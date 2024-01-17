@@ -1,9 +1,10 @@
-import Header from "@/components/header";
+import FoodCard from "@/components/card/foodCard";
 
 export default function Home() {
   return (
-    <main>
-      <Header/>
+    <main className="">
+      <FoodCard />
+      <FoodCard isDiscounted={true} />
     </main>
   );
 }
