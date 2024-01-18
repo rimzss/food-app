@@ -4,7 +4,7 @@ type Props = {};
 
 const Trace = (props: Props) => {
   return (
-    <div className="absolute w-screen overflow-hidden flex justify-center">
+    <div className="absolute flex justify-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1440"

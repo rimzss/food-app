@@ -11,8 +11,10 @@ const Footer = (props: Props) => {
   return (
     <Box
       sx={{
+        position:"relative",
+        overflow:"hidden",
         bgcolor: "#18BA51",
-        height: "48vh",
+        height: "50vh",
       }}
     >
       <Box>
