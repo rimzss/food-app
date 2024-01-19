@@ -20,7 +20,7 @@ const BasketItem = (props: Props) => {
     <Card
       sx={{
         display: "flex",
-        maxWidth: 600,
+        Width: 700,
         padding: "20px",
         boxShadow: "none",
       }}

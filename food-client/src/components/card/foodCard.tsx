@@ -9,7 +9,7 @@ const FoodCard = ({ isDiscounted = false }: Props) => {
   return (
     <Card
       sx={{
-        maxWidth: 345,
+        width: 345,
         padding: "20px",
         boxShadow: "none",
         position: "relative",

@@ -1,21 +1,31 @@
-import React from 'react'
+import React, { ReactNode } from "react";
 import Button from "@mui/material/Button";
 
-type Props = {
-  text: string | HTMLElement,
-  buttonFunction: ()=>void
+interface IButtonProps {
+  text: string;
+  disabled?: boolean;
+  btnType?: "contained" | "outlined";
+  buttonFunction?: () => void;
 }
 
-const DefualtButton = ({text, buttonFunction}: Props) => {
+export const DefualtButton = ({
+  text,
+  disabled = false,
+  btnType = "contained",
+  buttonFunction,
+}: IButtonProps) => {
   return (
     <Button
-    sx={{color: "white"}}
-    variant="contained"
-
-  >
-{text}
-  </Button>
-  )
-}
-
-export default DefualtButton
+      fullWidth={true}
+      onClick={buttonFunction}
+      sx={{
+        color: btnType === "outlined" ? "#18BA51" : "white",
+        padding: "10px",
+      }}
+      variant={btnType}
+      disabled={disabled}
+    >
+      {text}
+    </Button>
+  );
+};

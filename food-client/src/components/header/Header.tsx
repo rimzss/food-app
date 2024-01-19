@@ -18,7 +18,7 @@ const Header = (props: Props) => {
     setAnchorEl(null);
   };
   return (
-    <nav className="flex justify-between md:justify-normal m-5 md:mx-20">
+    <nav className="flex justify-between md:justify-normal my-5">
       <Logo color="black" />
       <div className="md:hidden">
         <Button

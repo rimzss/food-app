@@ -1,5 +1,5 @@
 import Header from "@/components/header/Header";
-import "./globals.css";
+import "./globals.scss";
 import { ThemeProvider } from "@/theme";
 import Footer from "@/components/footer";
 
@@ -12,8 +12,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
-          <Header />
-          {children}
+          <section className="px-5 md:px-32">
+            <Header />
+            {children}
+          </section>
+
           <Footer />
         </ThemeProvider>
       </body>
