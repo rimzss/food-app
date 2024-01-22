@@ -12,10 +12,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
-          <section className="px-5 md:px-32">
-            <Header />
-            {children}
-          </section>
+          <Header />
+          {children}
 
           <Footer />
         </ThemeProvider>

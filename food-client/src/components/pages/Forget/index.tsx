@@ -3,10 +3,9 @@ import { Box, Container, Typography } from "@mui/material";
 
 import Link from "next/link";
 import React from "react";
-
 type Props = {};
 
-const LoginPage = (props: Props) => {
+const ForgetPage = (props: Props) => {
   return (
     <Box
       sx={{
@@ -27,32 +26,16 @@ const LoginPage = (props: Props) => {
           textAlign="center"
           marginBottom="35px"
         >
-          Нэвтрэх
+          Нууц үг сэргээх
         </Typography>
 
         <DefaultInput label="Имэйл" placeholder="Имэйл хаягаа оруулна уу" />
-        <DefaultInput
-          label="Нууц үг"
-          placeholder="Нууц үг"
-          showPassword={true}
-        />
-        <Link href="/forget">
-          <Typography marginTop="-15px" textAlign="right" variant="body2">
-            Нууц үг сэргээх
-          </Typography>
-        </Link>
-
         <Box display="flex" flexDirection="column" gap="28px" marginTop="50px">
-          <DefualtButton text="Нэвтрэх" />
-
-          <Typography textAlign="center">Эсвэл</Typography>
-          <Link href="/signup">
-            <DefualtButton text="Бүртгүүлэх" btnType="outlined" />
-          </Link>
+          <DefualtButton text="Үргэлжлүүлэх" />
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default LoginPage;
+export default ForgetPage;

@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { IoMdMenu } from "react-icons/io";
 import PhoneMenu from "./PhoneMenu";
 import WebMenu from "./WebMenu";
+import { Container } from "@mui/material";
 
 type Props = {};
 
@@ -18,23 +19,25 @@ const Header = (props: Props) => {
     setAnchorEl(null);
   };
   return (
-    <nav className="flex justify-between md:justify-normal my-5">
-      <Logo color="black" />
-      <div className="md:hidden">
-        <Button
-          variant="contained"
-          id="basic-button"
-          aria-controls={open ? "basic-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-        >
-          <IoMdMenu size="20px" color="white" />
-        </Button>
-      </div>
-      <WebMenu />
-      <PhoneMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />
-    </nav>
+    <Container>
+      <nav className="flex justify-between md:justify-normal my-5 static">
+        <Logo color="black" />
+        <div className="md:hidden">
+          <Button
+            variant="contained"
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            <IoMdMenu size="20px" color="white" />
+          </Button>
+        </div>
+        <WebMenu />
+        <PhoneMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />
+      </nav>
+    </Container>
   );
 };
 

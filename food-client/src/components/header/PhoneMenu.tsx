@@ -4,6 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { MdOutlineShoppingBasket } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { IoIosSearch } from "react-icons/io";
+import Link from "next/link";
 
 type Props = {
   handleClose: () => void;
@@ -23,7 +24,9 @@ const PhoneMenu = ({ handleClose, open, anchorEl }: Props) => {
       }}
     >
       <div className="w-screen">
-        <MenuItem onClick={handleClose}>Нүүр</MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link href="./">Нүүр</Link>
+        </MenuItem>
         <MenuItem onClick={handleClose}>Хоолны цэс</MenuItem>
         <MenuItem onClick={handleClose}>Хүргэлтийн бүс</MenuItem>
       </div>
@@ -33,8 +36,10 @@ const PhoneMenu = ({ handleClose, open, anchorEl }: Props) => {
           Сагс
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <FaRegUser className="mr-2" />
-          Нэвтрэх
+          <Link href="/login" className="flex">
+            <FaRegUser className="mr-2" />
+            Нэвтрэх
+          </Link>
         </MenuItem>
       </div>
       <MenuItem>

@@ -10,7 +10,7 @@ const WebMenu = (props: Props) => {
   return (
     <div className="hidden md:flex justify-between w-screen font-bold">
       <section className="flex gap-10 ml-10">
-        <Link href="">
+        <Link href="./">
           <p>Нүүр</p>
         </Link>
         <Link href="">
@@ -33,10 +33,12 @@ const WebMenu = (props: Props) => {
           <MdOutlineShoppingBasket size="25px" />
           Сагс
         </div>
-        <div className="flex items-center gap-2">
-          <FaRegUser size="20px" />
-          Нэвтрэх
-        </div>
+        <Link href="/login">
+          <div className="flex items-center gap-2">
+            <FaRegUser size="20px" />
+            Нэвтрэх
+          </div>
+        </Link>
       </section>
     </div>
   );

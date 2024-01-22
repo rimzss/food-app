@@ -4,25 +4,28 @@ import Book from "./Book";
 import TimeCard from "./TimeCard";
 import HealthCard from "./HealthyCard";
 import ChooseCard from "./chooseCard";
+import { Container } from "@mui/material";
 
 type Props = {};
 
 const AdCards = (props: Props) => {
   return (
-    <Grid container rowSpacing={{ xs: 5, md: 30 }} columnSpacing={{ xs: 5 }}>
-      <Grid item md={3} xs={6}>
-        <Book />
+    <Container>
+      <Grid container spacing={10}>
+        <Grid item xs={6} md={3}>
+          <Book />
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <TimeCard />
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <HealthCard />
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <HealthCard />
+        </Grid>
       </Grid>
-      <Grid item md={3} xs={6}>
-        <TimeCard />
-      </Grid>
-      <Grid item md={3} xs={6}>
-        <HealthCard />
-      </Grid>
-      <Grid item md={3} xs={6}>
-        <ChooseCard />
-      </Grid>
-    </Grid>
+    </Container>
   );
 };
 
