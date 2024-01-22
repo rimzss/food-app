@@ -1,28 +1,53 @@
-import { Stack, TextField, Typography } from "@mui/material";
-import React, { ChangeEvent } from "react";
+"use client";
+import React, { ChangeEvent, useState } from "react";
+import {
+  TextField,
+  Stack,
+  FormControl,
+  FormLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface IInputProps {
   label: string;
-  placeholder: string;
   showPassword?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
 }
 
-const DefaultInput = ({
+export const DefaultInput = ({
   label,
+  showPassword = false,
   onChange,
   placeholder,
-  showPassword,
 }: IInputProps) => {
+  const [isShowPassword, setIsShowPassword] = useState(showPassword);
   return (
-    <Stack>
-      <Typography variant="caption">{label}</Typography>
-      <TextField
-        placeholder={placeholder}
-        sx={{ backgroundColor: "#F7F7F8" }}
-      />
-    </Stack>
+    <>
+      <FormControl sx={{ my: "1rem" }} variant="outlined" fullWidth>
+        <FormLabel sx={{ my: "4px", color: "black" }}>{label}</FormLabel>
+        <OutlinedInput
+          sx={{ backgroundColor: "#ECEDF0" }}
+          placeholder={placeholder}
+          type={isShowPassword ? "password" : "text"}
+          endAdornment={
+            showPassword && (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => {
+                    setIsShowPassword(!isShowPassword);
+                  }}
+                >
+                  {isShowPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }
+        />
+      </FormControl>
+    </>
   );
 };
-
-export default DefaultInput;
