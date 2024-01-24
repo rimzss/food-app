@@ -10,7 +10,7 @@ type Props = {};
 
 const AdCards = (props: Props) => {
   return (
-    <Container>
+    <Container sx={{ marginTop: "30px" }}>
       <Grid container spacing={10}>
         <Grid item xs={6} md={3}>
           <Book />
@@ -22,7 +22,7 @@ const AdCards = (props: Props) => {
           <HealthCard />
         </Grid>
         <Grid item xs={6} md={3}>
-          <HealthCard />
+          <ChooseCard />
         </Grid>
       </Grid>
     </Container>

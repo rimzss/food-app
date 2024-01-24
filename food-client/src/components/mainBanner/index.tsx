@@ -5,12 +5,10 @@ type Props = {};
 
 const MainBannerText = (props: Props) => {
   return (
-    <Box>
-      {" "}
+    <Box width="380px">
       <Typography
         sx={{
           fontSize: "55px",
-          width: "380px",
           color: "white",
           fontWeight: "600",
           lineHeight: "90%",
@@ -26,6 +24,9 @@ const MainBannerText = (props: Props) => {
           marginTop: "40px",
         }}
       ></Box>
+      <Typography color="white" variant="h5" marginTop="30px">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </Typography>
     </Box>
   );
 };

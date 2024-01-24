@@ -25,7 +25,7 @@ const PhoneMenu = ({ handleClose, open, anchorEl }: Props) => {
     >
       <div className="w-screen">
         <MenuItem onClick={handleClose}>
-          <Link href="./">Нүүр</Link>
+          <Link href="/">Нүүр</Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>Хоолны цэс</MenuItem>
         <MenuItem onClick={handleClose}>Хүргэлтийн бүс</MenuItem>

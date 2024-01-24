@@ -5,6 +5,7 @@ import BasketItem from "@/components/checkout/BasketItem";
 import Checkout from "@/components/checkout/Checkout";
 import Trace from "@/components/footer/trace";
 import MainBannerText from "@/components/mainBanner";
+import FoodImages from "@/components/mainBanner/foodImages";
 import { Box, Container, Grid } from "@mui/material";
 
 export default function Home() {
@@ -37,7 +38,7 @@ export default function Home() {
           justifyContent="center"
           alignItems="center"
         >
-          <MainBannerText />
+          <FoodImages />
         </Grid>
       </Grid>
       <Container>
