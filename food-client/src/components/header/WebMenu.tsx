@@ -4,9 +4,12 @@ import { FaRegUser } from "react-icons/fa6";
 import { IoIosSearch } from "react-icons/io";
 import Link from "next/link";
 
-type Props = {};
+type Props = {
+  setOpenDrawer: (arg0: boolean) => void;
+  openDrawer: boolean;
+};
 
-const WebMenu = (props: Props) => {
+const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
   return (
     <div className="hidden md:flex justify-between w-screen font-bold">
       <section className="flex gap-10 ml-10">
@@ -29,10 +32,15 @@ const WebMenu = (props: Props) => {
             className="w-full py-2 relative z-0 px-10 border-[1px] border-black rounded-lg"
           />
         </div>
-        <div className="flex items-center gap-2">
+        <button
+          onClick={() => {
+            setOpenDrawer(true);
+          }}
+          className="flex items-center gap-2"
+        >
           <MdOutlineShoppingBasket size="25px" />
           Сагс
-        </div>
+        </button>
         <Link href="/login">
           <div className="flex items-center gap-2">
             <FaRegUser size="20px" />

@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../core/Logo";
 import Button from "@mui/material/Button";
 import { IoMdMenu } from "react-icons/io";
 import PhoneMenu from "./PhoneMenu";
 import WebMenu from "./WebMenu";
 import { Container } from "@mui/material";
+import DrawerComp from "../drawer/DrawerComp";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const Header = (props: Props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   return (
     <Container>
       <nav className="flex justify-between md:justify-normal my-5 static">
@@ -34,9 +36,17 @@ const Header = (props: Props) => {
             <IoMdMenu size="20px" color="white" />
           </Button>
         </div>
-        <WebMenu />
-        <PhoneMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />
+        <WebMenu setOpenDrawer={setOpenDrawer} openDrawer={openDrawer} />
+        <PhoneMenu
+          setOpenDrawer={setOpenDrawer}
+          openDrawer={openDrawer}
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+          open={open}
+          handleClose={handleClose}
+        />
       </nav>
+      <DrawerComp setOpenDrawer={setOpenDrawer} openDrawer={openDrawer} />
     </Container>
   );
 };

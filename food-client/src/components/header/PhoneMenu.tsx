@@ -10,9 +10,19 @@ type Props = {
   handleClose: () => void;
   open: boolean;
   anchorEl: null | HTMLElement;
+  setAnchorEl: (arg0: null) => void;
+  setOpenDrawer: (arg0: boolean) => void;
+  openDrawer: boolean;
 };
 
-const PhoneMenu = ({ handleClose, open, anchorEl }: Props) => {
+const PhoneMenu = ({
+  handleClose,
+  open,
+  anchorEl,
+  setOpenDrawer,
+  openDrawer,
+  setAnchorEl,
+}: Props) => {
   return (
     <Menu
       id="basic-menu"
@@ -31,7 +41,12 @@ const PhoneMenu = ({ handleClose, open, anchorEl }: Props) => {
         <MenuItem onClick={handleClose}>Хүргэлтийн бүс</MenuItem>
       </div>
       <div className="border-y-2">
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            setAnchorEl(null);
+            setOpenDrawer(true);
+          }}
+        >
           <MdOutlineShoppingBasket className="mr-2" />
           Сагс
         </MenuItem>
