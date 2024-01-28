@@ -6,6 +6,7 @@ import connectDB from "./config/db";
 import { configDotenv } from "dotenv";
 import authRoutes from "./router/authRoutes";
 import userRoutes from "./router/userRoutes";
+import emailRoutes from "./router/emailRoutes"
 configDotenv();
 
 const app: Application = express();
@@ -17,6 +18,7 @@ connectDB(MONGO_URL);
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
+app.use("/", emailRoutes)
 
 // app.get("/user", async (req: Request, res: Response) => {
 //   const newUser = {
