@@ -9,12 +9,12 @@ type Props = {};
 
 const GridRoutes = (props: Props) => {
   const routes = [
-    { name: "Нүүр", link: "" },
-    { name: "Холбоо барих", link: "" },
-    { name: "Хоолны цэс", link: "" },
-    { name: "Үйлчилгээний нөхцөл", link: "" },
-    { name: "Хүргэлтийн бүс", link: "" },
-    { name: "Нууцлагын бодлого", link: "" },
+    { name: "Нүүр", link: "/" },
+    { name: "Холбоо барих", link: "/" },
+    { name: "Хоолны цэс", link: "/" },
+    { name: "Үйлчилгээний нөхцөл", link: "/policy" },
+    { name: "Хүргэлтийн бүс", link: "/" },
+    { name: "Нууцлагын бодлого", link: "/secrecy" },
   ];
   return (
     <Grid
@@ -25,6 +25,7 @@ const GridRoutes = (props: Props) => {
         marginTop: { md: "-50px" },
         borderBottom: "1px solid white",
         paddingBottom: { xs: "0px" },
+        position: "relative",
       }}
     >
       <Grid container md={12} xs={6}>

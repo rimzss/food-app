@@ -13,7 +13,7 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
   return (
     <div className="hidden md:flex justify-between w-screen font-bold">
       <section className="flex gap-10 ml-10">
-        <Link href="./">
+        <Link href="/">
           <p>Нүүр</p>
         </Link>
         <Link href="">

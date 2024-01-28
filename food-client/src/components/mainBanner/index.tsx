@@ -24,7 +24,12 @@ const MainBannerText = (props: Props) => {
           marginTop: "40px",
         }}
       ></Box>
-      <Typography color="white" variant="h5" marginTop="30px">
+      <Typography
+        color="white"
+        variant="h5"
+        marginTop="30px"
+        className="hidden md:block"
+      >
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </Typography>
     </Box>

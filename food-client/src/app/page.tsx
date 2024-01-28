@@ -25,6 +25,7 @@ export default function Home() {
         <Grid
           item
           md={6}
+          sm={12}
           display="flex"
           justifyContent="center"
           alignItems="center"
@@ -34,6 +35,7 @@ export default function Home() {
         <Grid
           item
           md={6}
+          sm={12}
           display="flex"
           justifyContent="center"
           alignItems="center"
