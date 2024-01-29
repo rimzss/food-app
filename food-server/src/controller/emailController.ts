@@ -16,49 +16,68 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const mailHTML = (otp: String) => {
-  return `<!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Mail</title>
-      <style>
-        * {
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-          font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-            sans-serif;
-        }
-        .container {
-          width: 80%;
-          
-        }
-        .code {
-          padding: 10px;
-          background-color: greenyellow;
-          border-radius: 30px;
-        }
-        .code-box {
-          margin-top: 20px;
-        }
-      </style>
-    </head>
-    <body>
-      <main class="container">
-        <img
-          src="https://s8566740.sendpul.se/ti/8566740/475586/987abae3c29df10d2785a1caeef84b668566740/Screenshot_2024-01-28_220933.png"
-          alt=""
-        />
-        <h1>Pinecone Food Delivery</h1>
-        <h2>Reset your account password</h2>
-        <div class="code-box">
-          <h3>verification code: <span class="code"> ${otp}</span></h3>
-        </div>
-      </main>
-    </body>
-  </html>
+const mailHTML = (otp: String, username:string) => {
+  return `
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mail</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+      .container {
+        width: 100%;
+        overflow: hidden;
+        border: 0.2px solid gainsboro;
+      }
+      .code {
+        padding: 10px;
+        background-color: #18BA51;
+        border-radius: 10px;
+        width: 60px;
+        color: white;
+      }
+      .code-box {
+        margin-top: 20px;
+      }
+      .header-image{
+        width: 100%;
+      }
+      .content{
+        padding:20px 50px
+      }
+      .content h1{
+        font-weight: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <img
+        src="https://s8566740.sendpul.se/ti/8566740/475586/987abae3c29df10d2785a1caeef84b668566740/Screenshot_2024-01-28_220933.png"
+        alt=""
+        class="header-image"
+      />
+      <div class="content">
+        <h1>Сайн байна уу? ${username}</h1>
+      <h2>Та нууц үгээ сэргээх хүсэлт явуулсан байна.</h2>
+      <h2>Доорх кодыг ашиглан нууц үг ээ сэргээнэ үү.</h2>
+      <div class="code-box">
+        <h3> Нууц үг сэргээх код:</h3>
+        <h3 class="code">${otp}</h3>
+      </div>
+      </div>
+      
+    </main>
+  </body>
+</html>
   `;
 };
 
@@ -76,20 +95,20 @@ export const sendEmailUser = async (req: Request, res: Response) => {
     findUser.otp = await bcrypt.hash(otp, 10);
     await findUser.save();
     console.log(color.bgWhite(`USER OTP SAVED ${otp}`));
-    sendEmail(email, otp);
+    sendEmail(email, otp, findUser.name);
     res.status(200).json({ message: "Email has been sent" });
   } catch (error) {
     res.status(500).json({ message: "Email илгээх үед алдаа гарлаа.", error });
   }
 };
-const sendEmail = async (email: string, otp: string) => {
+const sendEmail = async (email: string, otp: string, username:string) => {
   try {
     const info = await transporter.sendMail({
       from: '"Pinecone Food Delivery" <rimz1009@gmail.com>',
       to: email,
       subject: "Reset password",
       text: "Hello world?",
-      html: mailHTML(otp),
+      html: mailHTML(otp, username),
     });
     console.log(color.bgBlue(`Email has been sent to ${email}`));
   } catch (error) {

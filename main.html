@@ -13,15 +13,28 @@
           sans-serif;
       }
       .container {
-        width: 80%;
+        width: 100%;
+        overflow: hidden;
+        border: 0.2px solid gainsboro;
       }
       .code {
         padding: 10px;
-        background-color: greenyellow;
-        border-radius: 30px;
+        background-color: #18BA51;
+        border-radius: 10px;
+        width: 60px;
+        color: white;
       }
       .code-box {
         margin-top: 20px;
+      }
+      .header-image{
+        width: 100%;
+      }
+      .content{
+        padding:20px 50px
+      }
+      .content h1{
+        font-weight: 100;
       }
     </style>
   </head>
@@ -30,12 +43,18 @@
       <img
         src="https://s8566740.sendpul.se/ti/8566740/475586/987abae3c29df10d2785a1caeef84b668566740/Screenshot_2024-01-28_220933.png"
         alt=""
+        class="header-image"
       />
-      <h1>Pinecone Food Delivery</h1>
-      <h2>Reset your account password</h2>
+      <div class="content">
+        <h1>Сайн байна уу? username</h1>
+      <h2>Та нууц үгээ сэргээх хүсэлт явуулсан байна.</h2>
+      <h2>Доорх кодыг ашиглан нууц үг ээ сэргээнэ үү.</h2>
       <div class="code-box">
-        <h3>verification code: <span class="code"> 123456</span></h3>
+        <h3> Нууц үг сэргээх код:</h3>
+        <h3 class="code">1234</h3>
       </div>
+      </div>
+      
     </main>
   </body>
 </html>
