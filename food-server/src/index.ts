@@ -6,19 +6,20 @@ import connectDB from "./config/db";
 import { configDotenv } from "dotenv";
 import authRoutes from "./router/authRoutes";
 import userRoutes from "./router/userRoutes";
-import emailRoutes from "./router/emailRoutes"
+import emailRoutes from "./router/emailRoutes";
+import cors from "cors";
 configDotenv();
-
 const app: Application = express();
 
 const MONGO_URL = process.env.MONGO_URL as string;
 const PORT = process.env.PORT;
 connectDB(MONGO_URL);
 
+app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
-app.use("/", emailRoutes)
+app.use("/verify", emailRoutes);
 
 // app.get("/user", async (req: Request, res: Response) => {
 //   const newUser = {

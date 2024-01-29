@@ -5,7 +5,7 @@ type Props = {};
 
 const SecrecyPage = (props: Props) => {
   return (
-    <Container>
+    <Container sx={{ marginY: "30px", minHeight: "900px" }}>
       <Box display="flex" alignItems="center">
         <svg
           xmlns="http://www.w3.org/2000/svg"

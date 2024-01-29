@@ -16,6 +16,7 @@ interface IInputProps {
   showPassword?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
+  name?: string;
 }
 
 export const DefaultInput = ({
@@ -23,6 +24,7 @@ export const DefaultInput = ({
   showPassword = false,
   onChange,
   placeholder,
+  name,
 }: IInputProps) => {
   const [isShowPassword, setIsShowPassword] = useState(showPassword);
   return (
@@ -30,6 +32,8 @@ export const DefaultInput = ({
       <FormControl sx={{ my: "1rem" }} variant="outlined" fullWidth>
         <FormLabel sx={{ my: "4px", color: "black" }}>{label}</FormLabel>
         <OutlinedInput
+          name={name}
+          onChange={onChange}
           sx={{ backgroundColor: "#ECEDF0" }}
           placeholder={placeholder}
           type={isShowPassword ? "password" : "text"}

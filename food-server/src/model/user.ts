@@ -24,6 +24,10 @@ const userSchema = new Schema({
     duureg: String,
     horoo: String,
   },
+  otp: {
+    type: String,
+    default: "",
+  },
   role: {
     type: ["admin", "user", "moderator"],
     default: "user",
@@ -35,7 +39,7 @@ const userSchema = new Schema({
 });
 
 userSchema.pre("save", function () {
-  this.password = bcrypt.hashSync(this.password, 10);
+  //   this.password = bcrypt.hashSync(this.password, 10);
 });
 
 // userSchema.methods.checkPassword = function(password:String){
