@@ -1,36 +1,49 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import User from "../model/user";
 import color from "colors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
+import MyError from "../utils/myError";
+
 configDotenv();
 
-export const signup = async (req: Request, res: Response) => {
+export const signup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     let newUser = req.body;
     const user = await User.create(newUser);
     res.status(201).json({ message: "New user successfully created" });
   } catch (error) {
     console.log(color.bgRed(`signup request failed ${error}`));
-    res.status(500).json({ message: "Error occured while signing up", error });
+    next(error);
   }
 };
 
-export const signin = async (req: Request, res: Response) => {
+export const signin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    let { email, password } = req.body;
-    const user = await User.findOne({ email }).select("+password");
+    let { email, upassword } = req.body;
+    const user = await User.findOne({ email }).select("+password").lean();
+
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: `${email} -хэрэглэгч бүртгэлгүй байна` });
+      throw new MyError(
+        `${email} -хэрэглэгч бүртгэлгүй эсвэл нууц үг буруу байнав`,
+        400
+      );
     }
-    const isValid = await bcrypt.compare(password, user.password);
+    const isValid = await bcrypt.compare(upassword, user.password);
     if (!isValid) {
-      return res
-        .status(400)
-        .json({ message: `Имэйл эсвэл нууц үг буруу байнав` });
+      throw new MyError(
+        `${email} -хэрэглэгч бүртгэлгүй эсвэл нууц үг буруу байнав`,
+        400
+      );
     }
     const token = jwt.sign(
       {
@@ -41,10 +54,10 @@ export const signin = async (req: Request, res: Response) => {
         expiresIn: process.env.JWT_EXPIRES_IN,
       }
     );
+    const { password, ...userInfo } = user;
 
-    res.status(201).json({ message: "Амжилттай нэвтэрлээ", token });
+    res.status(201).json({ message: "Амжилттай нэвтэрлээ", token, userInfo });
   } catch (error) {
-    console.log(color.bgRed(`signup request failed ${error}`));
-    res.status(500).json({ message: "Error occured while signing in", error });
+    next(error);
   }
 };

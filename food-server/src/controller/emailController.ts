@@ -1,9 +1,11 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import color from "colors";
 import nodemailer from "nodemailer";
 import { configDotenv } from "dotenv";
 import User from "../model/user";
 import bcrypt from "bcrypt";
+import MyError from "../utils/myError";
+import { error } from "console";
 configDotenv();
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,
@@ -16,7 +18,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const mailHTML = (otp: String, username:string) => {
+const mailHTML = (otp: String, username: string) => {
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +83,11 @@ const mailHTML = (otp: String, username:string) => {
   `;
 };
 
-export const sendEmailUser = async (req: Request, res: Response) => {
+export const sendEmailUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { email } = req.body;
   console.log(color.bgWhite("SEND EMAIL USER FUNCTION WORKING"));
   try {
@@ -90,7 +96,7 @@ export const sendEmailUser = async (req: Request, res: Response) => {
       .padStart(4, "0");
     const findUser = await User.findOne({ email });
     if (!findUser) {
-      return res.status(401).json({ message: "Хэрэглэгч олдсонгүй" });
+      throw new MyError(`Хэрэглэгч олдсонгүй`, 401);
     }
     findUser.otp = await bcrypt.hash(otp, 10);
     await findUser.save();
@@ -98,10 +104,10 @@ export const sendEmailUser = async (req: Request, res: Response) => {
     sendEmail(email, otp, findUser.name);
     res.status(200).json({ message: "Email has been sent" });
   } catch (error) {
-    res.status(500).json({ message: "Email илгээх үед алдаа гарлаа.", error });
+    next(error);
   }
 };
-const sendEmail = async (email: string, otp: string, username:string) => {
+const sendEmail = async (email: string, otp: string, username: string) => {
   try {
     const info = await transporter.sendMail({
       from: '"Pinecone Food Delivery" <rimz1009@gmail.com>',
@@ -116,24 +122,32 @@ const sendEmail = async (email: string, otp: string, username:string) => {
   }
 };
 
-export const checkOtp = async (req: Request, res: Response) => {
+export const checkOtp = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, otp } = req.body;
     const findUser = await User.findOne({ email });
     if (!findUser) {
-      return res.status(400).json({ message: "Хэрэглэгч олдсонгүй" });
+      throw new MyError(`Хэрэглэгч олдсонгүй`, 401);
     }
     const verifiedOtp = await bcrypt.compare(otp, findUser?.otp);
     if (!verifiedOtp) {
-      return res.status(400).json({ message: "Код буруу байна" });
+      throw new MyError("Код буруу байна", 401);
     }
     res.status(200).json({ message: "OTP is validated" });
   } catch (error) {
-    res.status(500).json({ message: "Email илгээх үед алдаа гарлаа.", error });
+    next(error);
   }
 };
 
-export const changePassword = async (req: Request, res: Response) => {
+export const changePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password } = req.body;
     const findUser = await User.findOne({ email });
@@ -142,6 +156,6 @@ export const changePassword = async (req: Request, res: Response) => {
     await findUser?.save();
     res.status(200).json({ message: "Password has been changed succesfully" });
   } catch (error) {
-    res.status(500).json({ message: "Change password function error", error });
+    next(error);
   }
 };

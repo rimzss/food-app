@@ -7,7 +7,9 @@ import { configDotenv } from "dotenv";
 import authRoutes from "./router/authRoutes";
 import userRoutes from "./router/userRoutes";
 import emailRoutes from "./router/emailRoutes";
+import catRoutes from "./router/catRoutes";
 import cors from "cors";
+import errorHandler from "./middleware/errorHandler";
 configDotenv();
 const app: Application = express();
 
@@ -21,15 +23,9 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/verify", emailRoutes);
 
-// app.get("/user", async (req: Request, res: Response) => {
-//   const newUser = {
-//     name: "Admin",
-//     email: "admin@gmail.com",
-//     password: "Admin123",
-//   };
-//   const user = await User.create(newUser);
-//   res.json({ message: "New user created" });
-// });
+app.use("/category", catRoutes);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(color.rainbow(`Server is Running on ${PORT}`));
