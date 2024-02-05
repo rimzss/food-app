@@ -9,19 +9,33 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 
 interface IUserCreateContext {
-  handleLoginInfo: () => void;
+  handleLoginInfo: (e: ChangeEvent<HTMLInputElement>) => void;
+  login: () => void;
+  loginInfo: {
+    email: string;
+    password: string;
+  };
 }
 
-export const userContext = createContext(null);
+export const userContext = createContext<IUserCreateContext>({
+  handleLoginInfo: () => {},
+  login: () => {},
+  loginInfo: {
+    email: "",
+    password: "",
+  },
+});
 
 const UserProvider = ({ children }: PropsWithChildren) => {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
+
   const handleLoginInfo = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
+
   const login = async () => {
     try {
       const data = axios.post("http://localhost:8080/auth/signin", {

@@ -39,12 +39,10 @@ const userSchema = new Schema({
 });
 
 userSchema.pre("save", function () {
-  //   this.password = bcrypt.hashSync(this.password, 10);
+  if (this.isModified("password")) {
+    this.password = bcrypt.hashSync(this.password, 10);
+  }
 });
-
-// userSchema.methods.checkPassword = function(password:String){
-//     return bcrypt.compare(password, this.password)
-// }
 
 const User = model("User", userSchema);
 export default User;

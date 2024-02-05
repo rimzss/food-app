@@ -8,6 +8,8 @@ import authRoutes from "./router/authRoutes";
 import userRoutes from "./router/userRoutes";
 import emailRoutes from "./router/emailRoutes";
 import catRoutes from "./router/catRoutes";
+import foodRoutes from "./router/foodRoutes";
+import uploadRoutes from "./router/uploadRoutes";
 import cors from "cors";
 import errorHandler from "./middleware/errorHandler";
 configDotenv();
@@ -22,8 +24,10 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/verify", emailRoutes);
+app.use("/upload", uploadRoutes);
 
 app.use("/category", catRoutes);
+app.use("/food", foodRoutes);
 
 app.use(errorHandler);
 

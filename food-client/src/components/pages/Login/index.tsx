@@ -1,12 +1,16 @@
+"use client";
 import { DefualtButton, DefaultInput } from "@/components";
+import UserProvider, { userContext } from "@/context/userProvider";
 import { Box, Container, Typography } from "@mui/material";
 
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 type Props = {};
 
 const LoginPage = (props: Props) => {
+  const { handleLoginInfo, login } = useContext(userContext);
+
   return (
     <Box
       sx={{
@@ -30,11 +34,18 @@ const LoginPage = (props: Props) => {
           Нэвтрэх
         </Typography>
 
-        <DefaultInput label="Имэйл" placeholder="Имэйл хаягаа оруулна уу" />
+        <DefaultInput
+          label="Имэйл"
+          placeholder="Имэйл хаягаа оруулна уу"
+          onChange={handleLoginInfo}
+          name="email"
+        />
         <DefaultInput
           label="Нууц үг"
           placeholder="Нууц үг"
           showPassword={true}
+          onChange={handleLoginInfo}
+          name="password"
         />
         <Link href="/forget">
           <Typography marginTop="-15px" textAlign="right" variant="body2">
@@ -43,7 +54,7 @@ const LoginPage = (props: Props) => {
         </Link>
 
         <Box display="flex" flexDirection="column" gap="28px" marginTop="50px">
-          <DefualtButton text="Нэвтрэх" />
+          <DefualtButton text="Нэвтрэх" buttonFunction={login} />
 
           <Typography textAlign="center">Эсвэл</Typography>
           <Link href="/signup">
