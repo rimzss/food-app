@@ -6,9 +6,10 @@ import {
   getCategory,
   updateCategory,
 } from "../controller/categoryController";
+import { authenticate } from "../middleware/auth";
 
 const router = Router();
-router.route("/").get(getAllCategory).post(createCategory);
+router.route("/").get(authenticate, getAllCategory).post(createCategory);
 router
   .route("/:categoryId")
   .get(getCategory)
