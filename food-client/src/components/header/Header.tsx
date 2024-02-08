@@ -21,7 +21,7 @@ const Header = (props: Props) => {
   };
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   return (
-    <Container>
+    <Container maxWidth="xl">
       <nav className="flex justify-between md:justify-normal my-5 static">
         <Logo color="black" />
         <div className="md:hidden">

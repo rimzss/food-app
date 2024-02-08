@@ -27,3 +27,16 @@ export const authenticate = async (
     next(error);
   }
 };
+
+export const authorize = (...roles:string[]) =>{
+  return (req:IReq, res:Response, next:NextFunction)=>{
+    try {
+      const {user} = req
+      if(!roles.includes(user.role)){
+        throw new MyError("Уучлаарай таны эрх энэ үйлдлийг хийх боломжгүй байна",403)
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+}

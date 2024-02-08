@@ -6,9 +6,19 @@ import Checkout from "@/components/checkout/Checkout";
 import Trace from "@/components/footer/trace";
 import MainBannerText from "@/components/mainBanner";
 import FoodImages from "@/components/mainBanner/foodImages";
+import Menu from "@/components/menu";
+import { catContext } from "@/context/catProvider";
+import { foodContext } from "@/context/foodProvider";
 import { Box, Container, Grid } from "@mui/material";
+import { useContext, useEffect } from "react";
 
 export default function Home() {
+  const { foods, getFoods } = useContext(foodContext);
+  const { getCategories, categories } = useContext(catContext);
+  useEffect(() => {
+    getFoods();
+    getCategories();
+  }, []);
   return (
     <main className="flex flex-wrap">
       <Grid
@@ -43,13 +53,31 @@ export default function Home() {
           <FoodImages />
         </Grid>
       </Grid>
-      <Container>
+      <Container maxWidth="xl">
         <Box>
           <AdCards />
-          <FoodCard isDiscounted={false} />
-          <FoodCard isDiscounted={true} />
-          <Checkout />
-          <BasketItem />
+          {categories?.map((category: any) => {
+            return (
+              <Menu
+                key={category._id}
+                id={category._id}
+                catName={category.name}
+                foods={foods}
+              />
+            );
+          })}
+
+          {/* {foods?.map((food: any) => {
+            return (
+              <FoodCard
+                key={food._id}
+                name={food.name}
+                price={food.price}
+                image={food.image}
+                isDiscounted={food.isSale}
+              />
+            );
+          })} */}
         </Box>
       </Container>
     </main>

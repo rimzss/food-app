@@ -16,10 +16,14 @@ import AppWidgetSummary from "./app-widget-summary";
 import AppTrafficBySite from "./app-traffic-by-site";
 import AppCurrentSubject from "./app-current-subject";
 import AppConversionRates from "./app-conversion-rates";
+import { redirect } from "next/navigation";
 
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+  if (!user) {
+    redirect("/login");
+  }
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>

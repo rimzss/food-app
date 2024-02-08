@@ -2,7 +2,9 @@ import Header from "@/components/header/Header";
 import "./globals.scss";
 import { ThemeProvider } from "@/theme";
 import Footer from "@/components/footer";
-import UserProvider from "@/context/userProvider";
+import AuthProvider from "@/context/authProvider";
+import FoodProvider from "@/context/foodProvider";
+import CatProvider from "@/context/catProvider";
 
 export default function RootLayout({
   children,
@@ -13,12 +15,15 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
-          <UserProvider>
-            <Header />
-            {children}
-
-            <Footer />
-          </UserProvider>
+          <AuthProvider>
+            <CatProvider>
+              <FoodProvider>
+                <Header />
+                {children}
+                <Footer />
+              </FoodProvider>
+            </CatProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

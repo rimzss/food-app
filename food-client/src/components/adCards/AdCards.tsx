@@ -10,7 +10,7 @@ type Props = {};
 
 const AdCards = (props: Props) => {
   return (
-    <Container sx={{ marginTop: "30px" }}>
+    <Container sx={{ marginY: { xs: 10, md: 30 } }} maxWidth="xl">
       <Grid container spacing={10}>
         <Grid item xs={6} md={3}>
           <Book />

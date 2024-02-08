@@ -28,10 +28,10 @@ const GridRoutes = (props: Props) => {
         position: "relative",
       }}
     >
-      <Grid container md={12} xs={6}>
+      <Grid container>
         {routes.map((route) => {
           return (
-            <Grid item md={2} xs={12}>
+            <Grid item md={2} xs={12} key={route.name}>
               <Link color="inherit" sx={{ color: "white" }} href={route.link}>
                 {route.name}
               </Link>

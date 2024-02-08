@@ -8,7 +8,7 @@ import Link from "next/link";
 import React, { ChangeEvent, use, useState } from "react";
 type Props = {
   handleNext: () => void;
-  handleChange: () => void;
+  handleChange: (arg0: ChangeEvent<HTMLInputElement>) => void;
   inputedPassword: string;
 };
 

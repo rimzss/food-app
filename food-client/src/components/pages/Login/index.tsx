@@ -1,6 +1,6 @@
 "use client";
 import { DefualtButton, DefaultInput } from "@/components";
-import UserProvider, { userContext } from "@/context/userProvider";
+import { authContext } from "@/context/authProvider";
 import { Box, Container, Typography } from "@mui/material";
 
 import Link from "next/link";
@@ -9,7 +9,7 @@ import React, { useContext } from "react";
 type Props = {};
 
 const LoginPage = (props: Props) => {
-  const { handleLoginInfo, login } = useContext(userContext);
+  const { handleLoginInfo, login } = useContext(authContext);
 
   return (
     <Box

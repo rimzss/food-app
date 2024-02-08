@@ -2,10 +2,10 @@ import { DefualtButton, DefaultInput } from "@/components";
 import { Box, Container, Typography } from "@mui/material";
 
 import Link from "next/link";
-import React from "react";
+import React, { ChangeEvent } from "react";
 type Props = {
   handleNext: () => void;
-  handleChange: () => void;
+  handleChange: (argo: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const AfterForget = ({ handleNext, handleChange }: Props) => {

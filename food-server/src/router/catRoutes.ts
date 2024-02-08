@@ -6,14 +6,14 @@ import {
   getCategory,
   updateCategory,
 } from "../controller/categoryController";
-import { authenticate } from "../middleware/auth";
+import { authenticate, authorize } from "../middleware/auth";
 
 const router = Router();
-router.route("/").get(authenticate, getAllCategory).post(createCategory);
+router.route("/").get(getAllCategory).post(createCategory);
 router
   .route("/:categoryId")
   .get(getCategory)
-  .put(updateCategory)
-  .delete(deleteCategory);
+  .put(authenticate, authorize("Admin", "Moderator"),updateCategory)
+  .delete(authenticate, authorize("Admin", "Moderator"),deleteCategory);
 
 export default router;
