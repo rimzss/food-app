@@ -7,17 +7,20 @@ import Trace from "@/components/footer/trace";
 import MainBannerText from "@/components/mainBanner";
 import FoodImages from "@/components/mainBanner/foodImages";
 import Menu from "@/components/menu";
+import { authContext } from "@/context/authProvider";
 import { catContext } from "@/context/catProvider";
 import { foodContext } from "@/context/foodProvider";
 import { Box, Container, Grid } from "@mui/material";
 import { useContext, useEffect } from "react";
 
 export default function Home() {
+  const { authLogged } = useContext(authContext);
   const { foods, getFoods } = useContext(foodContext);
   const { getCategories, categories } = useContext(catContext);
   useEffect(() => {
     getFoods();
     getCategories();
+    authLogged();
   }, []);
   return (
     <main className="flex flex-wrap">

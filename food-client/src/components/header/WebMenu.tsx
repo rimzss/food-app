@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { MdOutlineShoppingBasket } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { IoIosSearch } from "react-icons/io";
 import Link from "next/link";
+import { authContext } from "@/context/authProvider";
 
 type Props = {
   setOpenDrawer: (arg0: boolean) => void;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
+  const { logout } = useContext(authContext);
   return (
     <div className="hidden md:flex justify-between w-screen font-bold">
       <section className="flex gap-10 ml-10">
@@ -41,7 +43,7 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
           <MdOutlineShoppingBasket size="25px" />
           Сагс
         </button>
-        <Link href="/login">
+        <Link href="/login" onClick={logout}>
           <div className="flex items-center gap-2">
             <FaRegUser size="20px" />
             Нэвтрэх
