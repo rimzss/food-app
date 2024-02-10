@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
@@ -20,10 +20,12 @@ import { bgGradient } from "@/theme/css";
 
 import Logo from "@/components/logo";
 import Iconify from "@/components/iconify";
+import { authContext } from "@/context/authProvider";
 
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
+  const { login, handleLoginInfo } = useContext(authContext);
   const theme = useTheme();
 
   const router = useRouter();
@@ -37,11 +39,16 @@ export default function LoginView() {
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField
+          name="email"
+          label="Email address"
+          onChange={handleLoginInfo}
+        />
 
         <TextField
           name="password"
           label="Password"
+          onChange={handleLoginInfo}
           type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
@@ -77,7 +84,7 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={handleClick}
+        onClick={login}
       >
         Login
       </LoadingButton>
@@ -110,52 +117,8 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">Sign in to Minimal</Typography>
-
-          <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-            Don’t have an account?
-            <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-              Get started
-            </Link>
-          </Typography>
-
-          <Stack direction="row" spacing={2}>
-            <Button
-              fullWidth
-              size="large"
-              color="inherit"
-              variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
-            >
-              <Iconify icon="eva:google-fill" color="#DF3E30" />
-            </Button>
-
-            <Button
-              fullWidth
-              size="large"
-              color="inherit"
-              variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
-            >
-              <Iconify icon="eva:facebook-fill" color="#1877F2" />
-            </Button>
-
-            <Button
-              fullWidth
-              size="large"
-              color="inherit"
-              variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
-            >
-              <Iconify icon="eva:twitter-fill" color="#1C9CEA" />
-            </Button>
-          </Stack>
-
-          <Divider sx={{ my: 3 }}>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              OR
-            </Typography>
-          </Divider>
+          <Typography variant="h4">Admin нэвтрэх</Typography>
+          <Divider sx={{ my: 3 }}></Divider>
 
           {renderForm}
         </Card>

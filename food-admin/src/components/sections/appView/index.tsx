@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
 import { faker } from "@faker-js/faker";
 
 import Container from "@mui/material/Container";
@@ -17,13 +18,22 @@ import AppTrafficBySite from "./app-traffic-by-site";
 import AppCurrentSubject from "./app-current-subject";
 import AppConversionRates from "./app-conversion-rates";
 import { redirect } from "next/navigation";
+import { useContext, useEffect } from "react";
+import { authContext } from "@/context/authProvider";
 
 // ----------------------------------------------------------------------
 
 export default function AppView() {
-  if (!user) {
-    redirect("/login");
-  }
+  const { user, checkIsLogged } = useContext(authContext);
+
+  useEffect(() => {
+    checkIsLogged();
+    if (!localStorage.getItem("token")) {
+      console.log("USER NOT FOUND");
+      redirect("/login");
+    }
+  }, []);
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
