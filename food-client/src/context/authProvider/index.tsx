@@ -7,12 +7,15 @@ import React, {
 } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { json } from "stream/consumers";
 
 interface IUserCreateContext {
   handleLoginInfo: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSignupInfo: (e: ChangeEvent<HTMLInputElement>) => void;
   login: () => void;
   logout: () => void;
+  token: string;
+  user: any;
   loginInfo: {
     email: string;
     password: string;
@@ -37,6 +40,8 @@ export const authContext = createContext<IUserCreateContext>({
   login: () => {},
   logout: () => {},
   signup: () => {},
+  token: "",
+  user: "",
   loginInfo: {
     email: "",
     password: "",
@@ -83,8 +88,8 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
           upassword: loginInfo.password,
         })
         .then((res) => res.data);
-      localStorage.setItem("user", data.userInfo);
-      localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("user", JSON.stringify(data.userInfo));
+      localStorage.setItem("token", data.token);
       console.log("LOGIN SUCCESS!!!", data.userInfo);
       router.push("/");
     } catch (error) {
@@ -108,14 +113,20 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       console.log("ERROR IN SIGNUP FUNCTION", error);
     }
   };
-  const [user, setUser] = useState();
+  const [user, setUser] = useState("");
   const [token, setToken] = useState("");
   const authLogged = () => {
-    console.log("aa");
+    if (localStorage.getItem("token")) {
+      setUser(JSON.parse(localStorage.getItem("user")!));
+      setToken(localStorage.getItem("token")!);
+      console.log("USER ALREADY LOGGED IN");
+    }
   };
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    setUser("");
+    setToken("");
   };
   return (
     <authContext.Provider
@@ -128,6 +139,8 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         signupInfo,
         authLogged,
         logout,
+        user,
+        token,
       }}
     >
       {children}
