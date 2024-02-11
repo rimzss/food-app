@@ -20,7 +20,7 @@ export default function UserTableRow({
   selected,
   name,
   avatarUrl,
-  company,
+  email,
   role,
   isVerified,
   status,
@@ -52,17 +52,9 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{email}</TableCell>
 
         <TableCell>{role}</TableCell>
-
-        <TableCell align="center">{isVerified ? "Yes" : "No"}</TableCell>
-
-        <TableCell>
-          <Label color={(status === "banned" && "error") || "success"}>
-            {status}
-          </Label>
-        </TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

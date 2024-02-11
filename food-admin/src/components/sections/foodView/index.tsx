@@ -17,6 +17,7 @@ import { sample } from "lodash";
 import { faker } from "@faker-js/faker";
 import { Button } from "@mui/material";
 import Iconify from "@/components/iconify";
+import FoodModal from "@/components/foodModal";
 
 // ----------------------------------------------------------------------
 
@@ -92,6 +93,9 @@ export default function FoodView() {
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="eva:plus-fill" />}
+          onClick={() => {
+            setOpenFilter(true);
+          }}
         >
           Шинэ хоол
         </Button>
@@ -122,7 +126,7 @@ export default function FoodView() {
           </Grid>
         ))}
       </Grid>
-
+      <FoodModal openFilter={openFilter} />
       {/* <ProductCartWidget /> */}
     </Container>
   );
