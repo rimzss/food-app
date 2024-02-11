@@ -13,11 +13,11 @@ import CategorySort from "./category-sort";
 import CategorySearch from "./category-search";
 
 // ----------------------------------------------------------------------
-import { faker } from "@faker-js/faker";
 import CategoryModal from "@/components/categoryModal";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import axios, { AxiosError } from "axios";
+import { catContext } from "@/context/catProvider";
 
 // ----------------------------------------------------------------------
 
@@ -42,8 +42,9 @@ const CATEGORY_TITLES = [
 // ----------------------------------------------------------------------
 
 export default function CategoryView() {
+  const { categories, getCategories } = useContext(catContext);
   const [open, setOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
+
   const [file, setFile] = useState<File | null>(null);
 
   const [newCategory, setNewCategory] = useState({
@@ -80,30 +81,14 @@ export default function CategoryView() {
       } = (await axios.post("http://localhost:8080/categories", formData)) as {
         data: { category: object };
       };
-
-      // setCategories(categories);
       console.log("Success Add Category");
     } catch (error: any) {
       alert("Add Error - " + error.message);
     }
   };
 
-  const getCategory = async () => {
-    try {
-      const {
-        data: { categories },
-      } = (await axios.get("http://localhost:8080/categories")) as {
-        data: { categories: [] };
-      };
-
-      setCategories(categories);
-    } catch (error: any) {
-      alert("Get Error - " + error.message);
-    }
-  };
-
   useEffect(() => {
-    getCategory();
+    getCategories();
   }, []);
 
   return (
