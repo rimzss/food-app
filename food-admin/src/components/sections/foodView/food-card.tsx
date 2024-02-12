@@ -32,7 +32,7 @@ export default function FoodCard({ product }: any) {
     <Box
       component="img"
       alt={product.name}
-      src={product.cover}
+      src={product.image}
       sx={{
         top: 0,
         width: 1,
@@ -84,7 +84,6 @@ export default function FoodCard({ product }: any) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <ColorPreview colors={product.colors} />
           {renderPrice}
         </Stack>
       </Stack>

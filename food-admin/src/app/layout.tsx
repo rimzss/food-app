@@ -3,6 +3,7 @@ import "./globals.css";
 import AuthProvider from "@/context/authProvider";
 import UserProvider from "@/context/userProvider";
 import CatProvider from "@/context/catProvider";
+import FoodProvider from "@/context/foodProvider";
 
 export default function RootLayout({
   children,
@@ -15,7 +16,9 @@ export default function RootLayout({
         <AuthProvider>
           <UserProvider>
             <CatProvider>
-              <ThemeProvider>{children}</ThemeProvider>
+              <FoodProvider>
+                <ThemeProvider>{children}</ThemeProvider>
+              </FoodProvider>
             </CatProvider>
           </UserProvider>
         </AuthProvider>

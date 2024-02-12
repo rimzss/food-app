@@ -20,7 +20,6 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 750,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   borderRadius: 5,
   boxShadow: 22,
   p: 4,
@@ -83,7 +82,12 @@ export default function CategoryModal({
             Upload file
             <VisuallyHiddenInput type="file" onChange={handleFileChange} />
           </MuiButton>
-          <Button label="нэмэх" onClick={handleSave}></Button>
+          <Button
+            label="нэмэх"
+            onClick={() => {
+              handleSave(), handleClose();
+            }}
+          ></Button>
         </Box>
       </Modal>
     </div>

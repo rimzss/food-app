@@ -7,8 +7,8 @@ export function fNumber(number: number) {
 }
 
 export function fCurrency(number: number) {
-  const format = number ? numeral(number).format("$0,0.00") : "";
-
+  let format = number ? numeral(number).format("0,0.00") : "";
+  format = format+"₮"
   return result(format, ".00");
 }
 

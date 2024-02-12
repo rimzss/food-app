@@ -20,6 +20,7 @@ import Iconify from "@/components/iconify";
 import FoodModal from "@/components/foodModal";
 import { authContext } from "@/context/authProvider";
 import { redirect } from "next/navigation";
+import { foodContext } from "@/context/foodProvider";
 
 // ----------------------------------------------------------------------
 
@@ -71,8 +72,10 @@ export const products = [...Array(FOOD_NAME.length)].map((_, index) => {
 
 export default function FoodView() {
   const { checkIsLogged } = useContext(authContext);
+  const { getFoods, foods } = useContext(foodContext);
   useEffect(() => {
     checkIsLogged();
+    getFoods();
     if (!localStorage.getItem("token")) {
       console.log("USER NOT FOUND");
       redirect("/login");
@@ -130,7 +133,7 @@ export default function FoodView() {
       </Stack>
 
       <Grid container spacing={3}>
-        {products.map((product: any) => (
+        {foods?.map((product: any) => (
           <Grid key={product.id} xs={12} sm={6} md={3}>
             <FoodCard product={product} />
           </Grid>
