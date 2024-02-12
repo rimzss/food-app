@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 interface ICreateAuthContext {
   user: any;
   login: () => void;
+  logout: () => void;
   checkIsLogged: () => void;
   handleLoginInfo: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -18,6 +19,7 @@ interface ICreateAuthContext {
 export const authContext = createContext<ICreateAuthContext>({
   user: "",
   login: () => {},
+  logout: () => {},
   checkIsLogged: () => {},
   handleLoginInfo: () => {},
 });
@@ -59,9 +61,16 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       setToken(localStorage.getItem("token")!);
     }
   };
+  const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setUser("");
+    setToken("");
+    router.push("/");
+  };
   return (
     <authContext.Provider
-      value={{ user, login, handleLoginInfo, checkIsLogged }}
+      value={{ user, login, handleLoginInfo, checkIsLogged, logout }}
     >
       {children}
     </authContext.Provider>

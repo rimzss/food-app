@@ -40,7 +40,7 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
-  const { user } = useContext(authContext);
+  const { user, logout } = useContext(authContext);
   const handleOpen = (event: any) => {
     setOpen(event.currentTarget);
   };
@@ -113,7 +113,10 @@ export default function AccountPopover() {
         <MenuItem
           disableRipple
           disableTouchRipple
-          onClick={handleClose}
+          onClick={() => {
+            handleClose();
+            logout();
+          }}
           sx={{ typography: "body2", color: "error.main", py: 1.5 }}
         >
           Гарах

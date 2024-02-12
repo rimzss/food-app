@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
@@ -14,7 +14,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { alpha, useTheme } from "@mui/material/styles";
 import InputAdornment from "@mui/material/InputAdornment";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import { bgGradient } from "@/theme/css";
 
@@ -25,7 +25,15 @@ import { authContext } from "@/context/authProvider";
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
-  const { login, handleLoginInfo } = useContext(authContext);
+  useEffect(() => {
+    checkIsLogged();
+    if (localStorage.getItem("token")) {
+      console.log("USER NOT FOUND");
+      redirect("/dashboard");
+    }
+  }, []);
+
+  const { login, handleLoginInfo, checkIsLogged } = useContext(authContext);
   const theme = useTheme();
 
   const router = useRouter();
