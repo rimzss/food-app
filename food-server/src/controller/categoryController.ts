@@ -11,8 +11,8 @@ export const createCategory = async (
 ) => {
   try {
     console.log(color.bgWhite(`REQUESTIIN BODY ${req.body}`));
-    await Category.create({ ...req.body });
-    res.status(201).json({ message: "Successfully created category" });
+    const newCategory = await Category.create({ ...req.body });
+    res.status(201).json({ message: "Successfully created category",newCategory  });
   } catch (error) {
     next(error);
   }

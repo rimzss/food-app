@@ -23,7 +23,7 @@ export const catContext = createContext<ICreateCatContext>({
 });
 
 const CatProvider = ({ children }: PropsWithChildren) => {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<any>([]);
   let [categoryForm, setCategoryForm] = useState({
     name: "",
     description: "",
@@ -35,7 +35,6 @@ const CatProvider = ({ children }: PropsWithChildren) => {
         .get("http://localhost:8080/category")
         .then((res) => res.data);
       setCategories(categorys);
-      console.log("GET CATEGORIES SUCCESFUL", categorys);
     } catch (error) {
       console.log("ERROR IN GETCATEGORIES FUNCTION", error);
     }
@@ -50,7 +49,7 @@ const CatProvider = ({ children }: PropsWithChildren) => {
           image: categoryForm.image,
         })
         .then((res) => res.data);
-      console.log("SUCCESFFULLY CREATE CATEGORY", data);
+      setCategories([...categories, data.newCategory]);
     } catch (error) {
       console.log("ERROR IN CREATECATEGORY FUNCTION");
     }
@@ -58,7 +57,6 @@ const CatProvider = ({ children }: PropsWithChildren) => {
 
   const [file, setFile] = useState<File | null>(null);
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("FILE", e);
     setFile(e.currentTarget.files![0]);
   };
   const handleCategoryForm = (e: ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +67,6 @@ const CatProvider = ({ children }: PropsWithChildren) => {
       const formData = new FormData();
       formData.set("image", file!);
       const image = await axios.post("http://localhost:8080/upload", formData);
-      console.log("IMAGE SUCCESFULLY UPLOADED", image.data.url);
       categoryForm.image = image.data.url;
       createCategory();
     } catch (error) {

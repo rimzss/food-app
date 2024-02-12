@@ -41,7 +41,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
           upassword: loginInfo.password,
         })
         .then((res) => res.data);
-      console.log("LOGIN SUCCESS!!!", data);
       checkRole(data);
     } catch (error) {
       console.log("ERROR IN LOGIN FUNCTION", error);
@@ -58,7 +57,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     if (localStorage.getItem("token")) {
       setUser(JSON.parse(localStorage.getItem("user")!));
       setToken(localStorage.getItem("token")!);
-      console.log("ADMIN ALREADY LOGGED IN", user);
     }
   };
   return (
