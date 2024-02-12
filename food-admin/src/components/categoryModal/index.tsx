@@ -65,14 +65,14 @@ export default function CategoryModal({
           <Input
             name="name"
             label="Name"
-            desc="Write food name"
+            desc="Write category name"
             onChange={handleChange}
           />
 
           <Input
             name="description"
             label="Description"
-            desc="Write food Description"
+            desc="Write category description"
             onChange={handleChange}
           />
           <MuiButton

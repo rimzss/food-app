@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+"use client";
+import { useContext, useEffect } from "react";
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -18,6 +19,7 @@ import Scrollbar from "@/components/scrollbar";
 import { NAV } from "./config-layout";
 import navConfig from "./config-navigation";
 import Link from "next/link";
+import { authContext } from "@/context/authProvider";
 
 export const account = {
   displayName: "Aдмин",
@@ -29,6 +31,7 @@ export const account = {
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }: any) {
+  const { user } = useContext(authContext);
   const pathname = usePathname();
 
   const upLg = useResponsive("up", "lg");
@@ -56,10 +59,10 @@ export default function Nav({ openNav, onCloseNav }: any) {
       <Avatar src={account.photoURL} alt="photoURL" />
 
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{account.displayName}</Typography>
+        <Typography variant="subtitle2">{user.name}</Typography>
 
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {account.role}
+          {user.role[0]}
         </Typography>
       </Box>
     </Box>

@@ -17,7 +17,9 @@ import CategoryModal from "@/components/categoryModal";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import axios, { AxiosError } from "axios";
+import { redirect } from "next/navigation";
 import { catContext } from "@/context/catProvider";
+import { authContext } from "@/context/authProvider";
 
 // ----------------------------------------------------------------------
 
@@ -42,25 +44,22 @@ const CATEGORY_TITLES = [
 // ----------------------------------------------------------------------
 
 export default function CategoryView() {
-  const { categories, getCategories } = useContext(catContext);
+  const { checkIsLogged } = useContext(authContext);
+  useEffect(() => {
+    checkIsLogged();
+    if (!localStorage.getItem("token")) {
+      console.log("USER NOT FOUND");
+      redirect("/login");
+    }
+  }, []);
+  const {
+    categories,
+    getCategories,
+    uploadImage,
+    handleFile,
+    handleCategoryForm,
+  } = useContext(catContext);
   const [open, setOpen] = useState(false);
-
-  const [file, setFile] = useState<File | null>(null);
-
-  const [newCategory, setNewCategory] = useState({
-    name: "",
-    description: "",
-  });
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFile(e.currentTarget.files![0]);
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setNewCategory({ ...newCategory, [name]: value });
-  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -69,23 +68,23 @@ export default function CategoryView() {
     setOpen(() => false);
   };
 
-  const createCategory = async () => {
-    try {
-      const formData = new FormData();
-      formData.set("image", file!);
-      formData.set("name", newCategory.name);
-      formData.set("description", newCategory.description);
+  // const createCategory = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.set("image", file!);
+  //     formData.set("name", newCategory.name);
+  //     formData.set("description", newCategory.description);
 
-      const {
-        data: { category },
-      } = (await axios.post("http://localhost:8080/categories", formData)) as {
-        data: { category: object };
-      };
-      console.log("Success Add Category");
-    } catch (error: any) {
-      alert("Add Error - " + error.message);
-    }
-  };
+  //     const {
+  //       data: { category },
+  //     } = (await axios.post("http://localhost:8080/categories", formData)) as {
+  //       data: { category: object };
+  //     };
+  //     console.log("Success Add Category");
+  //   } catch (error: any) {
+  //     alert("Add Error - " + error.message);
+  //   }
+  // };
 
   useEffect(() => {
     getCategories();
@@ -133,10 +132,9 @@ export default function CategoryView() {
       <CategoryModal
         open={open}
         handleClose={handleClose}
-        newCategory={newCategory}
-        handleChange={handleChange}
-        handleFileChange={handleFileChange}
-        handleSave={createCategory}
+        handleChange={handleCategoryForm}
+        handleFileChange={handleFile}
+        handleSave={uploadImage}
       />
     </Container>
   );

@@ -23,6 +23,8 @@ import TableEmptyRows from "./table-empty-rows";
 import UserTableToolbar from "./user-table-toolbar";
 import { emptyRows, applyFilter, getComparator } from "./functions";
 import { userContext } from "@/context/userProvider";
+import { authContext } from "@/context/authProvider";
+import { redirect } from "next/navigation";
 
 // ----------------------------------------------------------------------
 
@@ -52,6 +54,14 @@ export const users = [...Array(24)].map((_, index) => ({
 // ----------------------------------------------------------------------
 
 export default function UserView() {
+  const { checkIsLogged } = useContext(authContext);
+  useEffect(() => {
+    checkIsLogged();
+    if (!localStorage.getItem("token")) {
+      console.log("USER NOT FOUND");
+      redirect("/login");
+    }
+  }, []);
   const { getCustomers, customers } = useContext(userContext);
   useEffect(() => {
     getCustomers();

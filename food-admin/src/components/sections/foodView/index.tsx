@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
@@ -18,6 +18,8 @@ import { faker } from "@faker-js/faker";
 import { Button } from "@mui/material";
 import Iconify from "@/components/iconify";
 import FoodModal from "@/components/foodModal";
+import { authContext } from "@/context/authProvider";
+import { redirect } from "next/navigation";
 
 // ----------------------------------------------------------------------
 
@@ -68,6 +70,14 @@ export const products = [...Array(FOOD_NAME.length)].map((_, index) => {
 // ----------------------------------------------------------------------
 
 export default function FoodView() {
+  const { checkIsLogged } = useContext(authContext);
+  useEffect(() => {
+    checkIsLogged();
+    if (!localStorage.getItem("token")) {
+      console.log("USER NOT FOUND");
+      redirect("/login");
+    }
+  }, []);
   const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = () => {
