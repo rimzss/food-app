@@ -10,8 +10,8 @@ export const createFood = async (
 ) => {
   try {
     console.log(color.bgWhite(`REQUESTIIN BODY ${req.body}`));
-    await Food.create({ ...req.body });
-    res.status(201).json({ message: "Successfully created category" });
+    const food = await Food.create({ ...req.body });
+    res.status(201).json({ message: "Successfully created category", food });
   } catch (error) {
     next(error);
   }

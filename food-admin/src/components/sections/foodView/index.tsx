@@ -134,12 +134,15 @@ export default function FoodView() {
 
       <Grid container spacing={3}>
         {foods?.map((product: any) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
+          <Grid key={product._id} xs={12} sm={6} md={3}>
             <FoodCard product={product} />
           </Grid>
         ))}
       </Grid>
-      <FoodModal openFilter={openFilter} />
+      <FoodModal
+        openFilter={openFilter}
+        handleCloseFilter={handleCloseFilter}
+      />
       {/* <ProductCartWidget /> */}
     </Container>
   );

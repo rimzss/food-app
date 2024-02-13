@@ -21,6 +21,8 @@ import Image from "next/image";
 import { Remove, Add, Close } from "@mui/icons-material";
 import { Button, Input } from "../core";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { catContext } from "@/context/catProvider";
+import { foodContext } from "@/context/foodProvider";
 
 const style = {
   position: "absolute" as "absolute",
@@ -29,7 +31,6 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 750,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   borderRadius: 5,
   boxShadow: 22,
   p: 4,
@@ -47,36 +48,53 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export default function FoodModal({ handleClose, openFilter }: any) {
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
-  };
+export default function FoodModal({ handleCloseFilter, openFilter }: any) {
+  React.useEffect(() => {
+    getCategories();
+  }, []);
+  const { categories, getCategories } = React.useContext(catContext);
+  const { uploadFoodImage, handleFoodForm, handleFile, foodForm } =
+    React.useContext(foodContext);
   return (
     <div>
       <Modal
         open={openFilter}
-        onClose={handleClose}
+        onClose={handleCloseFilter}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Typography variant="h3">Хоол нэмэх хэсэг</Typography>
-            <MuiButton onClick={handleClose} sx={{ fontSize: 23 }}>
+            <MuiButton onClick={handleCloseFilter} sx={{ fontSize: 23 }}>
               X
             </MuiButton>
           </Stack>
 
-          <Input label="Name" desc="Хоолны нэрийг оруулна уу" />
-          <Input label="Price" desc="Үнийн дүнг оруулна уу" />
-          <Input label="Description" desc="Write food Description" />
+          <Input
+            label="Name"
+            desc="Хоолны нэрийг оруулна уу"
+            name="name"
+            onChange={handleFoodForm}
+          />
+          <Input
+            label="Price"
+            desc="Үнийн дүнг оруулна уу"
+            name="price"
+            onChange={handleFoodForm}
+          />
+          <Input
+            label="Description"
+            desc="Write food Description"
+            name="description"
+            onChange={handleFoodForm}
+          />
           <Stack>
             <Input label="Discount" desc="Хямдралын хувийг оруулна уу" />
             <FormGroup sx={{ display: "flex", flexDirection: "row" }}>
               <FormControlLabel
                 control={<Checkbox defaultChecked />}
+                name="isSale"
                 label="sale"
               />
             </FormGroup>
@@ -89,16 +107,18 @@ export default function FoodModal({ handleClose, openFilter }: any) {
               <Select
                 labelId="demo-simple-select-disabled-label"
                 id="demo-simple-select-disabled"
-                value={age}
                 label="Катигори"
-                onChange={handleChange}
+                name="category"
+                value={foodForm.category}
+                onChange={handleFoodForm}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {categories?.map((category: any) => {
+                  return (
+                    <MenuItem key={category._id} value={category._id}>
+                      {category.name}
+                    </MenuItem>
+                  );
+                })}
               </Select>
               <FormHelperText>Required</FormHelperText>
             </FormControl>
@@ -109,9 +129,15 @@ export default function FoodModal({ handleClose, openFilter }: any) {
             startIcon={<CloudUploadIcon />}
           >
             Upload file
-            <VisuallyHiddenInput type="file" />
+            <VisuallyHiddenInput type="file" onChange={handleFile} />
           </MuiButton>
-          <Button label="нэмэх"></Button>
+          <Button
+            onClick={() => {
+              uploadFoodImage();
+              handleCloseFilter();
+            }}
+            label="нэмэх"
+          ></Button>
         </Box>
       </Modal>
     </div>
