@@ -12,6 +12,7 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { authContext } from "@/context/authProvider";
+import Link from "next/link";
 
 type Props = {};
 
@@ -82,12 +83,15 @@ const UserMenu = (props: Props) => {
           <Avatar /> {user.name}
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
+        <Link href="/settings">
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+        </Link>
+
         <MenuItem
           onClick={() => {
             handleClose(), logout();

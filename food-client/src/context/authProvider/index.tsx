@@ -3,6 +3,7 @@ import React, {
   ChangeEvent,
   PropsWithChildren,
   createContext,
+  useEffect,
   useState,
 } from "react";
 import axios from "axios";
@@ -122,6 +123,9 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       console.log("USER ALREADY LOGGED IN");
     }
   };
+  useEffect(() => {
+    authLogged();
+  }, []);
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");

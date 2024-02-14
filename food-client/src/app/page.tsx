@@ -20,7 +20,6 @@ export default function Home() {
   useEffect(() => {
     getFoods();
     getCategories();
-    authLogged();
   }, []);
   return (
     <main className="flex flex-wrap">

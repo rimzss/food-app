@@ -39,9 +39,9 @@ const PhoneMenu = ({
       }}
     >
       <div className="w-screen">
-        <MenuItem onClick={handleClose}>
-          <Link href="/">Нүүр</Link>
-        </MenuItem>
+        <Link href="/">
+          <MenuItem onClick={handleClose}>Нүүр</MenuItem>
+        </Link>
         <MenuItem onClick={handleClose}>Хоолны цэс</MenuItem>
         <MenuItem onClick={handleClose}>Хүргэлтийн бүс</MenuItem>
       </div>
@@ -57,14 +57,17 @@ const PhoneMenu = ({
         </MenuItem>
         {token ? (
           <Box>
-            <MenuItem
-              onClick={() => {
-                handleClose();
-              }}
-            >
-              <FaRegUser className="mr-2" />
-              {user.name}
-            </MenuItem>
+            <Link href="/settings">
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                }}
+              >
+                <FaRegUser className="mr-2" />
+                {user.name}
+              </MenuItem>
+            </Link>
+
             <MenuItem
               onClick={() => {
                 handleClose(), logout();
