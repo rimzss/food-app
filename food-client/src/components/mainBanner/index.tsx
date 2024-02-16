@@ -5,7 +5,7 @@ type Props = {};
 
 const MainBannerText = (props: Props) => {
   return (
-    <Box width="380px">
+    <Box width="380px" padding={5}>
       <Typography
         sx={{
           fontSize: "55px",
@@ -18,6 +18,7 @@ const MainBannerText = (props: Props) => {
         Pinecone Food delivery
       </Typography>
       <Box
+        className="hidden lg:block"
         sx={{
           borderBottom: "2px solid white",
           opacity: "50%",
@@ -28,7 +29,7 @@ const MainBannerText = (props: Props) => {
         color="white"
         variant="h5"
         marginTop="30px"
-        className="hidden md:block"
+        className="hidden lg:block"
       >
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </Typography>
