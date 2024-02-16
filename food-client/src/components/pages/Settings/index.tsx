@@ -16,12 +16,11 @@ const Settings = (props: Props) => {
         height: "100vh",
         alignItems: "center",
         justifyContent: "center",
-        minWidth: "500px",
       }}
     >
       <Stack spacing={10} sx={{ marginBottom: 10 }}>
         <Avatar sx={{ width: "120px", height: "120px" }} />
-        <h1 className="text-3xl font-bold">{user?.name}</h1>
+        <h1 className="text-3xl font-bold">{user ? user.name : "Your Name"}</h1>
       </Stack>
       <Stack spacing={5}>
         <DefaultUserEdit label="Таны нэр" icon="name" value={user.name} />

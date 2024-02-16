@@ -11,12 +11,12 @@ type Props = {
 
 export const DefaultUserEdit = ({
   label,
-  value,
+  value = "Your name",
   icon,
   buttonFunction,
 }: Props) => {
   return (
-    <div className="bg-[#EEEFF2] rounded-sm px-3 py-5 flex justify-between items-center w-full">
+    <div className="bg-[#EEEFF2] rounded-sm px-3 py-5 flex justify-between items-center w-80">
       <div className="flex gap-3">
         <div className="bg-white rounded-full p-3 border-[0.5px]">
           {icon === "name" && <PersonOutlineOutlinedIcon />}
