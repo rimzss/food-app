@@ -10,17 +10,21 @@ import React, {
 interface ICreateFoodContext {
   foods: string[];
   getFoods: () => void;
+  isLoading: boolean;
 }
 
 export const foodContext = createContext<ICreateFoodContext>({
   foods: [],
   getFoods: () => {},
+  isLoading: false,
 });
 
 const FoodProvider = ({ children }: PropsWithChildren) => {
   const [foods, setFoods] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const getFoods = async () => {
     try {
+      setIsLoading(true);
       const foodData = await axios
         .get("http://localhost:8080/food")
         .then((res) => res.data);
@@ -32,7 +36,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <foodContext.Provider value={{ foods, getFoods }}>
+    <foodContext.Provider value={{ foods, getFoods, isLoading }}>
       {children}
     </foodContext.Provider>
   );

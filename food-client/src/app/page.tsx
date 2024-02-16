@@ -1,21 +1,17 @@
 "use client";
 import AdCards from "@/components/adCards/AdCards";
-import FoodCard from "@/components/card/foodCard";
-import BasketItem from "@/components/checkout/BasketItem";
-import Checkout from "@/components/checkout/Checkout";
+import CategorySkeleton from "@/components/categorySkeleton";
 import Trace from "@/components/footer/trace";
 import MainBannerText from "@/components/mainBanner";
 import FoodImages from "@/components/mainBanner/foodImages";
 import Menu from "@/components/menu";
-import { authContext } from "@/context/authProvider";
 import { catContext } from "@/context/catProvider";
 import { foodContext } from "@/context/foodProvider";
 import { Box, Container, Grid } from "@mui/material";
 import { useContext, useEffect } from "react";
 
 export default function Home() {
-  const { authLogged } = useContext(authContext);
-  const { foods, getFoods } = useContext(foodContext);
+  const { foods, getFoods, isLoading } = useContext(foodContext);
   const { getCategories, categories } = useContext(catContext);
   useEffect(() => {
     getFoods();
@@ -58,7 +54,21 @@ export default function Home() {
       <Container maxWidth="xl">
         <Box>
           <AdCards />
-          {categories?.map((category: any) => {
+          {isLoading ? (
+            <CategorySkeleton />
+          ) : (
+            categories?.map((category: any) => {
+              return (
+                <Menu
+                  key={category._id}
+                  id={category._id}
+                  catName={category.name}
+                  foods={foods}
+                />
+              );
+            })
+          )}
+          {/* {categories?.map((category: any) => {
             return (
               <Menu
                 key={category._id}
@@ -67,7 +77,7 @@ export default function Home() {
                 foods={foods}
               />
             );
-          })}
+          })} */}
 
           {/* {foods?.map((food: any) => {
             return (
