@@ -16,20 +16,20 @@ interface ICreateFoodContext {
 export const foodContext = createContext<ICreateFoodContext>({
   foods: [],
   getFoods: () => {},
-  isLoading: false,
+  isLoading: true,
 });
 
 const FoodProvider = ({ children }: PropsWithChildren) => {
   const [foods, setFoods] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const getFoods = async () => {
     try {
-      setIsLoading(true);
       const foodData = await axios
         .get("http://localhost:8080/food")
         .then((res) => res.data);
       console.log("FOODS!!!", foodData.foods);
       setFoods(foodData.foods);
+      setIsLoading(false);
     } catch (error) {
       console.log("ERROR IN GET FOODS", error);
     }
