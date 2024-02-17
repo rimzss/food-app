@@ -22,6 +22,7 @@ export const authenticate = async (
     };
     const findUser = await User.findById(id);
     req.user = findUser;
+    console.log("FOUND USER", findUser)
     next();
   } catch (error) {
     next(error);
@@ -32,9 +33,11 @@ export const authorize = (...roles:string[]) =>{
   return (req:IReq, res:Response, next:NextFunction)=>{
     try {
       const {user} = req
-      if(!roles.includes(user.role)){
+      console.log("USERR!!!", user)
+      if(!roles.includes(user.role[0])){
         throw new MyError("Уучлаарай таны эрх энэ үйлдлийг хийх боломжгүй байна",403)
       }
+      next()
     } catch (error) {
       next(error)
     }

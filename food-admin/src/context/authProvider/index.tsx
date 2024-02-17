@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 interface ICreateAuthContext {
   user: any;
+  token: string;
   login: () => void;
   logout: () => void;
   checkIsLogged: () => void;
@@ -18,6 +19,7 @@ interface ICreateAuthContext {
 
 export const authContext = createContext<ICreateAuthContext>({
   user: "",
+  token: "",
   login: () => {},
   logout: () => {},
   checkIsLogged: () => {},
@@ -70,7 +72,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   };
   return (
     <authContext.Provider
-      value={{ user, login, handleLoginInfo, checkIsLogged, logout }}
+      value={{ user, login, handleLoginInfo, checkIsLogged, logout, token }}
     >
       {children}
     </authContext.Provider>

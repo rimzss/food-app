@@ -1,17 +1,21 @@
 "use client";
 import { SelectChangeEvent } from "@mui/material";
 import axios from "axios";
+import { array } from "prop-types";
 import React, {
   ChangeEvent,
   PropsWithChildren,
   createContext,
+  useContext,
   useState,
 } from "react";
+import { authContext } from "../authProvider";
 
 interface ICreateFoodContext {
   foods: any;
   getFoods: () => void;
   uploadFoodImage: () => void;
+  deleteFood: (foodId: string) => void;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
   handleFoodForm: (e: any) => void;
   foodForm: {
@@ -26,6 +30,7 @@ export const foodContext = createContext({
   foods: [],
   getFoods: () => {},
   uploadFoodImage: () => {},
+  deleteFood: (foodId: string) => {},
   handleFoodForm: (e: any) => {},
   handleFile: (e: ChangeEvent<HTMLInputElement>) => {},
   foodForm: {
@@ -37,6 +42,7 @@ export const foodContext = createContext({
   },
 });
 const FoodProvider = ({ children }: PropsWithChildren) => {
+  const { token } = useContext(authContext);
   const [file, setFile] = useState<File | null>(null);
   const [foods, setFoods] = useState<any>();
   let [foodForm, setFoodForm] = useState<any>({
@@ -87,6 +93,25 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
       console.log("ERROR IN UPLOAD IMAGE FUNCTION", error);
     }
   };
+  const deleteFoodFromArray = (id: string) => {
+    const foodObjIndex = foods.findIndex((obj: any) => obj._id === id);
+    console.log("DELETING FOOD INDEX", foodObjIndex, id);
+    foods.splice(foodObjIndex, 1);
+    setFoods(foods);
+  };
+  const deleteFood = async (foodId: string) => {
+    try {
+      const data = await axios.delete(`http://localhost:8080/food/${foodId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      deleteFoodFromArray(foodId);
+      console.log("FOOD SUCCESFULLY DELETED");
+    } catch (error) {
+      console.log("ERROR IN DELETE FOOD FUNCTION");
+    }
+  };
   return (
     <foodContext.Provider
       value={{
@@ -96,6 +121,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         handleFoodForm,
         handleFile,
         foodForm,
+        deleteFood,
       }}
     >
       {children}

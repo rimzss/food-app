@@ -12,11 +12,13 @@ import { ColorPreview } from "@/components/color-utils";
 import MenuItem from "@mui/material/MenuItem";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { foodContext } from "@/context/foodProvider";
 
 // ----------------------------------------------------------------------
 
 export default function FoodCard({ product }: any) {
+  const { deleteFood } = useContext(foodContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -122,7 +124,12 @@ export default function FoodCard({ product }: any) {
               Edit
             </MenuItem>
 
-            <MenuItem onClick={handleClose} sx={{ color: "error.main" }}>
+            <MenuItem
+              onClick={() => {
+                deleteFood(product._id), handleClose;
+              }}
+              sx={{ color: "error.main" }}
+            >
               <DeleteForeverOutlinedIcon />
               Delete
             </MenuItem>
