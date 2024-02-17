@@ -22,7 +22,6 @@ export const authenticate = async (
     };
     const findUser = await User.findById(id);
     req.user = findUser;
-    console.log("FOUND USER", findUser)
     next();
   } catch (error) {
     next(error);

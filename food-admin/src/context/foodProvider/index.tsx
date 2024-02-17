@@ -56,7 +56,6 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
     setFile(e.currentTarget.files![0]);
   };
   const handleFoodForm = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("FOOD FORM", e.target.value);
     setFoodForm({ ...foodForm, [e.target.name]: e.target.value });
   };
   const getFoods = async () => {
@@ -65,9 +64,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         .get("http://localhost:8080/food")
         .then((res) => res.data);
       setFoods(foods);
-    } catch (error) {
-      console.log("ERROR IN GET FOODS FUNCTION", error);
-    }
+    } catch (error) {}
   };
   const createFood = async () => {
     try {
@@ -76,10 +73,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         .post("http://localhost:8080/food", foodForm)
         .then((res) => res.data);
       setFoods([...foods, food]);
-      console.log("CREATE FOOD WORKING");
-    } catch (error) {
-      console.log("ERROR IN CREATE FOOD FUNCTION", error);
-    }
+    } catch (error) {}
   };
   const uploadFoodImage = async () => {
     try {
@@ -87,17 +81,14 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
       formData.set("image", file!);
       const image = await axios.post("http://localhost:8080/upload", formData);
       foodForm.image = image.data.url;
-      console.log("IMAGE UPLOADING", image.data.url);
+
       createFood();
-    } catch (error) {
-      console.log("ERROR IN UPLOAD IMAGE FUNCTION", error);
-    }
+    } catch (error) {}
   };
   const deleteFoodFromArray = (id: string) => {
-    const foodObjIndex = foods.findIndex((obj: any) => obj._id === id);
-    console.log("DELETING FOOD INDEX", foodObjIndex, id);
-    foods.splice(foodObjIndex, 1);
-    setFoods(foods);
+    setFoods((oldFoods: any) => {
+      return oldFoods.filter((obj: any) => obj._id !== id);
+    });
   };
   const deleteFood = async (foodId: string) => {
     try {
@@ -107,10 +98,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         },
       });
       deleteFoodFromArray(foodId);
-      console.log("FOOD SUCCESFULLY DELETED");
-    } catch (error) {
-      console.log("ERROR IN DELETE FOOD FUNCTION");
-    }
+    } catch (error) {}
   };
   return (
     <foodContext.Provider
