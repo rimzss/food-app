@@ -15,6 +15,7 @@ interface ICreateFoodContext {
   foods: any;
   getFoods: () => void;
   uploadFoodImage: () => void;
+  handleLoading: () => void;
   deleteFood: (foodId: string) => void;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
   handleFoodForm: (e: any) => void;
@@ -25,11 +26,13 @@ interface ICreateFoodContext {
     image: string;
     category: string;
   };
+  loading: boolean;
 }
 export const foodContext = createContext({
   foods: [],
   getFoods: () => {},
   uploadFoodImage: () => {},
+  handleLoading: () => {},
   deleteFood: (foodId: string) => {},
   handleFoodForm: (e: any) => {},
   handleFile: (e: ChangeEvent<HTMLInputElement>) => {},
@@ -40,9 +43,11 @@ export const foodContext = createContext({
     image: "",
     category: "",
   },
+  loading: false,
 });
 const FoodProvider = ({ children }: PropsWithChildren) => {
   const { token } = useContext(authContext);
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [foods, setFoods] = useState<any>();
   let [foodForm, setFoodForm] = useState<any>({
@@ -66,12 +71,16 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
       setFoods(foods);
     } catch (error) {}
   };
+  const handleLoading = () => {
+    setLoading(true);
+  };
   const createFood = async () => {
     try {
       console.log("FOOD FORM", foodForm);
       const { food } = await axios
         .post("http://localhost:8080/food", foodForm)
         .then((res) => res.data);
+      setLoading(false);
       setFoods([...foods, food]);
     } catch (error) {}
   };
@@ -110,6 +119,8 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         handleFile,
         foodForm,
         deleteFood,
+        loading,
+        handleLoading,
       }}
     >
       {children}

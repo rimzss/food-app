@@ -53,8 +53,13 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
     getCategories();
   }, []);
   const { categories, getCategories } = React.useContext(catContext);
-  const { uploadFoodImage, handleFoodForm, handleFile, foodForm } =
-    React.useContext(foodContext);
+  const {
+    uploadFoodImage,
+    handleFoodForm,
+    handleFile,
+    foodForm,
+    handleLoading,
+  } = React.useContext(foodContext);
   return (
     <div>
       <Modal
@@ -133,6 +138,7 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
           </MuiButton>
           <Button
             onClick={() => {
+              handleLoading();
               uploadFoodImage();
               handleCloseFilter();
             }}

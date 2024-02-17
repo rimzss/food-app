@@ -21,6 +21,7 @@ import FoodModal from "@/components/foodModal";
 import { authContext } from "@/context/authProvider";
 import { redirect } from "next/navigation";
 import { foodContext } from "@/context/foodProvider";
+import Skeletons from "@/components/Skeletons";
 
 // ----------------------------------------------------------------------
 
@@ -72,7 +73,7 @@ export const products = [...Array(FOOD_NAME.length)].map((_, index) => {
 
 export default function FoodView() {
   const { checkIsLogged } = useContext(authContext);
-  const { getFoods, foods } = useContext(foodContext);
+  const { getFoods, foods, loading } = useContext(foodContext);
   useEffect(() => {
     checkIsLogged();
     getFoods();
@@ -138,6 +139,11 @@ export default function FoodView() {
             <FoodCard product={product} />
           </Grid>
         ))}
+        {loading && (
+          <Grid xs={12} sm={6} md={3}>
+            <Skeletons />
+          </Grid>
+        )}
       </Grid>
       <FoodModal
         openFilter={openFilter}
