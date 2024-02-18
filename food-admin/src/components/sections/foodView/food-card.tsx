@@ -6,9 +6,9 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { fCurrency } from "@/utils/format-number";
-import Popover from "@mui/material/Popover";
 import Label from "@/components/label";
 import { ColorPreview } from "@/components/color-utils";
+import Popover from "@mui/material/Popover";
 import MenuItem from "@mui/material/MenuItem";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
@@ -119,14 +119,13 @@ export default function FoodCard({ product }: any) {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>
-              {" "}
               <EditOutlinedIcon />
               Edit
             </MenuItem>
 
             <MenuItem
               onClick={() => {
-                deleteFood(product._id), handleClose;
+                deleteFood(product._id), handleClose();
               }}
               sx={{ color: "error.main" }}
             >

@@ -4,8 +4,10 @@ import React, {
   ChangeEvent,
   PropsWithChildren,
   createContext,
+  useContext,
   useState,
 } from "react";
+import { authContext } from "../authProvider";
 
 interface ICreateCatContext {
   categories: any;
@@ -13,16 +15,19 @@ interface ICreateCatContext {
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
   handleCategoryForm: (e: ChangeEvent<HTMLInputElement>) => void;
   uploadImage: () => void;
+  deleteCategory: (catId: string) => void;
 }
 export const catContext = createContext<ICreateCatContext>({
   getCategories: () => {},
   handleFile: () => {},
   handleCategoryForm: () => {},
   uploadImage: () => {},
+  deleteCategory: (catId: string) => {},
   categories: [],
 });
 
 const CatProvider = ({ children }: PropsWithChildren) => {
+  const { token } = useContext(authContext);
   const [categories, setCategories] = useState<any>([]);
   let [categoryForm, setCategoryForm] = useState({
     name: "",
@@ -73,6 +78,24 @@ const CatProvider = ({ children }: PropsWithChildren) => {
       console.log("ERROR IN UPLOAD IMAGE FUNCTION", error);
     }
   };
+  const deleteCategoryFromArray = (id: string) => {
+    setCategories((oldCategories: any) => {
+      return oldCategories.filter((obj: any) => obj._id !== id);
+    });
+  };
+  const deleteCategory = async (catId: string) => {
+    try {
+      const data = await axios.delete(
+        `http://localhost:8080/category/${catId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      deleteCategoryFromArray(catId);
+    } catch (error) {}
+  };
   return (
     <catContext.Provider
       value={{
@@ -81,6 +104,7 @@ const CatProvider = ({ children }: PropsWithChildren) => {
         handleFile,
         uploadImage,
         handleCategoryForm,
+        deleteCategory,
       }}
     >
       {children}
