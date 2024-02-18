@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "../core/Logo";
 import Button from "@mui/material/Button";
 import { IoMdMenu } from "react-icons/io";
@@ -7,10 +7,14 @@ import PhoneMenu from "./PhoneMenu";
 import WebMenu from "./WebMenu";
 import { Container } from "@mui/material";
 import DrawerComp from "../drawer/DrawerComp";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import { authContext } from "@/context/authProvider";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const { isLoggingOut } = useContext(authContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,6 +51,12 @@ const Header = (props: Props) => {
         />
       </nav>
       <DrawerComp setOpenDrawer={setOpenDrawer} openDrawer={openDrawer} />
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoggingOut}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Container>
   );
 };

@@ -32,6 +32,7 @@ interface IUserCreateContext {
     };
   };
   authLogged: () => void;
+  isLoggingOut: boolean;
 }
 
 export const authContext = createContext<IUserCreateContext>({
@@ -41,6 +42,7 @@ export const authContext = createContext<IUserCreateContext>({
   login: () => {},
   logout: () => {},
   signup: () => {},
+  isLoggingOut: false,
   token: "",
   user: "",
   loginInfo: {
@@ -60,6 +62,7 @@ export const authContext = createContext<IUserCreateContext>({
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -92,6 +95,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem("user", JSON.stringify(data.userInfo));
       localStorage.setItem("token", data.token);
       console.log("LOGIN SUCCESS!!!", data.userInfo);
+      authLogged();
       router.push("/");
     } catch (error) {
       console.log("ERROR IN LOGIN FUNCTION");
@@ -100,7 +104,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const signup = async () => {
     try {
-      const data = axios
+      const data = await axios
         .post("http://localhost:8080/auth/signup", {
           name: signupInfo.name,
           email: signupInfo.email,
@@ -108,7 +112,10 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
           address: signupInfo.address,
         })
         .then((res) => res.data);
+      localStorage.setItem("user", JSON.stringify(data.userInfo));
+      localStorage.setItem("token", data.token);
       console.log("SIGNUP SUCCESS!!!", data);
+      authLogged();
       router.push("/");
     } catch (error) {
       console.log("ERROR IN SIGNUP FUNCTION", error);
@@ -127,10 +134,14 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     authLogged();
   }, []);
   const logout = () => {
+    setIsLoggingOut(true);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setUser("");
     setToken("");
+    setTimeout(() => {
+      setIsLoggingOut(false);
+    }, 1000);
   };
   return (
     <authContext.Provider
@@ -145,6 +156,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         logout,
         user,
         token,
+        isLoggingOut,
       }}
     >
       {children}

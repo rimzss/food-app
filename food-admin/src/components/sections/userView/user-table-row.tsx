@@ -10,7 +10,8 @@ import MenuItem from "@mui/material/MenuItem";
 import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Label from "@/components/label";
 import Iconify from "@/components/iconify";
 
@@ -73,6 +74,14 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
+        <MenuItem onClick={handleCloseMenu}>
+          <ThumbUpIcon />
+          Promote
+        </MenuItem>
+        <MenuItem onClick={handleCloseMenu}>
+          <ThumbDownIcon />
+          Demote
+        </MenuItem>
         <MenuItem onClick={handleCloseMenu}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
