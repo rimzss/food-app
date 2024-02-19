@@ -11,12 +11,20 @@ interface ICreateFoodContext {
   foods: string[];
   getFoods: () => void;
   isLoading: boolean;
+  food: any;
+  openOrderModal: (food: any) => void;
+  openOrder: boolean;
+  setOpenOrder: any;
 }
 
 export const foodContext = createContext<ICreateFoodContext>({
   foods: [],
   getFoods: () => {},
   isLoading: true,
+  food: {},
+  openOrderModal: () => {},
+  openOrder: false,
+  setOpenOrder: () => {},
 });
 
 const FoodProvider = ({ children }: PropsWithChildren) => {
@@ -34,9 +42,25 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
       console.log("ERROR IN GET FOODS", error);
     }
   };
+  const [food, setFood] = useState({});
+  const [openOrder, setOpenOrder] = useState<boolean>(false);
+  const openOrderModal = (food: any) => {
+    setFood(food);
+    setOpenOrder(true);
+  };
 
   return (
-    <foodContext.Provider value={{ foods, getFoods, isLoading }}>
+    <foodContext.Provider
+      value={{
+        foods,
+        getFoods,
+        isLoading,
+        openOrderModal,
+        food,
+        openOrder,
+        setOpenOrder,
+      }}
+    >
       {children}
     </foodContext.Provider>
   );

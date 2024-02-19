@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import FoodCard from "../card/foodCard";
-import Star from "../core/star";
+import Star from "../core/Star";
+import { Box, Modal, Stack, Typography } from "@mui/material";
 
 type Props = {
   id: string;
@@ -26,13 +27,16 @@ const Menu = ({ id, catName, foods }: Props) => {
       <div className="flex gap-8 flex-wrap">
         {catFoods?.map((food: any) => {
           return (
-            <FoodCard
-              key={food._id}
-              name={food.name}
-              price={food.price}
-              image={food.image}
-              isDiscounted={food.isSale}
-            />
+            <>
+              <FoodCard
+                food={food}
+                key={food._id}
+                name={food.name}
+                price={food.price}
+                image={food.image}
+                isDiscounted={food.isSale}
+              />
+            </>
           );
         })}
       </div>

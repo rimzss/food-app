@@ -1,4 +1,5 @@
 "use client";
+import OrderModal from "@/components/OrderModal";
 import AdCards from "@/components/adCards/AdCards";
 import CategorySkeleton from "@/components/categorySkeleton";
 import Trace from "@/components/footer/trace";
@@ -92,6 +93,7 @@ export default function Home() {
           })} */}
         </Box>
       </Container>
+      <OrderModal />
     </main>
   );
 }

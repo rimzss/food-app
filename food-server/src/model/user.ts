@@ -38,11 +38,11 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.pre("save", function () {
-  if (this.isModified("password")) {
-    this.password = bcrypt.hashSync(this.password, 10);
-  }
-});
+// userSchema.pre("save", function () {
+//   if (this.isModified("password")) {
+//     this.password = bcrypt.hashSync(this.password, 10);
+//   }
+// });
 
 const User = model("User", userSchema);
 export default User;
