@@ -8,6 +8,7 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -17,6 +18,7 @@ interface IInputProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   name?: string;
+  errorText?: string;
 }
 
 export const DefaultInput = ({
@@ -25,6 +27,7 @@ export const DefaultInput = ({
   onChange,
   placeholder,
   name,
+  errorText,
 }: IInputProps) => {
   const [isShowPassword, setIsShowPassword] = useState(showPassword);
   return (
@@ -51,6 +54,7 @@ export const DefaultInput = ({
             )
           }
         />
+        <Typography color="red">{errorText}</Typography>
       </FormControl>
     </>
   );

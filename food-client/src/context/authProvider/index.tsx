@@ -13,7 +13,7 @@ import { json } from "stream/consumers";
 interface IUserCreateContext {
   handleLoginInfo: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSignupInfo: (e: ChangeEvent<HTMLInputElement>) => void;
-  login: () => void;
+  login: (email: string, password: string) => void;
   logout: () => void;
   token: string;
   user: any;
@@ -39,7 +39,7 @@ export const authContext = createContext<IUserCreateContext>({
   handleLoginInfo: () => {},
   handleSignupInfo: () => {},
   authLogged: () => {},
-  login: () => {},
+  login: (email: string, password: string) => {},
   logout: () => {},
   signup: () => {},
   isLoggingOut: false,
@@ -84,12 +84,12 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
   };
 
-  const login = async () => {
+  const login = async (email: string, password: string) => {
     try {
       const data = await axios
         .post("http://localhost:8080/auth/signin", {
-          email: loginInfo.email,
-          upassword: loginInfo.password,
+          email: email,
+          upassword: password,
         })
         .then((res) => res.data);
       localStorage.setItem("user", JSON.stringify(data.userInfo));
