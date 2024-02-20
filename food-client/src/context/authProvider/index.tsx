@@ -21,7 +21,7 @@ interface IUserCreateContext {
     email: string;
     password: string;
   };
-  signup: () => void;
+  signup: (name: string, email: string, password: string) => void;
   signupInfo: {
     name: string;
     email: string;
@@ -41,7 +41,7 @@ export const authContext = createContext<IUserCreateContext>({
   authLogged: () => {},
   login: (email: string, password: string) => {},
   logout: () => {},
-  signup: () => {},
+  signup: (name: string, email: string, password: string) => {},
   isLoggingOut: false,
   token: "",
   user: "",
@@ -102,13 +102,13 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const signup = async () => {
+  const signup = async (name: string, email: string, password: string) => {
     try {
       const data = await axios
         .post("http://localhost:8080/auth/signup", {
-          name: signupInfo.name,
-          email: signupInfo.email,
-          password: signupInfo.password,
+          name: name,
+          email: email,
+          password: password,
           address: signupInfo.address,
         })
         .then((res) => res.data);

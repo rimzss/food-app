@@ -11,7 +11,7 @@ import React, { useContext } from "react";
 type Props = {};
 
 const LoginPage = (props: Props) => {
-  const { handleLoginInfo, login } = useContext(authContext);
+  const { login } = useContext(authContext);
   const validationSchema = yup.object({
     email: yup
       .string()

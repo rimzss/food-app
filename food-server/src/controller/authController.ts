@@ -16,7 +16,7 @@ export const signup = async (
   try {
     let newUser = req.body;
     const user = await User.create(newUser);
-    res.status(201).json({ message: "New user successfully created" });
+    res.status(201).json({ message: "New user successfully created", userInfo:user });
   } catch (error) {
     console.log(color.bgRed(`signup request failed ${error}`));
     next(error);
