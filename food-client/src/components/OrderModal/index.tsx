@@ -43,7 +43,7 @@ const OrderModal = () => {
           <img
             src={food.image}
             alt=""
-            className="md:w-[500px] md:h-[500px] w-full h-[300px]"
+            className="md:w-[500px] md:h-[500px] w-full h-[300px] object-cover"
           />
           <Stack
             spacing={7}
