@@ -4,12 +4,16 @@ import React, { PropsWithChildren, createContext, useState } from "react";
 
 interface ICreateCatContext {
   getCategories: () => void;
-  categories: string[];
+  categories: ICategory[];
 }
-export const catContext = createContext<ICreateCatContext>({
-  getCategories: () => {},
-  categories: [],
-});
+interface ICategory {
+  _id: string;
+  name: string;
+  description: string;
+}
+export const catContext = createContext<ICreateCatContext>(
+  {} as ICreateCatContext
+);
 const CatProvider = ({ children }: PropsWithChildren) => {
   const [categories, setCatogories] = useState([]);
 

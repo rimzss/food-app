@@ -17,14 +17,9 @@ interface ICreateCatContext {
   uploadImage: () => void;
   deleteCategory: (catId: string) => void;
 }
-export const catContext = createContext<ICreateCatContext>({
-  getCategories: () => {},
-  handleFile: () => {},
-  handleCategoryForm: () => {},
-  uploadImage: () => {},
-  deleteCategory: (catId: string) => {},
-  categories: [],
-});
+export const catContext = createContext<ICreateCatContext>(
+  {} as ICreateCatContext
+);
 
 const CatProvider = ({ children }: PropsWithChildren) => {
   const { token } = useContext(authContext);

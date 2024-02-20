@@ -28,23 +28,7 @@ interface ICreateFoodContext {
   };
   loading: boolean;
 }
-export const foodContext = createContext({
-  foods: [],
-  getFoods: () => {},
-  uploadFoodImage: () => {},
-  handleLoading: () => {},
-  deleteFood: (foodId: string) => {},
-  handleFoodForm: (e: any) => {},
-  handleFile: (e: ChangeEvent<HTMLInputElement>) => {},
-  foodForm: {
-    name: "",
-    price: 0,
-    description: "",
-    image: "",
-    category: "",
-  },
-  loading: false,
-});
+export const foodContext = createContext({} as ICreateFoodContext);
 const FoodProvider = ({ children }: PropsWithChildren) => {
   const { token } = useContext(authContext);
   const [loading, setLoading] = useState(false);

@@ -21,6 +21,7 @@ export const DefualtButton = ({
       sx={{
         color: btnType === "outlined" ? "#18BA51" : "white",
         padding: "10px",
+        borderRadius: "15px",
       }}
       variant={btnType}
       disabled={disabled}

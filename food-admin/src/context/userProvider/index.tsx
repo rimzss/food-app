@@ -6,10 +6,9 @@ interface ICreateUserContext {
   getCustomers: () => void;
   customers: any;
 }
-export const userContext = createContext<ICreateUserContext>({
-  getCustomers: () => {},
-  customers: {},
-});
+export const userContext = createContext<ICreateUserContext>(
+  {} as ICreateUserContext
+);
 
 const UserProvider = ({ children }: PropsWithChildren) => {
   const [customers, setCustomers] = useState([]);

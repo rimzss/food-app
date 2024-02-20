@@ -35,30 +35,9 @@ interface IUserCreateContext {
   isLoggingOut: boolean;
 }
 
-export const authContext = createContext<IUserCreateContext>({
-  handleLoginInfo: () => {},
-  handleSignupInfo: () => {},
-  authLogged: () => {},
-  login: (email: string, password: string) => {},
-  logout: () => {},
-  signup: (name: string, email: string, password: string) => {},
-  isLoggingOut: false,
-  token: "",
-  user: "",
-  loginInfo: {
-    email: "",
-    password: "",
-  },
-  signupInfo: {
-    name: "",
-    email: "",
-    password: "",
-    address: {
-      duureg: "",
-      horoo: "",
-    },
-  },
-});
+export const authContext = createContext<IUserCreateContext>(
+  {} as IUserCreateContext
+);
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();

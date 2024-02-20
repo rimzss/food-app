@@ -17,14 +17,9 @@ interface ICreateAuthContext {
   handleLoginInfo: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const authContext = createContext<ICreateAuthContext>({
-  user: "",
-  token: "",
-  login: () => {},
-  logout: () => {},
-  checkIsLogged: () => {},
-  handleLoginInfo: () => {},
-});
+export const authContext = createContext<ICreateAuthContext>(
+  {} as ICreateAuthContext
+);
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();

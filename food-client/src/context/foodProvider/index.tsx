@@ -17,15 +17,9 @@ interface ICreateFoodContext {
   setOpenOrder: any;
 }
 
-export const foodContext = createContext<ICreateFoodContext>({
-  foods: [],
-  getFoods: () => {},
-  isLoading: true,
-  food: {},
-  openOrderModal: () => {},
-  openOrder: false,
-  setOpenOrder: () => {},
-});
+export const foodContext = createContext<ICreateFoodContext>(
+  {} as ICreateFoodContext
+);
 
 const FoodProvider = ({ children }: PropsWithChildren) => {
   const [foods, setFoods] = useState([]);

@@ -12,7 +12,7 @@ type Props = {
 };
 
 const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
-  const { logout, token } = useContext(authContext);
+  const { logout, user } = useContext(authContext);
 
   return (
     <div className="hidden md:flex justify-between w-screen font-bold">
@@ -20,7 +20,7 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
         <Link href="/">
           <p>Нүүр</p>
         </Link>
-        <Link href="">
+        <Link href="/foodmenu">
           <p>Хоолны цэс</p>
         </Link>
         <Link href="">
@@ -45,7 +45,7 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
           <MdOutlineShoppingBasket size="25px" />
           Сагс
         </button>
-        {token ? (
+        {user ? (
           <UserMenu />
         ) : (
           <Link href="/login">

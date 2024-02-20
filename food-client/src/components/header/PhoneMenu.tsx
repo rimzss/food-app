@@ -42,7 +42,9 @@ const PhoneMenu = ({
         <Link href="/">
           <MenuItem onClick={handleClose}>Нүүр</MenuItem>
         </Link>
-        <MenuItem onClick={handleClose}>Хоолны цэс</MenuItem>
+        <Link href="/foodmenu">
+          <MenuItem onClick={handleClose}>Хоолны цэс</MenuItem>
+        </Link>
         <MenuItem onClick={handleClose}>Хүргэлтийн бүс</MenuItem>
       </div>
       <div className="border-y-2">
