@@ -2,6 +2,7 @@
 import { foodContext } from "@/context/foodProvider";
 import { Box, Card, Modal, Stack, Typography, CardMedia } from "@mui/material";
 import React, { useContext } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { DefualtButton } from "..";
 import Image from "next/image";
@@ -18,6 +19,7 @@ const OrderModal = () => {
       }}
     >
       <Card
+        className="md:w-10/12 max-w-[1000px] w-[380px]"
         sx={{
           position: "absolute" as "absolute",
           top: "50%",
@@ -27,12 +29,28 @@ const OrderModal = () => {
           boxShadow: 24,
           p: 4,
           borderRadius: "10px",
-          width: 1000,
         }}
       >
-        <div className="flex">
-          <img src={food.image} alt="" className="w-[500px] h-[500px]" />
-          <Stack spacing={7} padding={5} paddingTop={20} width="50%">
+        <div className="md:flex relative">
+          <div
+            className="text-right md:absolute md:right-0 cursor-pointer"
+            onClick={() => {
+              setOpenOrder(false);
+            }}
+          >
+            <CloseIcon />
+          </div>
+          <img
+            src={food.image}
+            alt=""
+            className="md:w-[500px] md:h-[500px] w-full h-[300px]"
+          />
+          <Stack
+            spacing={7}
+            padding={5}
+            paddingTop={20}
+            sx={{ width: { md: "50%" } }}
+          >
             <div>
               <Typography variant="h4" fontWeight={600}>
                 {food.name}
