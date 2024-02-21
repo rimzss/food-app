@@ -6,6 +6,7 @@ import AuthProvider from "@/context/authProvider";
 import FoodProvider from "@/context/foodProvider";
 import CatProvider from "@/context/catProvider";
 import BasketProvider from "@/context/basketProvider";
+import AlertProvider from "@/context/alertProvider";
 
 export default function RootLayout({
   children,
@@ -16,17 +17,19 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
-          <AuthProvider>
-            <CatProvider>
-              <FoodProvider>
-                <BasketProvider>
-                  <Header />
-                  {children}
-                  <Footer />
-                </BasketProvider>
-              </FoodProvider>
-            </CatProvider>
-          </AuthProvider>
+          <AlertProvider>
+            <AuthProvider>
+              <CatProvider>
+                <FoodProvider>
+                  <BasketProvider>
+                    <Header />
+                    {children}
+                    <Footer />
+                  </BasketProvider>
+                </FoodProvider>
+              </CatProvider>
+            </AuthProvider>
+          </AlertProvider>
         </ThemeProvider>
       </body>
     </html>

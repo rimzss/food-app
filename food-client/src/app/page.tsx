@@ -14,6 +14,7 @@ import { useContext, useEffect } from "react";
 export default function Home() {
   const { foods, getFoods, isLoading } = useContext(foodContext);
   const { getCategories, categories } = useContext(catContext);
+
   useEffect(() => {
     getFoods();
     getCategories();

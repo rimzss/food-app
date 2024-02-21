@@ -7,12 +7,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import { DefualtButton } from "..";
 import Image from "next/image";
 import { basketContext } from "@/context/basketProvider";
-
+import { alertContext } from "@/context/alertProvider";
 type Props = {};
 
 const OrderModal = () => {
   const { openOrder, setOpenOrder, food } = useContext(foodContext);
   const { addFoodToLocalStorage } = useContext(basketContext);
+  const { alert } = useContext(alertContext);
   const [count, setCount] = useState(1);
   return (
     <Modal
@@ -97,7 +98,9 @@ const OrderModal = () => {
             <DefualtButton
               text="Сагслах"
               buttonFunction={() => {
-                addFoodToLocalStorage(food._id, count);
+                // addFoodToLocalStorage(food._id, count);
+                alert("Амжилттай сагслагдлаа", "success");
+                setOpenOrder(false);
               }}
             />
           </Stack>
