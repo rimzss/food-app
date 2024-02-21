@@ -29,7 +29,7 @@ const PhoneMenu = ({
   setAnchorEl,
 }: Props) => {
   const { logout, user, token } = useContext(authContext);
-  const { localBasketFoods } = useContext(basketContext);
+
   return (
     <Menu
       id="basic-menu"
@@ -56,7 +56,7 @@ const PhoneMenu = ({
             setOpenDrawer(true);
           }}
         >
-          <Badge badgeContent={localBasketFoods.length} color="primary">
+          <Badge badgeContent={0} color="primary">
             <MdOutlineShoppingBasket className="mr-2" />
           </Badge>
           Сагс

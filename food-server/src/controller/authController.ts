@@ -34,14 +34,14 @@ export const signin = async (
 
     if (!user) {
       throw new MyError(
-        `${email} -хэрэглэгч бүртгэлгүй эсвэл нууц үг буруу байнав`,
+        `${email} -хэрэглэгч бүртгэлгүй байна.`,
         400
       );
     }
     const isValid = await bcrypt.compare(upassword, user.password);
     if (!isValid) {
       throw new MyError(
-        `${email} -хэрэглэгч бүртгэлгүй эсвэл нууц үг буруу байнав`,
+        `Имэйл эсвэл нууц үг буруу байнав`,
         400
       );
     }

@@ -3,12 +3,14 @@ import React, {
   ChangeEvent,
   PropsWithChildren,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { json } from "stream/consumers";
+import { alertContext } from "../alertProvider";
 
 interface IUserCreateContext {
   handleLoginInfo: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -40,6 +42,7 @@ export const authContext = createContext<IUserCreateContext>(
 );
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
+  const { alert } = useContext(alertContext);
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
@@ -73,11 +76,12 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         .then((res) => res.data);
       localStorage.setItem("user", JSON.stringify(data.userInfo));
       localStorage.setItem("token", data.token);
-      console.log("LOGIN SUCCESS!!!", data.userInfo);
       authLogged();
+      alert("Амжилттай нэвтэрлээ", "success");
       router.push("/");
-    } catch (error) {
-      console.log("ERROR IN LOGIN FUNCTION");
+    } catch (error: any) {
+      console.log("ERROR IN LOGIN FUNCTION", error.response.data.message);
+      alert(error.response.data.message, "warning");
     }
   };
 
@@ -95,6 +99,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem("token", data.token);
       console.log("SIGNUP SUCCESS!!!", data);
       authLogged();
+      alert("Амжилттай бүртгэгдлээ", "success");
       router.push("/");
     } catch (error) {
       console.log("ERROR IN SIGNUP FUNCTION", error);

@@ -8,13 +8,27 @@ import { DefualtButton } from "..";
 import Image from "next/image";
 import { basketContext } from "@/context/basketProvider";
 import { alertContext } from "@/context/alertProvider";
+import { authContext } from "@/context/authProvider";
+import { useRouter } from "next/navigation";
 type Props = {};
 
 const OrderModal = () => {
   const { openOrder, setOpenOrder, food } = useContext(foodContext);
-  const { addFoodToLocalStorage } = useContext(basketContext);
+
+  const { user } = useContext(authContext);
   const { alert } = useContext(alertContext);
   const [count, setCount] = useState(1);
+  const router = useRouter();
+  const addToBasket = () => {
+    if (user) {
+      alert(`Таны сагсанд ${food.name}-ийн амжилттай нэмлээ`, "success");
+      setOpenOrder(false);
+    } else {
+      alert("Нэвтрэх шаардлагтай", "warning");
+      setOpenOrder(false);
+      router.push("/login");
+    }
+  };
   return (
     <Modal
       open={openOrder}
@@ -98,9 +112,7 @@ const OrderModal = () => {
             <DefualtButton
               text="Сагслах"
               buttonFunction={() => {
-                // addFoodToLocalStorage(food._id, count);
-                alert("Амжилттай сагслагдлаа", "success");
-                setOpenOrder(false);
+                addToBasket();
               }}
             />
           </Stack>
