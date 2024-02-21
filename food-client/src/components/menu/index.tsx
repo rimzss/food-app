@@ -27,16 +27,14 @@ const Menu = ({ id, catName, foods }: Props) => {
       <div className="flex gap-8 flex-wrap">
         {catFoods?.map((food: any) => {
           return (
-            <>
-              <FoodCard
-                food={food}
-                key={food._id}
-                name={food.name}
-                price={food.price}
-                image={food.image}
-                isDiscounted={food.isSale}
-              />
-            </>
+            <FoodCard
+              food={food}
+              key={food._id}
+              name={food.name}
+              price={food.price}
+              image={food.image}
+              isDiscounted={food.isSale}
+            />
           );
         })}
       </div>

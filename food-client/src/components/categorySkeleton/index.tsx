@@ -8,12 +8,12 @@ const CategorySkeleton = (props: Props) => {
   const array = [1, 2, 3];
   return (
     <div>
-      {array.map(() => {
+      {array.map((a) => {
         return (
-          <>
+          <div key={a}>
             <Skeleton variant="text" sx={{ fontSize: "3rem" }} width={240} />
             <CardSkeletonRow />
-          </>
+          </div>
         );
       })}
     </div>

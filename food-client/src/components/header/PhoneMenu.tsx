@@ -6,9 +6,10 @@ import { FaRegUser } from "react-icons/fa6";
 import { IoIosSearch } from "react-icons/io";
 import Link from "next/link";
 import { authContext } from "@/context/authProvider";
-import { Box } from "@mui/material";
+import { Badge, Box } from "@mui/material";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Logout from "@mui/icons-material/Logout";
+import { basketContext } from "@/context/basketProvider";
 
 type Props = {
   handleClose: () => void;
@@ -28,6 +29,7 @@ const PhoneMenu = ({
   setAnchorEl,
 }: Props) => {
   const { logout, user, token } = useContext(authContext);
+  const { localBasketFoods } = useContext(basketContext);
   return (
     <Menu
       id="basic-menu"
@@ -54,7 +56,9 @@ const PhoneMenu = ({
             setOpenDrawer(true);
           }}
         >
-          <MdOutlineShoppingBasket className="mr-2" />
+          <Badge badgeContent={localBasketFoods.length} color="primary">
+            <MdOutlineShoppingBasket className="mr-2" />
+          </Badge>
           Сагс
         </MenuItem>
         {token ? (

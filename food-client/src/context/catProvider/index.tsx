@@ -22,7 +22,6 @@ const CatProvider = ({ children }: PropsWithChildren) => {
       const categoryData = await axios
         .get("http://localhost:8080/category")
         .then((res) => res.data);
-      console.log("CATEGORIES", categoryData.categorys);
       setCatogories(categoryData.categorys);
     } catch (error) {
       console.log("ERROR IN GET CATEGORIES", error);

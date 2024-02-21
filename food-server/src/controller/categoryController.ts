@@ -10,9 +10,10 @@ export const createCategory = async (
   next: NextFunction
 ) => {
   try {
-    console.log(color.bgWhite(`REQUESTIIN BODY ${req.body}`));
     const newCategory = await Category.create({ ...req.body });
-    res.status(201).json({ message: "Successfully created category",newCategory  });
+    res
+      .status(201)
+      .json({ message: "Successfully created category", newCategory });
   } catch (error) {
     next(error);
   }

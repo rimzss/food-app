@@ -1,16 +1,19 @@
 "useClient";
 import { foodContext } from "@/context/foodProvider";
 import { Box, Card, Modal, Stack, Typography, CardMedia } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { DefualtButton } from "..";
 import Image from "next/image";
+import { basketContext } from "@/context/basketProvider";
 
 type Props = {};
 
 const OrderModal = () => {
   const { openOrder, setOpenOrder, food } = useContext(foodContext);
+  const { addFoodToLocalStorage } = useContext(basketContext);
+  const [count, setCount] = useState(1);
   return (
     <Modal
       open={openOrder}
@@ -73,15 +76,30 @@ const OrderModal = () => {
               </Typography>
               <div className="flex justify-between">
                 <div>
-                  <DefualtButton text="-" />
+                  <DefualtButton
+                    text="-"
+                    buttonFunction={() => {
+                      setCount((old) => old - 1);
+                    }}
+                  />
                 </div>
-                <Typography>1</Typography>
+                <Typography>{count}</Typography>
                 <div>
-                  <DefualtButton text="+" />
+                  <DefualtButton
+                    text="+"
+                    buttonFunction={() => {
+                      setCount((old) => old + 1);
+                    }}
+                  />
                 </div>
               </div>
             </div>
-            <DefualtButton text="Сагслах" />
+            <DefualtButton
+              text="Сагслах"
+              buttonFunction={() => {
+                addFoodToLocalStorage(food._id, count);
+              }}
+            />
           </Stack>
         </div>
       </Card>

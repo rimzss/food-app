@@ -5,6 +5,10 @@ import { IoIosSearch } from "react-icons/io";
 import Link from "next/link";
 import { authContext } from "@/context/authProvider";
 import UserMenu from "./userMenu";
+import Badge from "@mui/material/Badge";
+import { basketContext } from "@/context/basketProvider";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Props = {
   setOpenDrawer: (arg0: boolean) => void;
@@ -12,8 +16,17 @@ type Props = {
 };
 
 const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
+  const router = useRouter();
   const { logout, user } = useContext(authContext);
-
+  const { localBasketFoods, getUserBasketFoods } = useContext(basketContext);
+  const openBasket = () => {
+    console.log("OPEN DRAWER");
+    if (user) {
+      setOpenDrawer(true);
+    } else {
+      router.push("/login");
+    }
+  };
   return (
     <div className="hidden md:flex justify-between w-screen font-bold">
       <section className="flex gap-10 ml-10">
@@ -38,11 +51,14 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
         </div>
         <button
           onClick={() => {
-            setOpenDrawer(true);
+            openBasket();
+            getUserBasketFoods();
           }}
           className="flex items-center gap-2"
         >
-          <MdOutlineShoppingBasket size="25px" />
+          <Badge badgeContent={localBasketFoods?.length} color="primary">
+            <MdOutlineShoppingBasket size="25px" />
+          </Badge>
           Сагс
         </button>
         {user ? (

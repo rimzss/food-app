@@ -29,7 +29,6 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
       const foodData = await axios
         .get("http://localhost:8080/food")
         .then((res) => res.data);
-      console.log("FOODS!!!", foodData.foods);
       setFoods(foodData.foods);
       setIsLoading(false);
     } catch (error) {

@@ -1,14 +1,16 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import BasketItem from "../checkout/BasketItem";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { DefualtButton } from "..";
+import { basketContext } from "@/context/basketProvider";
 
 type Props = {
   setOpenDrawer: (arg0: boolean) => void;
 };
 
 const DrawerBox = ({ setOpenDrawer }: Props) => {
+  const { basketFoods } = useContext(basketContext);
   return (
     <div className="min-w-52 p-5 flex flex-col h-screen justify-between">
       <Box>
@@ -24,9 +26,10 @@ const DrawerBox = ({ setOpenDrawer }: Props) => {
             Таны сагс
           </Typography>
         </Box>
-
-        <BasketItem />
-        <BasketItem />
+        {basketFoods?.map((food: any) => {
+          console.log("BASKETFOODS", food.food);
+          return <BasketItem key={food._id} food={food.food} />;
+        })}
       </Box>
 
       <Box
