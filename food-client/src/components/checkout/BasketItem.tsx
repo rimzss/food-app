@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import {
   Card,
   CardMedia,
@@ -12,6 +12,8 @@ import {
 import { DefualtButton } from "../core/DefaultButton";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
+import { basketContext } from "@/context/basketProvider";
+import { alertContext } from "@/context/alertProvider";
 
 type Props = {
   name: string;
@@ -20,7 +22,13 @@ type Props = {
   image: string;
 };
 
-const BasketItem = ({ food }: any) => {
+const BasketItem = ({ food, count }: any) => {
+  const { deleteBasketItem } = useContext(basketContext);
+  const { alert } = useContext(alertContext);
+  const deleteFunction = () => {
+    deleteBasketItem(food._id);
+    alert(`${food.name} таны сагснаас хасагдлаа`, "success");
+  };
   return (
     <Card
       sx={{
@@ -51,17 +59,15 @@ const BasketItem = ({ food }: any) => {
                 {food.description}
               </Typography>
             </Box>
-            <RxCross2 size="50px" />
+            <RxCross2
+              className="cursor-pointer"
+              size="50px"
+              onClick={deleteFunction}
+            />
           </Box>
 
           <Stack spacing={4} direction="row">
-            <Button variant="contained" size="small">
-              <FaMinus color="white" size="18px" />
-            </Button>
-            <Typography marginX="20px">1</Typography>
-            <Button variant="contained" size="small">
-              <FaPlus color="white" size="18px" />
-            </Button>
+            <Typography marginX="20px">Тоо хэмжээ: {count}</Typography>
           </Stack>
           <Box display="flex"></Box>
         </CardContent>

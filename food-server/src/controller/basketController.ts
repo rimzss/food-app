@@ -28,7 +28,9 @@ export const addFoodToBasket = async (
     const userBasket = await Basket.findOne({ user: userId });
     userBasket?.foods.push({ food: foodId, count: count });
     await userBasket?.save();
-    res.status(200).json({ message: "successfully updated basket" });
+    res
+      .status(200)
+      .json({ message: "successfully updated basket", userBasket });
   } catch (error) {
     next(error);
   }

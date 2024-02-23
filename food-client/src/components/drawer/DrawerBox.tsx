@@ -27,8 +27,9 @@ const DrawerBox = ({ setOpenDrawer }: Props) => {
           </Typography>
         </Box>
         {basketFoods?.map((food: any) => {
-          console.log("BASKETFOODS", food.food);
-          return <BasketItem key={food._id} food={food.food} />;
+          return (
+            <BasketItem key={food._id} food={food.food} count={food.count} />
+          );
         })}
       </Box>
 
@@ -40,7 +41,16 @@ const DrawerBox = ({ setOpenDrawer }: Props) => {
       >
         <Box>
           <Typography color="#5E6166">Нийт төлөх дүн</Typography>
-          <Typography fontWeight={700}>34,800₮</Typography>
+          <Typography fontWeight={700}>
+            {basketFoods
+              ?.map((food: any) => {
+                return food.food.price * food.count;
+              })
+              .reduce((sum: number, cur: number) => {
+                return sum + cur;
+              }, 0)}
+            ₮
+          </Typography>
         </Box>
         <Box width="250px">
           <DefualtButton text="Захиалах" />

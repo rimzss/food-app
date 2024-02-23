@@ -14,7 +14,6 @@ const Menu = ({ id, catName, foods }: Props) => {
   const [catFoods, setCatFoods] = useState([]);
 
   useEffect(() => {
-    console.log("USE EFFECT WORKING");
     setCatFoods(foods?.filter((food: any) => food.category._id == id));
   }, [foods]);
 

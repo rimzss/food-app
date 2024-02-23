@@ -111,7 +111,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     if (localStorage.getItem("token")) {
       setUser(JSON.parse(localStorage.getItem("user")!));
       setToken(localStorage.getItem("token")!);
-      console.log("USER ALREADY LOGGED IN");
     }
   };
   useEffect(() => {

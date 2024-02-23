@@ -18,9 +18,8 @@ type Props = {
 const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
   const router = useRouter();
   const { logout, user } = useContext(authContext);
-  const { getUserBasketFoods } = useContext(basketContext);
+  const { getUserBasketFoods, basketFoods } = useContext(basketContext);
   const openBasket = () => {
-    console.log("OPEN DRAWER");
     if (user) {
       setOpenDrawer(true);
     } else {
@@ -56,7 +55,7 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
           }}
           className="flex items-center gap-2"
         >
-          <Badge badgeContent={0} color="primary">
+          <Badge badgeContent={basketFoods?.length} color="primary">
             <MdOutlineShoppingBasket size="25px" />
           </Badge>
           Сагс

@@ -17,10 +17,12 @@ const OrderModal = () => {
 
   const { user } = useContext(authContext);
   const { alert } = useContext(alertContext);
+  const { addBasketItem } = useContext(basketContext);
   const [count, setCount] = useState(1);
   const router = useRouter();
   const addToBasket = () => {
     if (user) {
+      addBasketItem(food._id, count);
       alert(`Таны сагсанд ${food.name}-ийн амжилттай нэмлээ`, "success");
       setOpenOrder(false);
     } else {

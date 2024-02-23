@@ -25,7 +25,7 @@ const FoodMenu = (props: Props) => {
 
   const [catFoods, setCatFoods] = useState<any>();
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ marginY: "30px", minHeight: "900px" }}>
       <div className="grid grid-cols-4 gap-5">
         {categories?.map((category: any, index) => {
           return (

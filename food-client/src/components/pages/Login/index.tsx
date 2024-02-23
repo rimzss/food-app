@@ -32,7 +32,7 @@ const LoginPage = (props: Props) => {
     },
     initialValues: { email: "", password: "" },
     validateOnChange: false,
-    validateOnBlur: false,
+    validateOnBlur: true,
     validationSchema,
   });
 

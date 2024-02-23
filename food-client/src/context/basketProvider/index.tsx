@@ -11,6 +11,8 @@ import axios from "axios";
 
 interface ICreateBasketContext {
   getUserBasketFoods: () => void;
+  addBasketItem: (foodId: string, count: number) => void;
+  deleteBasketItem: (foodId: string) => void;
   basketFoods: any;
 }
 
@@ -40,11 +42,45 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   // }, []);
 
   const getUserBasketFoods = async () => {
+    if (user) {
+      try {
+        const data = await axios
+          .get(`http://localhost:8080/basket/${user._id}`)
+          .then((res) => res.data);
+        console.log("RES", data.basket.foods);
+        setBasketFoods(data.basket.foods);
+      } catch (error) {}
+    }
+  };
+  useEffect(() => {
+    getUserBasketFoods();
+  }, [user]);
+  const addBasketItem = async (foodId: string, count: number) => {
     try {
       const data = await axios
-        .get(`http://localhost:8080/basket/${user._id}`)
+        .put("http://localhost:8080/basket", {
+          userId: user._id,
+          foodId: foodId,
+          count: count,
+        })
         .then((res) => res.data);
-      setBasketFoods(data.basket.foods);
+    } catch (error) {}
+  };
+  const deleteFoodFromArray = (id: string) => {
+    setBasketFoods((oldFoods: any) => {
+      console.log("OLD FOOD", oldFoods);
+      return oldFoods.filter((obj: any) => obj.food._id !== id);
+    });
+  };
+  const deleteBasketItem = async (foodId: string) => {
+    try {
+      const data = await axios.delete("http://localhost:8080/basket", {
+        data: {
+          userId: user._id,
+          foodId: foodId,
+        },
+      });
+      deleteFoodFromArray(foodId);
     } catch (error) {}
   };
   return (
@@ -52,6 +88,8 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       value={{
         getUserBasketFoods,
         basketFoods,
+        addBasketItem,
+        deleteBasketItem,
       }}
     >
       {children}
