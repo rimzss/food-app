@@ -7,6 +7,7 @@ import FoodProvider from "@/context/foodProvider";
 import CatProvider from "@/context/catProvider";
 import BasketProvider from "@/context/basketProvider";
 import AlertProvider from "@/context/alertProvider";
+import SearchProvider from "@/context/searchProvider";
 
 export default function RootLayout({
   children,
@@ -22,9 +23,11 @@ export default function RootLayout({
               <CatProvider>
                 <FoodProvider>
                   <BasketProvider>
-                    <Header />
-                    {children}
-                    <Footer />
+                    <SearchProvider>
+                      <Header />
+                      {children}
+                      <Footer />
+                    </SearchProvider>
                   </BasketProvider>
                 </FoodProvider>
               </CatProvider>

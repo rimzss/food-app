@@ -98,14 +98,6 @@ const PhoneMenu = ({
           </MenuItem>
         )}
       </div>
-      <MenuItem>
-        <IoIosSearch size="25px" className="-mr-6 relative z-10" />
-        <input
-          type="text"
-          placeholder="Хайх"
-          className="w-full py-2 relative z-0 px-6"
-        />
-      </MenuItem>
     </Menu>
   );
 };
