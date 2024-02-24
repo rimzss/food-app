@@ -13,7 +13,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: { xs: "100%", sm: "400px" },
-  height: { xs: "100%", sm: "400px" },
+  height: { xs: "100%", sm: "80%" },
   bgcolor: "background.paper",
   boxShadow: 24,
 };
@@ -22,14 +22,20 @@ export default function SearchModal() {
   //   const [openSeachModal, setOpenSeachModal] = React.useState(false);
   //   const handleOpen = () => setOpenSeachModal(true);
   //   const handleClose = () => setOpenSeachModal(false);
-  const { openSeachModal, handleSearchOpen, handleSearchClose } =
+  const { openSeachModal, handleSearchOpen, handleSearchClose, resultFoods } =
     React.useContext(searchContext);
   return (
     <div>
       <Modal open={openSeachModal} onClose={handleSearchClose}>
-        <Box sx={style}>
+        <Box sx={style} className="overflow-scroll">
           <SearchAppBar />
-          <ResultFoodCard />
+          {resultFoods?.map((result: any) => (
+            <ResultFoodCard
+              image={result.image}
+              name={result.name}
+              price={result.price}
+            />
+          ))}
         </Box>
       </Modal>
     </div>

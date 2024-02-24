@@ -1,20 +1,43 @@
 "use client";
-import React, { PropsWithChildren, createContext } from "react";
+import React, {
+  ChangeEvent,
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useState,
+} from "react";
+import { foodContext } from "../foodProvider";
 
 interface ICreateSearchContext {
   openSeachModal: boolean;
+  resultFoods: any;
   handleSearchOpen: () => void;
   handleSearchClose: () => void;
+  searching: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 export const searchContext = createContext({} as ICreateSearchContext);
 
 const SearchProvider = ({ children }: PropsWithChildren) => {
-  const [openSeachModal, setOpenSeachModal] = React.useState(false);
+  const { foods } = useContext(foodContext);
+  const [openSeachModal, setOpenSeachModal] = useState(false);
+  const [resultFoods, setResultFoods] = useState<any>();
   const handleSearchOpen = () => setOpenSeachModal(true);
   const handleSearchClose = () => setOpenSeachModal(false);
+  const searching = (e: ChangeEvent<HTMLInputElement>) => {
+    setResultFoods(
+      foods.filter((food: any) => food.name.includes(e.target.value))
+    );
+    console.log(e.target.value);
+  };
   return (
     <searchContext.Provider
-      value={{ openSeachModal, handleSearchOpen, handleSearchClose }}
+      value={{
+        openSeachModal,
+        handleSearchOpen,
+        handleSearchClose,
+        searching,
+        resultFoods,
+      }}
     >
       {children}
     </searchContext.Provider>
