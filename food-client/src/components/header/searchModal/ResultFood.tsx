@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -9,17 +10,33 @@ import Typography from "@mui/material/Typography";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
+import { foodContext } from "@/context/foodProvider";
 interface IResult {
   image: string;
   name: string;
   price: number;
+  food: any;
+  handleSearchClose: () => void;
 }
 
-export default function ResultFoodCard({ image, name, price }: IResult) {
+export default function ResultFoodCard({
+  image,
+  name,
+  price,
+  food,
+  handleSearchClose,
+}: IResult) {
   const theme = useTheme();
+  const { openOrderModal } = React.useContext(foodContext);
 
   return (
-    <Card sx={{ display: "flex" }}>
+    <Card
+      sx={{ display: "flex" }}
+      onClick={() => {
+        openOrderModal(food);
+        handleSearchClose();
+      }}
+    >
       <CardMedia
         component="img"
         sx={{ width: 200 }}

@@ -34,6 +34,8 @@ export default function SearchModal() {
               image={result.image}
               name={result.name}
               price={result.price}
+              food={result}
+              handleSearchClose={handleSearchClose}
             />
           ))}
         </Box>
