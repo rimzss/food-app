@@ -20,9 +20,10 @@ type Props = {
   price: number;
   description: string;
   image: string;
+  isOrder?: boolean;
 };
 
-const BasketItem = ({ food, count }: any) => {
+const BasketItem = ({ food, count, isOrder = true }: any) => {
   const { deleteBasketItem } = useContext(basketContext);
   const { alert } = useContext(alertContext);
   const deleteFunction = () => {
@@ -46,7 +47,7 @@ const BasketItem = ({ food, count }: any) => {
         alt={food.name}
       />
       <Box sx={{}}>
-        <CardContent sx={{ maxWidth: "300px", maxHeight: 150 }}>
+        <CardContent sx={{ maxWidth: "300px", maxHeight: 150, paddingY: 0 }}>
           <Box display="flex">
             <Box>
               <Typography variant="h5" fontWeight="bold">
@@ -59,11 +60,13 @@ const BasketItem = ({ food, count }: any) => {
                 {food.description}
               </Typography>
             </Box>
-            <RxCross2
-              className="cursor-pointer"
-              size="50px"
-              onClick={deleteFunction}
-            />
+            {isOrder && (
+              <RxCross2
+                className="cursor-pointer"
+                size="50px"
+                onClick={deleteFunction}
+              />
+            )}
           </Box>
 
           <Stack spacing={4} direction="row">
