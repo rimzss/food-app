@@ -21,7 +21,10 @@ const SearchProvider = ({ children }: PropsWithChildren) => {
   const { foods } = useContext(foodContext);
   const [openSeachModal, setOpenSeachModal] = useState(false);
   const [resultFoods, setResultFoods] = useState<any>();
-  const handleSearchOpen = () => setOpenSeachModal(true);
+  const handleSearchOpen = () => {
+    setResultFoods(foods);
+    setOpenSeachModal(true);
+  };
   const handleSearchClose = () => setOpenSeachModal(false);
   const searching = (e: ChangeEvent<HTMLInputElement>) => {
     setResultFoods(

@@ -11,8 +11,10 @@ import axios from "axios";
 
 interface ICreateBasketContext {
   getUserBasketFoods: () => void;
+  clearBasket: () => void;
   addBasketItem: (foodId: string, count: number) => void;
   deleteBasketItem: (foodId: string) => void;
+
   basketFoods: any;
 }
 
@@ -83,6 +85,9 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       deleteFoodFromArray(foodId);
     } catch (error) {}
   };
+  const clearBasket = () => {
+    setBasketFoods(undefined);
+  };
   return (
     <basketContext.Provider
       value={{
@@ -90,6 +95,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
         basketFoods,
         addBasketItem,
         deleteBasketItem,
+        clearBasket,
       }}
     >
       {children}

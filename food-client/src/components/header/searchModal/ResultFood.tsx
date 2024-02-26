@@ -31,18 +31,23 @@ export default function ResultFoodCard({
 
   return (
     <Card
-      sx={{ display: "flex" }}
+      sx={{
+        display: "flex",
+        marginTop: "10px",
+        height: "200px",
+        cursor: "pointer",
+        transition: "ease 0.2s",
+        "&:hover": {
+          backgroundColor: "whitesmoke",
+          transform: "scale(1.05)",
+        },
+      }}
       onClick={() => {
         openOrderModal(food);
         handleSearchClose();
       }}
     >
-      <CardMedia
-        component="img"
-        sx={{ width: 200 }}
-        image={image}
-        alt="Live from space album cover"
-      />
+      <CardMedia component="img" sx={{ width: 200 }} image={image} alt={name} />
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">

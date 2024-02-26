@@ -32,63 +32,61 @@ const FoodCard = ({
 }: Props) => {
   const { openOrderModal } = useContext(foodContext);
   return (
-    <>
-      <Card
-        onClick={() => {
-          openOrderModal(food);
-        }}
-        sx={{
-          width: 345,
-          boxShadow: "none",
-          position: "relative",
-        }}
-      >
-        {isDiscounted && (
-          <Box
-            position="absolute"
-            bgcolor="#18BA51"
-            color="white"
-            paddingX="15px"
-            fontSize="25px"
-            borderRadius="40px"
-            border="1px solid white"
-            top="35px"
-            right="35px"
-          >
-            20%
-          </Box>
-        )}
+    <Card
+      onClick={() => {
+        openOrderModal(food);
+      }}
+      sx={{
+        width: 345,
+        boxShadow: "none",
+        position: "relative",
+      }}
+    >
+      {isDiscounted && (
+        <Box
+          position="absolute"
+          bgcolor="#18BA51"
+          color="white"
+          paddingX="15px"
+          fontSize="25px"
+          borderRadius="40px"
+          border="1px solid white"
+          top="35px"
+          right="35px"
+        >
+          20%
+        </Box>
+      )}
 
-        <CardMedia
-          sx={{ height: 200, borderRadius: "20px" }}
-          image={image}
-          title={name}
-        />
-        <CardContent>
-          <Typography variant="h5" fontWeight="bold">
-            {name}
-          </Typography>
-          {isDiscounted ? (
-            <div className="flex gap-5">
-              <Typography variant="h6" color="#18BA51" fontWeight="bold">
-                {discountPrice}₮
-              </Typography>
-              <Typography
-                variant="h6"
-                color="black"
-                sx={{ textDecoration: "line-through" }}
-              >
-                {price}₮
-              </Typography>
-            </div>
-          ) : (
+      <CardMedia
+        sx={{ height: 200, borderRadius: "20px" }}
+        image={image}
+        title={name}
+      />
+      <CardContent>
+        <Typography variant="h5" fontWeight="bold">
+          {name}
+        </Typography>
+        {isDiscounted ? (
+          <div className="flex gap-5">
             <Typography variant="h6" color="#18BA51" fontWeight="bold">
+              {discountPrice}₮
+            </Typography>
+            <Typography
+              variant="h6"
+              color="black"
+              sx={{ textDecoration: "line-through" }}
+            >
               {price}₮
             </Typography>
-          )}
-        </CardContent>
-      </Card>
-    </>
+          </div>
+        ) : (
+          <Typography variant="h6" color="#18BA51" fontWeight="bold">
+            {price}₮
+          </Typography>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

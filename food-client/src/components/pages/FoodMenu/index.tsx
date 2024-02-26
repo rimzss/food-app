@@ -14,14 +14,20 @@ const FoodMenu = (props: Props) => {
   const [selectedCat, setSelectedCat] = useState("");
   const handleClick = (cat: string) => {
     setSelectedCat(cat);
+    setCatFoods(foods?.filter((food: any) => food.category._id == cat));
   };
   useEffect(() => {
     getCategories();
     getFoods();
   }, []);
   useEffect(() => {
-    setCatFoods(foods?.filter((food: any) => food.category._id == selectedCat));
-  }, [selectedCat]);
+    if (categories.length > 0) {
+      setSelectedCat(categories[0]._id);
+      setCatFoods(
+        foods?.filter((food: any) => food.category._id == categories[0]._id)
+      );
+    }
+  }, [foods]);
 
   const [catFoods, setCatFoods] = useState<any>();
   return (
@@ -40,7 +46,7 @@ const FoodMenu = (props: Props) => {
           );
         })}
       </div>
-      <div className="mt-20">
+      <div className="mt-20 flex flex-wrap gap-5">
         {catFoods?.map((food: any) => {
           return (
             <FoodCard

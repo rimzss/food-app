@@ -12,7 +12,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "100%", sm: "400px" },
+  width: { xs: "100%", sm: "580px" },
   height: { xs: "100%", sm: "80%" },
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -29,15 +29,17 @@ export default function SearchModal() {
       <Modal open={openSeachModal} onClose={handleSearchClose}>
         <Box sx={style} className="overflow-scroll">
           <SearchAppBar />
-          {resultFoods?.map((result: any) => (
-            <ResultFoodCard
-              image={result.image}
-              name={result.name}
-              price={result.price}
-              food={result}
-              handleSearchClose={handleSearchClose}
-            />
-          ))}
+          <div className="p-3">
+            {resultFoods?.map((result: any) => (
+              <ResultFoodCard
+                image={result.image}
+                name={result.name}
+                price={result.price}
+                food={result}
+                handleSearchClose={handleSearchClose}
+              />
+            ))}
+          </div>
         </Box>
       </Modal>
     </div>

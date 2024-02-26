@@ -29,6 +29,7 @@ const PhoneMenu = ({
   setAnchorEl,
 }: Props) => {
   const { logout, user, token } = useContext(authContext);
+  const { clearBasket } = useContext(basketContext);
 
   return (
     <Menu
@@ -89,6 +90,7 @@ const PhoneMenu = ({
           <MenuItem
             onClick={() => {
               handleClose(), logout();
+              clearBasket();
             }}
           >
             <Link href="/login" className="flex">

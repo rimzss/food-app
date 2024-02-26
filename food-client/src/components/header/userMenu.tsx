@@ -13,11 +13,13 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { authContext } from "@/context/authProvider";
 import Link from "next/link";
+import { basketContext } from "@/context/basketProvider";
 
 type Props = {};
 
 const UserMenu = (props: Props) => {
   const { logout, user } = useContext(authContext);
+  const { clearBasket } = useContext(basketContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -95,6 +97,7 @@ const UserMenu = (props: Props) => {
         <MenuItem
           onClick={() => {
             handleClose(), logout();
+            clearBasket();
           }}
         >
           <ListItemIcon>

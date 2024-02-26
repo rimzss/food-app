@@ -9,6 +9,7 @@ import Badge from "@mui/material/Badge";
 import { basketContext } from "@/context/basketProvider";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { searchContext } from "@/context/searchProvider";
 
 type Props = {
   setOpenDrawer: (arg0: boolean) => void;
@@ -19,6 +20,7 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
   const router = useRouter();
   const { logout, user } = useContext(authContext);
   const { getUserBasketFoods, basketFoods } = useContext(basketContext);
+  const { handleSearchOpen } = useContext(searchContext);
   const openBasket = () => {
     if (user) {
       setOpenDrawer(true);
@@ -40,7 +42,7 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
         </Link>
       </section>
       <section className="flex gap-5 items-center">
-        <div className="relative">
+        <div className="relative" onClick={handleSearchOpen}>
           <IoIosSearch size="25px" className="absolute top-2 left-4 z-10" />
           <input
             type="text"

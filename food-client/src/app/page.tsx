@@ -20,7 +20,7 @@ export default function Home() {
     getCategories();
   }, []);
   return (
-    <main className="flex flex-wrap">
+    <main className="flex flex-wrap overflow-hidden">
       <Grid
         container
         sx={{
@@ -70,28 +70,6 @@ export default function Home() {
               );
             })
           )}
-          {/* {categories?.map((category: any) => {
-            return (
-              <Menu
-                key={category._id}
-                id={category._id}
-                catName={category.name}
-                foods={foods}
-              />
-            );
-          })} */}
-
-          {/* {foods?.map((food: any) => {
-            return (
-              <FoodCard
-                key={food._id}
-                name={food.name}
-                price={food.price}
-                image={food.image}
-                isDiscounted={food.isSale}
-              />
-            );
-          })} */}
         </Box>
       </Container>
       <OrderModal />
