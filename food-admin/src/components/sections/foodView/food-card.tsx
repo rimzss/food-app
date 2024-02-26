@@ -18,7 +18,7 @@ import { foodContext } from "@/context/foodProvider";
 // ----------------------------------------------------------------------
 
 export default function FoodCard({ product }: any) {
-  const { deleteFood } = useContext(foodContext);
+  const { deleteFood, setUpdateForm } = useContext(foodContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -118,7 +118,11 @@ export default function FoodCard({ product }: any) {
             }}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem
+              onClick={() => {
+                handleClose(), setUpdateForm(product);
+              }}
+            >
               <EditOutlinedIcon />
               Edit
             </MenuItem>

@@ -59,6 +59,8 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
     handleFile,
     foodForm,
     handleLoading,
+    updateFood,
+    isUpdateing,
   } = React.useContext(foodContext);
   return (
     <div>
@@ -80,18 +82,21 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
             label="Name"
             desc="Хоолны нэрийг оруулна уу"
             name="name"
+            value={foodForm?.name}
             onChange={handleFoodForm}
           />
           <Input
             label="Price"
             desc="Үнийн дүнг оруулна уу"
             name="price"
+            value={foodForm.price?.toString()}
             onChange={handleFoodForm}
           />
           <Input
             label="Description"
             desc="Write food Description"
             name="description"
+            value={foodForm.description}
             onChange={handleFoodForm}
           />
           <Stack>
@@ -136,14 +141,24 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
             Upload file
             <VisuallyHiddenInput type="file" onChange={handleFile} />
           </MuiButton>
-          <Button
-            onClick={() => {
-              handleLoading();
-              uploadFoodImage();
-              handleCloseFilter();
-            }}
-            label="нэмэх"
-          ></Button>
+          {isUpdateing ? (
+            <Button
+              onClick={() => {
+                updateFood(foodForm?._id);
+                handleCloseFilter();
+              }}
+              label="3асах"
+            ></Button>
+          ) : (
+            <Button
+              onClick={() => {
+                handleLoading();
+                uploadFoodImage();
+                handleCloseFilter();
+              }}
+              label="нэмэх"
+            ></Button>
+          )}
         </Box>
       </Modal>
     </div>

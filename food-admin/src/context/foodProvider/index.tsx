@@ -13,18 +13,25 @@ import { authContext } from "../authProvider";
 
 interface ICreateFoodContext {
   foods: any;
+  openFilter: boolean;
+  isUpdateing: boolean;
   getFoods: () => void;
   uploadFoodImage: () => void;
+  handleOpenFilter: () => void;
+  handleCloseFilter: () => void;
   handleLoading: () => void;
+  updateFood: (foodId: string) => void;
   deleteFood: (foodId: string) => void;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
   handleFoodForm: (e: any) => void;
+  setUpdateForm: (value: any) => void;
   foodForm: {
     name: string;
     price: number;
     description: string;
     image: string;
     category: string;
+    _id?: string;
   };
   loading: boolean;
 }
@@ -41,6 +48,17 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
     image: "",
     category: "",
   });
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
+
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+    setIsUpdateing(false);
+  };
+
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
   };
@@ -93,6 +111,27 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
       deleteFoodFromArray(foodId);
     } catch (error) {}
   };
+
+  // -----------UPDATE FOOD SECTION----------
+  const [isUpdateing, setIsUpdateing] = useState(false);
+  const setUpdateForm = (value: any) => {
+    setIsUpdateing(true);
+    setFoodForm(value);
+    setOpenFilter(true);
+  };
+  const updateFood = async (foodId: string) => {
+    try {
+      const data = await axios.put(`http://localhost:8080/food/${foodId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          updateData: foodForm,
+        },
+      });
+      setIsUpdateing(false);
+    } catch (error) {}
+  };
   return (
     <foodContext.Provider
       value={{
@@ -105,6 +144,12 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         deleteFood,
         loading,
         handleLoading,
+        openFilter,
+        handleCloseFilter,
+        handleOpenFilter,
+        setUpdateForm,
+        updateFood,
+        isUpdateing,
       }}
     >
       {children}

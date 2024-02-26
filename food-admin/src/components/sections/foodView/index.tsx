@@ -27,7 +27,14 @@ import Skeletons from "@/components/Skeletons";
 
 export default function FoodView() {
   const { checkIsLogged } = useContext(authContext);
-  const { getFoods, foods, loading } = useContext(foodContext);
+  const {
+    getFoods,
+    foods,
+    loading,
+    openFilter,
+    handleCloseFilter,
+    handleOpenFilter,
+  } = useContext(foodContext);
   useEffect(() => {
     checkIsLogged();
     getFoods();
@@ -36,15 +43,6 @@ export default function FoodView() {
       redirect("/login");
     }
   }, []);
-  const [openFilter, setOpenFilter] = useState(false);
-
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
 
   return (
     <Container>
@@ -62,7 +60,7 @@ export default function FoodView() {
           color="inherit"
           startIcon={<Iconify icon="eva:plus-fill" />}
           onClick={() => {
-            setOpenFilter(true);
+            handleOpenFilter();
           }}
         >
           Шинэ хоол
