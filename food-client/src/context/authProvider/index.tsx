@@ -84,7 +84,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       alert(error.response.data.message, "warning");
     }
   };
-  const createUserBasket = async (id) => {
+  const createUserBasket = async (id: string) => {
     try {
       await axios.post("http://localhost:8080/basket", { userId: id });
     } catch (error) {}
