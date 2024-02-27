@@ -84,7 +84,11 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       alert(error.response.data.message, "warning");
     }
   };
-
+  const createUserBasket = async (id) => {
+    try {
+      await axios.post("http://localhost:8080/basket", { userId: id });
+    } catch (error) {}
+  };
   const signup = async (name: string, email: string, password: string) => {
     try {
       const data = await axios
@@ -98,6 +102,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem("user", JSON.stringify(data.userInfo));
       localStorage.setItem("token", data.token);
       console.log("SIGNUP SUCCESS!!!", data);
+      createUserBasket(data.userInfo._id);
       authLogged();
       alert("Амжилттай бүртгэгдлээ", "success");
       router.push("/");

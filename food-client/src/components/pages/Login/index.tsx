@@ -66,6 +66,7 @@ const LoginPage = (props: Props) => {
           errorText={formik.errors.email}
           name="email"
         />
+
         <DefaultInput
           label="Нууц үг"
           placeholder="Нууц үг"
@@ -75,7 +76,7 @@ const LoginPage = (props: Props) => {
           name="password"
         />
         <Link href="/forget">
-          <Typography marginTop="-15px" textAlign="right" variant="body2">
+          <Typography textAlign="right" variant="body2">
             Нууц үг сэргээх
           </Typography>
         </Link>

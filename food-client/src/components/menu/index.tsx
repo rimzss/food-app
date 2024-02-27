@@ -2,9 +2,6 @@
 import React, { useEffect, useState } from "react";
 import FoodCard from "../card/foodCard";
 import Star from "../core/Star";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 type Props = {
   id: string;
