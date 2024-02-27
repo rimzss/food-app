@@ -20,7 +20,7 @@ interface ICreateFoodContext {
   handleOpenFilter: () => void;
   handleCloseFilter: () => void;
   handleLoading: () => void;
-  updateFood: (foodId: string) => void;
+  updateFood: (foodId: string | undefined) => void;
   deleteFood: (foodId: string) => void;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
   handleFoodForm: (e: any) => void;
@@ -57,6 +57,13 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
   const handleCloseFilter = () => {
     setOpenFilter(false);
     setIsUpdateing(false);
+    setFoodForm({
+      name: "",
+      price: 0,
+      description: "",
+      image: "",
+      category: "",
+    });
   };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -119,15 +126,13 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
     setFoodForm(value);
     setOpenFilter(true);
   };
-  const updateFood = async (foodId: string) => {
+  const updateFood = async (foodId: string | undefined) => {
     try {
       const data = await axios.put(`http://localhost:8080/food/${foodId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        data: {
-          updateData: foodForm,
-        },
+        updateData: foodForm,
       });
       setIsUpdateing(false);
     } catch (error) {}

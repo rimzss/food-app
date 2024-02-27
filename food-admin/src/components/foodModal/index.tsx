@@ -72,7 +72,9 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
       >
         <Box sx={style}>
           <Stack direction={"row"} justifyContent={"space-between"}>
-            <Typography variant="h3">Хоол нэмэх хэсэг</Typography>
+            <Typography variant="h3">
+              {isUpdateing ? "Хоол засах хэсэг" : "Хоол нэмэх хэсэг"}
+            </Typography>
             <MuiButton onClick={handleCloseFilter} sx={{ fontSize: 23 }}>
               X
             </MuiButton>
@@ -133,14 +135,19 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
               <FormHelperText>Required</FormHelperText>
             </FormControl>
           </Stack>
-          <MuiButton
-            component="label"
-            variant="contained"
-            startIcon={<CloudUploadIcon />}
-          >
-            Upload file
-            <VisuallyHiddenInput type="file" onChange={handleFile} />
-          </MuiButton>
+          {isUpdateing ? (
+            <div></div>
+          ) : (
+            <MuiButton
+              component="label"
+              variant="contained"
+              startIcon={<CloudUploadIcon />}
+            >
+              Upload file
+              <VisuallyHiddenInput type="file" onChange={handleFile} />
+            </MuiButton>
+          )}
+
           {isUpdateing ? (
             <Button
               onClick={() => {

@@ -64,6 +64,8 @@ export const updateFood = async (
   try {
     const { foodId } = req.params;
     const {updateData} = req.body;
+    console.log("UPDATE DATA",req.body)
+    console.log("UPDATE id", foodId)
     const food = await Food.findByIdAndUpdate(foodId, updateData);
     if (!food) {
       throw new MyError(`Category not found id=${foodId}`, 400);
