@@ -4,6 +4,8 @@ import BasketItem from "../checkout/BasketItem";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { DefualtButton } from "..";
 import { basketContext } from "@/context/basketProvider";
+import Lottie from "lottie-react";
+import emptyBasketAnimation from "@/../public/lottie/Animation - 1709125937332.json";
 
 type Props = {
   setOpenDrawer: (arg0: boolean) => void;
@@ -26,11 +28,17 @@ const DrawerBox = ({ setOpenDrawer }: Props) => {
             Таны сагс
           </Typography>
         </Box>
-        {basketFoods?.map((food: any) => {
-          return (
-            <BasketItem key={food._id} food={food.food} count={food.count} />
-          );
-        })}
+        {basketFoods?.length === 0 ? (
+          <div className="w-56 mx-auto my-10">
+            <Lottie animationData={emptyBasketAnimation} size={10} />
+          </div>
+        ) : (
+          basketFoods?.map((food: any) => {
+            return (
+              <BasketItem key={food._id} food={food.food} count={food.count} />
+            );
+          })
+        )}
       </Box>
 
       <Box

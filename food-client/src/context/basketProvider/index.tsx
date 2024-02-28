@@ -33,6 +33,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
           .get(`http://localhost:8080/basket/${user._id}`)
           .then((res) => res.data);
         setBasketFoods(data.basket.foods);
+        console.log(data.basket.foods);
       } catch (error) {}
     }
   };
