@@ -53,7 +53,6 @@ const WebMenu = ({ setOpenDrawer, openDrawer }: Props) => {
         <button
           onClick={() => {
             openBasket();
-            getUserBasketFoods();
           }}
           className="flex items-center gap-2"
         >

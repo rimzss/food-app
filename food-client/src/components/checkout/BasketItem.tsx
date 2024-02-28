@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { DefualtButton } from "../core/DefaultButton";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import { RxCross2 } from "react-icons/rx";
 import { basketContext } from "@/context/basketProvider";
 import { alertContext } from "@/context/alertProvider";
@@ -47,7 +49,7 @@ const BasketItem = ({ food, count, isOrder = true }: any) => {
         alt={food.name}
       />
       <Box sx={{}}>
-        <CardContent sx={{ maxWidth: "300px", maxHeight: 150, paddingY: 0 }}>
+        <CardContent sx={{ maxWidth: "300px", maxHeight: 300, paddingY: 0 }}>
           <Box display="flex">
             <Box>
               <Typography variant="h5" fontWeight="bold">
@@ -70,7 +72,16 @@ const BasketItem = ({ food, count, isOrder = true }: any) => {
           </Box>
 
           <Stack spacing={4} direction="row">
-            <Typography marginX="20px">Тоо хэмжээ: {count}</Typography>
+            <Button sx={{ borderRadius: "10px" }} variant="contained">
+              <RemoveIcon className="text-white" />
+            </Button>
+
+            <Typography marginX="20px" variant="h6">
+              {count}
+            </Typography>
+            <Button sx={{ borderRadius: "10px" }} variant="contained">
+              <AddIcon className="text-white" />
+            </Button>
           </Stack>
           <Box display="flex"></Box>
         </CardContent>

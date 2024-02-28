@@ -26,11 +26,19 @@ export const addFoodToBasket = async (
   try {
     const { userId, foodId, count } = req.body;
     const userBasket = await Basket.findOne({ user: userId });
-    userBasket?.foods.push({ food: foodId, count: count });
-    await userBasket?.save();
+    const findIndex = userBasket?.foods.findIndex((el) => el.food == foodId);
+    if (findIndex === -1) {
+      userBasket?.foods.push({ food: foodId, count: count });
+    } else {
+      userBasket!.foods[findIndex!].count =
+        userBasket!.foods[findIndex!].count! + Number(count);
+    }
+    const userBasketFoods = await (
+      await userBasket?.save()
+    )?.populate("foods.food");
     res
       .status(200)
-      .json({ message: "successfully updated basket", userBasket });
+      .json({ message: "successfully updated basket", userBasketFoods });
   } catch (error) {
     next(error);
   }

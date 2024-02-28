@@ -24,16 +24,14 @@ const Menu = ({ id, catName, foods }: Props) => {
       <div className="flex gap-8 overflow-scroll no-scrollbar">
         {catFoods?.map((food: any) => {
           return (
-            <div>
-              <FoodCard
-                food={food}
-                key={food._id}
-                name={food.name}
-                price={food.price}
-                image={food.image}
-                isDiscounted={food.isSale}
-              />
-            </div>
+            <FoodCard
+              food={food}
+              key={food._id}
+              name={food.name}
+              price={food.price}
+              image={food.image}
+              isDiscounted={food.isSale}
+            />
           );
         })}
       </div>
