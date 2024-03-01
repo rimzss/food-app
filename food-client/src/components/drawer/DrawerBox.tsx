@@ -6,6 +6,7 @@ import { DefualtButton } from "..";
 import { basketContext } from "@/context/basketProvider";
 import Lottie from "lottie-react";
 import emptyBasketAnimation from "@/../public/lottie/Animation - 1709125937332.json";
+import Link from "next/link";
 
 type Props = {
   setOpenDrawer: (arg0: boolean) => void;
@@ -46,6 +47,7 @@ const DrawerBox = ({ setOpenDrawer }: Props) => {
         justifyContent="space-between"
         boxShadow="0px -4px 8px 0px rgba(187, 190, 205, 0.20)"
         padding="10px 32px 30px 32px"
+        sx={{ position: "sticky", bottom: "0", backgroundColor: "white" }}
       >
         <Box>
           <Typography color="#5E6166">Нийт төлөх дүн</Typography>
@@ -61,11 +63,17 @@ const DrawerBox = ({ setOpenDrawer }: Props) => {
           </Typography>
         </Box>
         <Box width="250px">
-          <DefualtButton text="Захиалах" />
+          <Link href="/order">
+            <DefualtButton
+              text="Захиалах"
+              buttonFunction={() => {
+                setOpenDrawer(false);
+              }}
+            />
+          </Link>
         </Box>
       </Box>
     </div>
   );
 };
-
 export default DrawerBox;

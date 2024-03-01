@@ -10,6 +10,7 @@ export const authenticate = async (
   next: NextFunction
 ) => {
   try {
+    console.log("TOKEN", req.headers.authorization);
     if (!req.headers.authorization) {
       throw new MyError("No token, Get token ASAP!!!", 400);
     }
@@ -28,17 +29,20 @@ export const authenticate = async (
   }
 };
 
-export const authorize = (...roles:string[]) =>{
-  return (req:IReq, res:Response, next:NextFunction)=>{
+export const authorize = (...roles: string[]) => {
+  return (req: IReq, res: Response, next: NextFunction) => {
     try {
-      const {user} = req
-      console.log("USERR!!!", user)
-      if(!roles.includes(user.role[0])){
-        throw new MyError("Уучлаарай таны эрх энэ үйлдлийг хийх боломжгүй байна",403)
+      const { user } = req;
+      console.log("USERR!!!", user);
+      if (!roles.includes(user.role[0])) {
+        throw new MyError(
+          "Уучлаарай таны эрх энэ үйлдлийг хийх боломжгүй байна",
+          403
+        );
       }
-      next()
+      next();
     } catch (error) {
-      next(error)
+      next(error);
     }
-  }
-}
+  };
+};

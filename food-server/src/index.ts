@@ -11,6 +11,7 @@ import catRoutes from "./router/catRoutes";
 import foodRoutes from "./router/foodRoutes";
 import uploadRoutes from "./router/uploadRoutes";
 import basketRoutes from "./router/basketRoutes";
+import orderRoutes from "./router/orderRoutes";
 import cors from "cors";
 import errorHandler from "./middleware/errorHandler";
 configDotenv();
@@ -30,6 +31,7 @@ app.use("/upload", uploadRoutes);
 app.use("/category", catRoutes);
 app.use("/food", foodRoutes);
 app.use("/basket", basketRoutes);
+app.use("/order", orderRoutes);
 
 app.use(errorHandler);
 

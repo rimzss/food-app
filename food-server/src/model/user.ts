@@ -36,13 +36,68 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  orders: [
+    {
+      orderNo: String,
+      foods: [
+        {
+          food: {
+            type: Schema.ObjectId,
+            ref: "Food",
+          },
+          count: Number,
+        },
+      ],
+      payment: {
+        paymentAmount: {
+          type: Number,
+          default: 0,
+        },
+        method: {
+          type: String,
+          enum: ["Card", "Qpay"],
+        },
+        status: {
+          type: String,
+          enum: ["paid", "unpaid"],
+          default: "unpaid",
+        },
+        paidDate: {
+          type: Date,
+          default: Date.now,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+      address: {
+        khoroo: { type: String },
+        duureg: { type: String },
+        buildingNo: { type: String },
+        info: String,
+      },
+      delivery: {
+        status: {
+          type: String,
+          enum: ["Pending", "Progressing", "Delivered"],
+          default: "Pending",
+        },
+        deliveredAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    },
+  ],
 });
 
-// userSchema.pre("save", function () {
-//   if (this.isModified("password")) {
-//     this.password = bcrypt.hashSync(this.password, 10);
-//   }
-// });
+userSchema.pre("save", async function async(next) {
+  if (this.isModified("password")) {
+    this.password = bcrypt.hashSync(this.password, 10);
+  }
+  next();
+});
 
 const User = model("User", userSchema);
 export default User;
