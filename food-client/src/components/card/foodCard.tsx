@@ -37,7 +37,7 @@ const FoodCard = ({
         openOrderModal(food);
       }}
       sx={{
-        width: 345,
+        minWidth: 345,
         boxShadow: "none",
         position: "relative",
       }}
