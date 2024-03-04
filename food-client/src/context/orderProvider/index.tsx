@@ -32,7 +32,20 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
   };
 
   const { token, user } = useContext(authContext);
-  const creatOrder = async () => {
+  const creatOrder = async ({
+    duureg,
+    horoo,
+    buildingNo,
+    info,
+    phoneNumber,
+    method,
+  }: any) => {
+    orderInfo.address.duureg = duureg;
+    orderInfo.address.khoroo = horoo;
+    orderInfo.address.buildingNo = buildingNo;
+    orderInfo.address.info = info;
+    orderInfo.payment.method = method;
+    orderInfo.phoneNumber = phoneNumber;
     const data = await axios.post("http://localhost:8080/order/new", {
       headers: {
         Authorization: `Bearer ${token}`,

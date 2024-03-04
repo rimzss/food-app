@@ -7,9 +7,14 @@ import TextField from "@mui/material/TextField";
 import { DefaultInput } from "@/components";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-type Props = {};
+import FormControl from "@mui/material/FormControl";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormLabel from "@mui/material/FormLabel";
+type Props = {
+  formik: any;
+};
 
-const StepOne = (props: Props) => {
+const StepOne = ({ formik }: Props) => {
   const duureg = [
     "Баянзүрх дүүрэг",
     "Баянгол дүүрэг",
@@ -51,7 +56,13 @@ const StepOne = (props: Props) => {
           Хаяг аа оруулна уу
         </Typography>
         <Stack spacing={4}>
-          <Select sx={{ bgcolor: "#ECEDF0" }} displayEmpty>
+          <Select
+            onChange={formik.handleChange}
+            sx={{ bgcolor: "#ECEDF0" }}
+            displayEmpty
+            name="duureg"
+            value={formik.values.duureg}
+          >
             <MenuItem sx={{ backgroundColor: "#18BA51" }}>
               <em>
                 <PlaceOutlinedIcon />
@@ -59,10 +70,19 @@ const StepOne = (props: Props) => {
               </em>
             </MenuItem>
             {duureg.map((el) => (
-              <MenuItem value={el}>{el}</MenuItem>
+              <MenuItem key={el} value={el}>
+                {el}
+              </MenuItem>
             ))}
           </Select>
-          <Select sx={{ bgcolor: "#ECEDF0" }} displayEmpty>
+          <Typography color="red">{formik.errors.duureg}</Typography>
+          <Select
+            name="horoo"
+            onChange={formik.handleChange}
+            sx={{ bgcolor: "#ECEDF0" }}
+            displayEmpty
+            value={formik.values.horoo}
+          >
             <MenuItem sx={{ backgroundColor: "#18BA51" }}>
               <em>
                 <PlaceOutlinedIcon />
@@ -70,10 +90,19 @@ const StepOne = (props: Props) => {
               </em>
             </MenuItem>
             {horoo.map((el) => (
-              <MenuItem value={el}>{el}</MenuItem>
+              <MenuItem key={el} value={el}>
+                {el}
+              </MenuItem>
             ))}
           </Select>
-          <Select sx={{ bgcolor: "#ECEDF0" }} displayEmpty>
+          <Typography color="red">{formik.errors.horoo}</Typography>
+          <Select
+            onChange={formik.handleChange}
+            sx={{ bgcolor: "#ECEDF0" }}
+            displayEmpty
+            name="buildingNo"
+            value={formik.values.buildingNo}
+          >
             <MenuItem sx={{ backgroundColor: "#18BA51" }}>
               <em>
                 <PlaceOutlinedIcon />
@@ -81,49 +110,67 @@ const StepOne = (props: Props) => {
               </em>
             </MenuItem>
             {bair.map((el) => (
-              <MenuItem value={el}>{el}</MenuItem>
+              <MenuItem key={el} value={el}>
+                {el}
+              </MenuItem>
             ))}
-          </Select>
+          </Select>{" "}
+          <Typography color="red">{formik.errors.buildingNo}</Typography>
         </Stack>
         <Stack spacing={7} marginTop={10}>
           <Box>
             <Typography variant="subtitle2" fontWeight={600}>
               Нэмэлт мэдээлэл
               <TextField
+                name="info"
+                onChange={formik.handleChange}
                 sx={{ bgcolor: "#ECEDF0", width: "100%" }}
                 id="outlined-multiline-static"
                 multiline
                 rows={4}
                 placeholder="Орц, давхар, орцны код..."
+                value={formik.values.info}
               />
+              <Typography color="red">{formik.errors.info}</Typography>
             </Typography>
           </Box>
           <Box>
             <Typography variant="subtitle2" fontWeight={600}>
               Утасны дугаар
             </Typography>
-            <DefaultInput placeholder="Утасны дугаараа оруулна уу" />
+            <DefaultInput
+              errorText={formik.errors.phoneNumber}
+              name="phoneNumber"
+              onChange={formik.handleChange}
+              placeholder="Утасны дугаараа оруулна уу"
+            />
           </Box>
           <Box>
-            <Typography variant="subtitle2" fontWeight={600}>
-              Төлбөр төлөх
-            </Typography>
-            <div>
-              <FormControlLabel
-                value="Qpay"
-                control={<Checkbox />}
-                checked={true}
-                label="Qpay"
-                labelPlacement="end"
-              />
-              <FormControlLabel
-                value="Card"
-                control={<Checkbox />}
-                label="Картаар"
-                labelPlacement="end"
-                checked={!false}
-              />
-            </div>
+            <FormControl>
+              <FormLabel id="demo-controlled-radio-buttons-group">
+                <Typography variant="subtitle2" fontWeight={600}>
+                  Төлбөр төлөх
+                </Typography>
+              </FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="method"
+                value={formik.values.method}
+                onChange={formik.handleChange}
+              >
+                <FormControlLabel
+                  value="Qpay"
+                  control={<Radio />}
+                  label="Qpay"
+                />
+                <FormControlLabel
+                  value="Card"
+                  control={<Radio />}
+                  label="Картаар"
+                />
+              </RadioGroup>
+            </FormControl>
+            <Typography color="red">{formik.errors.method}</Typography>
           </Box>
         </Stack>
       </Box>

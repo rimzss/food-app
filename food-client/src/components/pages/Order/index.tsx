@@ -1,6 +1,6 @@
 "use client";
 import { Container } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import StepOne from "./stepOne";
 import StepTwo from "./stepTwo";
 import { useFormik } from "formik";
@@ -9,24 +9,29 @@ import * as yup from "yup";
 type Props = {};
 
 const OrderPageComponent = (props: Props) => {
+  const [totalPrice, setTotalPrice] = useState(0);
   const validationSchema = yup.object({
-    email: yup
+    duureg: yup.string().required("Дүүрэгээ заавал оруулах ёстой."),
+    horoo: yup.string().required("Хороогоо заавал оруулах ёстой."),
+    buildingNo: yup.string().required("Байраа заавал оруулах ёстой."),
+    phoneNumber: yup.string().required("Утасны дугаарыг заавал оруулах ёстой"),
+    info: yup
       .string()
-      .max(100, "Имэйл хаяг 100 тэмдэгтээс доош байх ёстой")
-      .required("Имэйл хаягыг заавал байх ёстой.")
-      .email("Имэйл хаяг байх ёстой")
-      .matches(
-        /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@gmail[A-Za-z0-9.-]+$/,
-        "Та зөвхөн gmail хаяг оруулна"
-      ),
-    password: yup.string().required("Нууц үгээ заавал бөглөнө үү."),
+      .required("Нэмэлт хаягны мэдээлэлийг заавал оруулах ёстой."),
+    method: yup.string().required("Төлбөрийн төрлөө заавал сонгоно уу"),
   });
   const formik = useFormik({
-    onSubmit: ({}) => {
-      console.log();
-      console.log();
+    onSubmit: ({ duureg, horoo, buildingNo, info, phoneNumber, method }) => {
+      console.log("ON SUBMIT WORKING");
     },
-    initialValues: { duureg: "", horoo: "", buildingNo: "", info: "" },
+    initialValues: {
+      duureg: "",
+      horoo: "",
+      buildingNo: "",
+      phoneNumber: "",
+      info: "",
+      method: "",
+    },
     validateOnChange: false,
     validateOnBlur: true,
     validationSchema,
@@ -36,8 +41,12 @@ const OrderPageComponent = (props: Props) => {
       maxWidth="xl"
       sx={{ minHeight: "700px", display: { md: "flex" }, gap: "100px" }}
     >
-      <StepOne />
-      <StepTwo />
+      <StepOne formik={formik} />
+      <StepTwo
+        formik={formik}
+        totalPrice={totalPrice}
+        setTotalPrice={setTotalPrice}
+      />
     </Container>
   );
 };

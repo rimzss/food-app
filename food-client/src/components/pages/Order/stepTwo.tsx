@@ -8,9 +8,13 @@ import { DefaultInput, DefualtButton } from "@/components";
 import { basketContext } from "@/context/basketProvider";
 import BasketItem from "@/components/checkout/BasketItem";
 
-type Props = {};
+type Props = {
+  formik: any;
+  totalPrice: number;
+  setTotalPrice: any;
+};
 
-const StepTwo = (props: Props) => {
+const StepTwo = ({ formik, totalPrice, setTotalPrice }: Props) => {
   const { basketFoods } = useContext(basketContext);
   return (
     <Box sx={{ minWidth: 370, width: { md: "50%" } }}>
@@ -67,7 +71,10 @@ const StepTwo = (props: Props) => {
             </Typography>
           </Box>
           <Box width="250px">
-            <DefualtButton text="Захиалах" />
+            <DefualtButton
+              text="Захиалах"
+              buttonFunction={formik.handleSubmit}
+            />
           </Box>
         </Box>
       </Box>
