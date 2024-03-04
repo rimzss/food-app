@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import FoodCard from "../card/foodCard";
 import Star from "../core/Star";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -28,10 +28,11 @@ const Menu = ({ id, catName, foods }: Props) => {
       {/* <div className="flex gap-8"> */}
       <Swiper
         className="mySwiper"
-        modules={[Pagination]}
+        modules={[Pagination, Navigation]}
         pagination={{
           clickable: true,
         }}
+        navigation={true}
         breakpoints={{
           768: {
             slidesPerView: 2,
@@ -49,10 +50,9 @@ const Menu = ({ id, catName, foods }: Props) => {
       >
         {catFoods?.map((food: any) => {
           return (
-            <SwiperSlide>
+            <SwiperSlide key={food._id}>
               <FoodCard
                 food={food}
-                key={food._id}
                 name={food.name}
                 price={food.price}
                 image={food.image}

@@ -8,13 +8,16 @@ import {
   useState,
 } from "react";
 import { authContext } from "../authProvider";
+import { basketContext } from "../basketProvider";
 
 interface ICreateOrderContext {}
 export const orderContext = createContext({} as ICreateOrderContext);
 
 const OrderProvider = ({ children }: PropsWithChildren) => {
+  const { basketFoods } = useContext(basketContext);
   let orderInfo = {
-    foods: [],
+    orderId: "#" + Math.random() * 10000,
+    foods: basketFoods,
     payment: {
       paymentAmount: 0,
       method: "",
@@ -25,7 +28,9 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
       buildingNo: "",
       info: "",
     },
+    phoneNumber: "",
   };
+
   const { token, user } = useContext(authContext);
   const creatOrder = async () => {
     const data = await axios.post("http://localhost:8080/order/new", {
