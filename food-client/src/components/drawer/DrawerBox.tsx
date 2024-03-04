@@ -13,7 +13,7 @@ type Props = {
 };
 
 const DrawerBox = ({ setOpenDrawer }: Props) => {
-  const { basketFoods } = useContext(basketContext);
+  const { basketFoods, totalPrice } = useContext(basketContext);
   return (
     <div className="min-w-52 p-5 flex flex-col h-screen justify-between">
       <Box>
@@ -51,16 +51,7 @@ const DrawerBox = ({ setOpenDrawer }: Props) => {
       >
         <Box>
           <Typography color="#5E6166">Нийт төлөх дүн</Typography>
-          <Typography fontWeight={700}>
-            {basketFoods
-              ?.map((food: any) => {
-                return food.food.price * food.count;
-              })
-              .reduce((sum: number, cur: number) => {
-                return sum + cur;
-              }, 0)}
-            ₮
-          </Typography>
+          <Typography fontWeight={700}>{totalPrice}₮</Typography>
         </Box>
         <Box width="250px">
           <Link href="/order">

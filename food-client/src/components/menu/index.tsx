@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import FoodCard from "../card/foodCard";
 import Star from "../core/Star";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 type Props = {
   id: string;
@@ -28,7 +29,11 @@ const Menu = ({ id, catName, foods }: Props) => {
       {/* <div className="flex gap-8"> */}
       <Swiper
         className="mySwiper"
-        modules={[Pagination, Navigation]}
+        modules={[Pagination, Autoplay, Navigation]}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
         pagination={{
           clickable: true,
         }}

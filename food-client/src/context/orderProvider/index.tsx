@@ -10,16 +10,25 @@ import {
 import { authContext } from "../authProvider";
 import { basketContext } from "../basketProvider";
 
-interface ICreateOrderContext {}
+interface ICreateOrderContext {
+  createOrder: (
+    duureg: string,
+    horoo: string,
+    buildingNo: string,
+    info: string,
+    phoneNumber: string,
+    method: string
+  ) => void;
+}
 export const orderContext = createContext({} as ICreateOrderContext);
 
 const OrderProvider = ({ children }: PropsWithChildren) => {
-  const { basketFoods } = useContext(basketContext);
+  const { basketFoods, totalPrice } = useContext(basketContext);
   let orderInfo = {
-    orderId: "#" + Math.random() * 10000,
+    orderId: "#" + Math.floor(Math.random() * 10000),
     foods: basketFoods,
     payment: {
-      paymentAmount: 0,
+      paymentAmount: totalPrice,
       method: "",
     },
     address: {
@@ -32,29 +41,39 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
   };
 
   const { token, user } = useContext(authContext);
-  const creatOrder = async ({
-    duureg,
-    horoo,
-    buildingNo,
-    info,
-    phoneNumber,
-    method,
-  }: any) => {
+  const createOrder = async (
+    duureg: string,
+    horoo: string,
+    buildingNo: string,
+    info: string,
+    phoneNumber: string,
+    method: string
+  ) => {
     orderInfo.address.duureg = duureg;
     orderInfo.address.khoroo = horoo;
     orderInfo.address.buildingNo = buildingNo;
     orderInfo.address.info = info;
     orderInfo.payment.method = method;
     orderInfo.phoneNumber = phoneNumber;
-    const data = await axios.post("http://localhost:8080/order/new", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      data: {
+    console.log("CREATE ORDER", orderInfo);
+    console.log("TOKEN", token);
+    const data = await axios.post(
+      "http://localhost:8080/order/new",
+      {
         userId: user._id,
         orderInfo: orderInfo,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   };
-  return <orderContext.Provider value={{}}>{children}</orderContext.Provider>;
+  return (
+    <orderContext.Provider value={{ createOrder }}>
+      {children}
+    </orderContext.Provider>
+  );
 };
+export default OrderProvider;

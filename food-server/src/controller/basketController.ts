@@ -50,12 +50,14 @@ export const deleteFoodFromBasket = async (
 ) => {
   try {
     const { userId, foodId } = req.body;
-    const userBasket = await Basket.findOne({ user: userId });
-    const deleteIndex = userBasket?.foods.findIndex(
-      (food) => food.food === foodId
+    const userBasket = await Basket.findOne({ user: userId }).populate(
+      "foods.food"
     );
+    const deleteIndex = userBasket?.foods.findIndex(
+      (food) => food.food?._id == foodId
+    );
+
     userBasket?.foods.splice(deleteIndex!, 1);
-    console.log("USERBASKET", userBasket);
     await userBasket?.save();
     res.status(200).json({ message: "successfully deleted from basket" });
   } catch (error) {

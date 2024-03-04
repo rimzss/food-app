@@ -14,7 +14,7 @@ interface ICreateBasketContext {
   clearBasket: () => void;
   addBasketItem: (foodId: string, count: number) => void;
   deleteBasketItem: (foodId: string) => void;
-
+  totalPrice: number;
   basketFoods: any;
 }
 
@@ -25,7 +25,20 @@ export const basketContext = createContext<ICreateBasketContext>(
 const BasketProvider = ({ children }: PropsWithChildren) => {
   const [basketFoods, setBasketFoods] = useState();
   const { user } = useContext(authContext);
-
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    if (basketFoods) {
+      setTotalPrice(
+        basketFoods
+          ?.map((food: any) => {
+            return food.food.price * food.count;
+          })
+          .reduce((sum: number, cur: number) => {
+            return sum + cur;
+          }, 0)
+      );
+    }
+  }, [basketFoods]);
   const getUserBasketFoods = async () => {
     if (user) {
       try {
@@ -79,6 +92,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
         addBasketItem,
         deleteBasketItem,
         clearBasket,
+        totalPrice,
       }}
     >
       {children}

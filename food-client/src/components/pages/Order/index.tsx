@@ -1,15 +1,16 @@
 "use client";
 import { Container } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import StepOne from "./stepOne";
 import StepTwo from "./stepTwo";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { orderContext } from "@/context/orderProvider";
 
 type Props = {};
 
 const OrderPageComponent = (props: Props) => {
-  const [totalPrice, setTotalPrice] = useState(0);
+  const { createOrder } = useContext(orderContext);
   const validationSchema = yup.object({
     duureg: yup.string().required("Дүүрэгээ заавал оруулах ёстой."),
     horoo: yup.string().required("Хороогоо заавал оруулах ёстой."),
@@ -23,6 +24,7 @@ const OrderPageComponent = (props: Props) => {
   const formik = useFormik({
     onSubmit: ({ duureg, horoo, buildingNo, info, phoneNumber, method }) => {
       console.log("ON SUBMIT WORKING");
+      createOrder(duureg, horoo, buildingNo, info, phoneNumber, method);
     },
     initialValues: {
       duureg: "",
@@ -42,11 +44,7 @@ const OrderPageComponent = (props: Props) => {
       sx={{ minHeight: "700px", display: { md: "flex" }, gap: "100px" }}
     >
       <StepOne formik={formik} />
-      <StepTwo
-        formik={formik}
-        totalPrice={totalPrice}
-        setTotalPrice={setTotalPrice}
-      />
+      <StepTwo formik={formik} />
     </Container>
   );
 };

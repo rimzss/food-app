@@ -10,12 +10,10 @@ import BasketItem from "@/components/checkout/BasketItem";
 
 type Props = {
   formik: any;
-  totalPrice: number;
-  setTotalPrice: any;
 };
 
-const StepTwo = ({ formik, totalPrice, setTotalPrice }: Props) => {
-  const { basketFoods } = useContext(basketContext);
+const StepTwo = ({ formik }: Props) => {
+  const { basketFoods, totalPrice } = useContext(basketContext);
   return (
     <Box sx={{ minWidth: 370, width: { md: "50%" } }}>
       <Box sx={{ display: "flex" }}>
@@ -59,16 +57,7 @@ const StepTwo = ({ formik, totalPrice, setTotalPrice }: Props) => {
         >
           <Box>
             <Typography color="#5E6166">Нийт төлөх дүн</Typography>
-            <Typography fontWeight={700}>
-              {basketFoods
-                ?.map((food: any) => {
-                  return food.food.price * food.count;
-                })
-                .reduce((sum: number, cur: number) => {
-                  return sum + cur;
-                }, 0)}
-              ₮
-            </Typography>
+            <Typography fontWeight={700}>{totalPrice}₮</Typography>
           </Box>
           <Box width="250px">
             <DefualtButton

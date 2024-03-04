@@ -25,10 +25,12 @@ const OrderModal = () => {
       addBasketItem(food._id, count);
       alert(`Таны сагсанд ${food.name}-ийн амжилттай нэмлээ`, "success");
       setOpenOrder(false);
+      setCount(1);
     } else {
       alert("Нэвтрэх шаардлагтай", "warning");
       setOpenOrder(false);
       router.push("/login");
+      setCount(1);
     }
   };
   return (
