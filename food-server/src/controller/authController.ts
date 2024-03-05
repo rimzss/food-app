@@ -61,3 +61,22 @@ export const signin = async (
     next(error);
   }
 };
+
+export const updateUser = async (req: Request,
+  res: Response,
+  next: NextFunction) => {
+  try {
+    const {userId, updateInfo} = req.body
+    console.log(color.bgBlue(`Req body ${updateInfo}`))
+    const user = await User.findById(userId)
+    console.log(color.bgBlue(`Found user ${user}`))
+    if(!user){
+      throw new MyError("Хэрэглэгч бүртгэлгүй байна", 400)
+    }else{
+      await user.updateOne(updateInfo)
+    }
+    res.status(201).json({ message: "Амжилттай засагдлаа"});
+  } catch (error) {
+    next()
+  }
+}
