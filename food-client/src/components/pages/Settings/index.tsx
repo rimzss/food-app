@@ -2,13 +2,13 @@
 import { DefaultUserEdit, SecondaryButton } from "@/components";
 import { authContext } from "@/context/authProvider";
 import { Avatar, Container, Stack } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { EditInput } from "./editInput";
 
 type Props = {};
 
 const Settings = (props: Props) => {
-  const { user } = useContext(authContext);
+  const { user, updateUser } = useContext(authContext);
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const toggleEdit = (label: string) => {
@@ -22,6 +22,24 @@ const Settings = (props: Props) => {
       default:
         setIsEditingName(false);
         setIsEditingEmail(false);
+        break;
+    }
+  };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+    }
+  }, [user]);
+  const handleEdit = (e: ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.name) {
+      case "name":
+        setName(e.target.value);
+        break;
+      case "email":
+        setEmail(e.target.value);
         break;
     }
   };
@@ -42,18 +60,21 @@ const Settings = (props: Props) => {
       <Stack spacing={5}>
         {isEditingName ? (
           <EditInput
+            name="name"
+            onChange={handleEdit}
             label="Таны нэр"
             icon="name"
-            value={user.name}
+            value={name!}
             buttonFunction={() => {
               toggleEdit("");
+              updateUser({ name: name });
             }}
           />
         ) : (
           <DefaultUserEdit
             label="Таны нэр"
             icon="name"
-            value={user.name}
+            value={name!}
             buttonFunction={() => {
               toggleEdit("name");
             }}
@@ -61,18 +82,21 @@ const Settings = (props: Props) => {
         )}
         {isEditingEmail ? (
           <EditInput
+            name="email"
+            onChange={handleEdit}
             label="Имэйл хаяг"
             icon="name"
-            value={user.email}
+            value={email!}
             buttonFunction={() => {
               toggleEdit("");
+              updateUser({ email: email });
             }}
           />
         ) : (
           <DefaultUserEdit
             label="Имэйл хаяг"
             icon="name"
-            value={user.email}
+            value={email!}
             buttonFunction={() => {
               toggleEdit("email");
             }}

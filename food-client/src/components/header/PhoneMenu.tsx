@@ -89,7 +89,7 @@ const PhoneMenu = ({
         ) : (
           <MenuItem
             onClick={() => {
-              handleClose(), logout();
+              handleClose();
               clearBasket();
             }}
           >

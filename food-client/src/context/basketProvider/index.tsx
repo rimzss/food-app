@@ -23,7 +23,7 @@ export const basketContext = createContext<ICreateBasketContext>(
 );
 
 const BasketProvider = ({ children }: PropsWithChildren) => {
-  const [basketFoods, setBasketFoods] = useState();
+  const [basketFoods, setBasketFoods] = useState([]);
   const { user } = useContext(authContext);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
@@ -82,7 +82,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     } catch (error) {}
   };
   const clearBasket = () => {
-    setBasketFoods(undefined);
+    setBasketFoods([]);
   };
   return (
     <basketContext.Provider

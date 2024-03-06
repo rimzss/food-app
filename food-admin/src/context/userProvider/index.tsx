@@ -12,12 +12,14 @@ export const userContext = createContext<ICreateUserContext>(
 
 const UserProvider = ({ children }: PropsWithChildren) => {
   const [customers, setCustomers] = useState([]);
+  const [orders, setOrders] = useState();
   const getCustomers = async () => {
     try {
       const data = await axios
         .get("http://localhost:8080/users")
         .then((res) => res.data);
       setCustomers(data.users);
+      setOrders(data.users?.map((e: any) => {}));
     } catch (error) {
       console.log("Error in getUsers FUNCTION!", error);
     }

@@ -11,11 +11,13 @@ import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { json } from "stream/consumers";
 import { alertContext } from "../alertProvider";
+import { IUpdateInfo, IUser } from "@/types";
 
 interface IUserCreateContext {
   handleLoginInfo: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSignupInfo: (e: ChangeEvent<HTMLInputElement>) => void;
   login: (email: string, password: string) => void;
+  updateUser: (obj: IUpdateInfo) => void;
   logout: () => void;
   token: string;
   user: any;
@@ -110,11 +112,12 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       console.log("ERROR IN SIGNUP FUNCTION", error);
     }
   };
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState<IUser | null>();
   const [token, setToken] = useState("");
   const authLogged = () => {
     if (localStorage.getItem("token")) {
       setUser(JSON.parse(localStorage.getItem("user")!));
+      console.log("USER", JSON.parse(localStorage.getItem("user")!));
       setToken(localStorage.getItem("token")!);
     }
   };
@@ -125,11 +128,21 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     setIsLoggingOut(true);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    setUser("");
+    setUser(null);
     setToken("");
     setTimeout(() => {
       setIsLoggingOut(false);
     }, 1000);
+    router.push("/");
+  };
+  const updateUser = async (obj: IUpdateInfo) => {
+    console.log("UPDATING USER", obj);
+    try {
+      await axios.put("http://localhost:8080/users", {
+        userId: user?._id,
+        updateInfo: obj,
+      });
+    } catch (error) {}
   };
   return (
     <authContext.Provider
@@ -145,6 +158,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         user,
         token,
         isLoggingOut,
+        updateUser,
       }}
     >
       {children}

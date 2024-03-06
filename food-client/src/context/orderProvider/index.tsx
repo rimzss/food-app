@@ -55,6 +55,7 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
     orderInfo.address.info = info;
     orderInfo.payment.method = method;
     orderInfo.phoneNumber = phoneNumber;
+    orderInfo.payment.paymentAmount = totalPrice;
     console.log("CREATE ORDER", orderInfo);
     console.log("TOKEN", token);
     const data = await axios.post(

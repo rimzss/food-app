@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
@@ -8,6 +8,8 @@ type Props = {
   value: string;
   icon: string;
   buttonFunction?: () => void;
+  name: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const EditInput = ({
@@ -15,6 +17,8 @@ export const EditInput = ({
   value = "Your name",
   icon,
   buttonFunction,
+  name,
+  onChange,
 }: Props) => {
   return (
     <div className="bg-[#EEEFF2] rounded-sm px-3 py-5 flex justify-between items-center w-80">
@@ -26,7 +30,7 @@ export const EditInput = ({
 
         <div>
           <p className="text-sm text-[#888A99]">{label}</p>
-          <input type="text" value={value} />
+          <input name={name} type="text" value={value} onChange={onChange} />
         </div>
       </div>
       <button onClick={buttonFunction}>

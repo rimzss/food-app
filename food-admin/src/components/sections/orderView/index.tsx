@@ -28,7 +28,7 @@ import { redirect } from "next/navigation";
 
 // ----------------------------------------------------------------------
 
-export default function UserView() {
+export default function OrderView() {
   const { checkIsLogged } = useContext(authContext);
   useEffect(() => {
     checkIsLogged();
@@ -119,7 +119,7 @@ export default function UserView() {
         justifyContent="space-between"
         mb={5}
       >
-        <Typography variant="h4">Хэрэглэгчид</Typography>
+        <Typography variant="h4">Захиалгууд</Typography>
       </Stack>
 
       <Card sx={{}}>
