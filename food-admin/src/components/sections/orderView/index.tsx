@@ -37,7 +37,7 @@ export default function OrderView() {
       redirect("/login");
     }
   }, []);
-  const { getCustomers, customers } = useContext(userContext);
+  const { getCustomers, customers, orders } = useContext(userContext);
   useEffect(() => {
     getCustomers();
   }, []);
@@ -104,13 +104,13 @@ export default function OrderView() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: customers,
+    inputData: orders,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
-
+  console.log("ORDERS", orders);
   return (
     <Container>
       <Stack
@@ -135,42 +135,31 @@ export default function OrderView() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={customers.length}
+                rowCount={orders.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: "name", label: "Нэр" },
-                  { id: "company", label: "Имэйл" },
-                  { id: "role", label: "Эрх" },
+                  { id: "order", label: "Order Name" },
+                  { id: "info", label: "Buyer Info" },
+                  { id: "payment", label: "Payment" },
+                  { id: "address", label: "Address" },
+                  { id: "state", label: "Delivery state" },
                   { id: "action", label: "Үйлдэл" },
                 ]}
               />
               <TableBody>
-                {/* {customers ? (
-                  customers?.map((customer: any) => {
-                    return (
-                      <UserTableRow
-                        key={customer._id}
-                        name={customer.name}
-                        role={customer.role}
-                        company={customer.email}
-                      />
-                    );
-                  })
-                ) : (
-                  <div></div>
-                )} */}
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row: any) => (
                     <UserTableRow
                       key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      email={row.email}
-                      avatarUrl={row.avatarUrl}
+                      orderNo={row.orderNo}
+                      payment={row.payment}
+                      address={row.address}
+                      phoneNumber={row.phoneNumber}
+                      user={row.user}
+                      delivery={row.delivery}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event: any) => handleClick(event, row.name)}
                     />

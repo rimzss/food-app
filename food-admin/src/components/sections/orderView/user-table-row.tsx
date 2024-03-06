@@ -14,18 +14,19 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Label from "@/components/label";
 import Iconify from "@/components/iconify";
+import { Chip } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 export default function UserTableRow({
   selected,
-  name,
-  avatarUrl,
-  email,
-  role,
-  isVerified,
-  status,
+  orderNo,
+  payment,
+  address,
+  phoneNumber,
+  user,
   handleClick,
+  delivery,
 }: any) {
   const [open, setOpen] = useState(null);
 
@@ -46,16 +47,37 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
+            <Avatar alt={""} src={""} />
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {orderNo}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{email}</TableCell>
+        <TableCell>
+          <Stack>
+            <Typography variant="subtitle2">{phoneNumber}</Typography>
+            <Typography>{user?.name}</Typography>
+          </Stack>
+        </TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell>
+          <Stack>
+            <Typography variant="subtitle2">
+              {payment?.paymentAmount}₮{" "}
+              <Chip label={payment.status} color="info" />
+            </Typography>
+          </Stack>
+        </TableCell>
+        <TableCell>
+          <div className="flex justify-between">
+            <Typography>{address?.duureg}</Typography>
+            <Typography>{address?.khoroo}</Typography>
+          </div>
+        </TableCell>
+        <TableCell>
+          <Chip label={delivery.status} />
+        </TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

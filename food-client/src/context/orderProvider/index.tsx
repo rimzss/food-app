@@ -25,7 +25,7 @@ export const orderContext = createContext({} as ICreateOrderContext);
 const OrderProvider = ({ children }: PropsWithChildren) => {
   const { basketFoods, totalPrice } = useContext(basketContext);
   let orderInfo = {
-    orderId: "#" + Math.floor(Math.random() * 10000),
+    orderNo: "#" + Math.floor(Math.random() * 10000),
     foods: basketFoods,
     payment: {
       paymentAmount: totalPrice,
