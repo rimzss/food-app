@@ -78,6 +78,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         .then((res) => res.data);
       localStorage.setItem("user", JSON.stringify(data.userInfo));
       localStorage.setItem("token", data.token);
+      console.log("USER", data.userInfo);
       authLogged();
       alert("Амжилттай нэвтэрлээ", "success");
       router.push("/");

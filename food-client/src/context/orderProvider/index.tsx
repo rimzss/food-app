@@ -9,6 +9,7 @@ import {
 } from "react";
 import { authContext } from "../authProvider";
 import { basketContext } from "../basketProvider";
+import { alertContext } from "../alertProvider";
 
 interface ICreateOrderContext {
   createOrder: (
@@ -24,6 +25,7 @@ export const orderContext = createContext({} as ICreateOrderContext);
 
 const OrderProvider = ({ children }: PropsWithChildren) => {
   const { basketFoods, totalPrice } = useContext(basketContext);
+  const { alert } = useContext(alertContext);
   let orderInfo = {
     orderNo: "#" + Math.floor(Math.random() * 10000),
     foods: basketFoods,
@@ -58,18 +60,23 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
     orderInfo.payment.paymentAmount = totalPrice;
     console.log("CREATE ORDER", orderInfo);
     console.log("TOKEN", token);
-    const data = await axios.post(
-      "http://localhost:8080/order/new",
-      {
-        userId: user._id,
-        orderInfo: orderInfo,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    try {
+      const data = await axios.post(
+        "http://localhost:8080/order/new",
+        {
+          userId: user._id,
+          orderInfo: orderInfo,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("Таны захиалга амжилттай боллоо", "success");
+    } catch (error) {
+      alert("Таны захиалга амжилтгүй боллоо", "error");
+    }
   };
   return (
     <orderContext.Provider value={{ createOrder }}>

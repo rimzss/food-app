@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import color from "colors";
 import User from "../model/user";
+import Basket from "../model/basket";
 import MyError from "../utils/myError";
 
 export const createOrder = async (
@@ -9,11 +10,13 @@ export const createOrder = async (
   next: NextFunction
 ) => {
   try {
-    console.log(color.bgWhite(`REQUESTIIN BODY ${req.body}`));
     const { userId, orderInfo } = req.body;
     const user = await User.findById(userId);
+    const userBasket = await Basket.findOne({ user: userId });
     user?.orders.push(orderInfo);
+    userBasket?.foods.splice(0, userBasket?.foods.length);
     await user?.save();
+    await userBasket?.save();
     res.status(201).json({ message: "Successfully created order" });
   } catch (error) {
     next(error);

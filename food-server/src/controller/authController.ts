@@ -16,7 +16,9 @@ export const signup = async (
   try {
     let newUser = req.body;
     const user = await User.create(newUser);
-    res.status(201).json({ message: "New user successfully created", userInfo:user });
+    res
+      .status(201)
+      .json({ message: "New user successfully created", userInfo: user });
   } catch (error) {
     console.log(color.bgRed(`signup request failed ${error}`));
     next(error);
@@ -30,20 +32,17 @@ export const signin = async (
 ) => {
   try {
     let { email, upassword } = req.body;
-    const user = await User.findOne({ email }).select("+password").lean();
+    const user = await User.findOne({ email })
+      .select("+password")
+      .lean()
+      .populate("orders.foods.food");
 
     if (!user) {
-      throw new MyError(
-        `${email} -хэрэглэгч бүртгэлгүй байна.`,
-        400
-      );
+      throw new MyError(`${email} -хэрэглэгч бүртгэлгүй байна.`, 400);
     }
     const isValid = await bcrypt.compare(upassword, user.password);
     if (!isValid) {
-      throw new MyError(
-        `Имэйл эсвэл нууц үг буруу байнав`,
-        400
-      );
+      throw new MyError(`Имэйл эсвэл нууц үг буруу байнав`, 400);
     }
     const token = jwt.sign(
       {
@@ -62,21 +61,23 @@ export const signin = async (
   }
 };
 
-export const updateUser = async (req: Request,
+export const updateUser = async (
+  req: Request,
   res: Response,
-  next: NextFunction) => {
+  next: NextFunction
+) => {
   try {
-    const {userId, updateInfo} = req.body
-    console.log(color.bgBlue(`Req body ${updateInfo}`))
-    const user = await User.findById(userId)
-    console.log(color.bgBlue(`Found user ${user}`))
-    if(!user){
-      throw new MyError("Хэрэглэгч бүртгэлгүй байна", 400)
-    }else{
-      await user.updateOne(updateInfo)
+    const { userId, updateInfo } = req.body;
+    console.log(color.bgBlue(`Req body ${updateInfo}`));
+    const user = await User.findById(userId);
+    console.log(color.bgBlue(`Found user ${user}`));
+    if (!user) {
+      throw new MyError("Хэрэглэгч бүртгэлгүй байна", 400);
+    } else {
+      await user.updateOne(updateInfo);
     }
-    res.status(201).json({ message: "Амжилттай засагдлаа"});
+    res.status(201).json({ message: "Амжилттай засагдлаа" });
   } catch (error) {
-    next()
+    next();
   }
-}
+};
