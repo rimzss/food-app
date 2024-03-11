@@ -34,7 +34,7 @@ const StepTwo = ({ formik }: Props) => {
         gap={10}
         p={5}
         borderRadius={2}
-        sx={{ minHeight: 618 }}
+        sx={{ minHeight: 618, position: "relative", zIndex: 10 }}
       >
         <div className="overflow-scroll max-h-[500px]">
           {basketFoods?.map((food: any) => {
@@ -53,7 +53,9 @@ const StepTwo = ({ formik }: Props) => {
           justifyContent="space-between"
           boxShadow="0px -4px 8px 0px rgba(187, 190, 205, 0.20)"
           padding="10px 32px 30px 32px"
-          sx={{ position: "sticky", bottom: "0", backgroundColor: "white" }}
+          position="sticky"
+          bottom={0}
+          zIndex={20}
         >
           <Box>
             <Typography color="#5E6166">Нийт төлөх дүн</Typography>

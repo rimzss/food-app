@@ -27,7 +27,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
   const getFoods = async () => {
     try {
       const foodData = await axios
-        .get("http://localhost:8080/food")
+        .get("https://foodserver-lake.vercel.app/food")
         .then((res) => res.data);
       setFoods(foodData.foods);
       setIsLoading(false);

@@ -6,6 +6,7 @@ import StepTwo from "./stepTwo";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { orderContext } from "@/context/orderProvider";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
@@ -23,7 +24,6 @@ const OrderPageComponent = (props: Props) => {
   });
   const formik = useFormik({
     onSubmit: ({ duureg, horoo, buildingNo, info, phoneNumber, method }) => {
-      console.log("ON SUBMIT WORKING");
       createOrder(duureg, horoo, buildingNo, info, phoneNumber, method);
     },
     initialValues: {

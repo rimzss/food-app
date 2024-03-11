@@ -20,7 +20,7 @@ const CatProvider = ({ children }: PropsWithChildren) => {
   const getCategories = async () => {
     try {
       const categoryData = await axios
-        .get("http://localhost:8080/category")
+        .get("https://foodserver-lake.vercel.app/category")
         .then((res) => res.data);
       setCatogories(categoryData.categorys);
     } catch (error) {

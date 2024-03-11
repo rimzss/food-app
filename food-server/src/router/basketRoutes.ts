@@ -4,6 +4,7 @@ import {
   createBasket,
   deleteFoodFromBasket,
   getBasketFoods,
+  updateCounter,
 } from "../controller/basketController";
 
 const router = Router();
@@ -12,5 +13,5 @@ router
   .post(createBasket)
   .put(addFoodToBasket)
   .delete(deleteFoodFromBasket);
-router.route("/:userId").get(getBasketFoods);
+router.route("/:userId").get(getBasketFoods).put(updateCounter);
 export default router;

@@ -4,11 +4,12 @@ import { authContext } from "@/context/authProvider";
 import { Avatar, Container, Stack } from "@mui/material";
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { EditInput } from "./editInput";
+import Link from "next/link";
 
 type Props = {};
 
 const Settings = (props: Props) => {
-  const { user, updateUser } = useContext(authContext);
+  const { user, updateUser, logout } = useContext(authContext);
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const toggleEdit = (label: string) => {
@@ -102,9 +103,11 @@ const Settings = (props: Props) => {
             }}
           />
         )}
+        <Link href="/history">
+          <SecondaryButton icon="history" value="Захиалгын түүх" />
+        </Link>
 
-        <SecondaryButton icon="history" value="Захиалгын түүх" />
-        <SecondaryButton icon="logout" value="Гарах" />
+        <SecondaryButton buttonFunction={logout} icon="logout" value="Гарах" />
       </Stack>
     </Container>
   );

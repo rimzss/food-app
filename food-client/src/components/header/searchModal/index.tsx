@@ -32,6 +32,7 @@ export default function SearchModal() {
           <div className="p-3">
             {resultFoods?.map((result: any) => (
               <ResultFoodCard
+                key={result.name}
                 image={result.image}
                 name={result.name}
                 price={result.price}

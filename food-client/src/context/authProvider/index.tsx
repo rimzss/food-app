@@ -71,7 +71,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const login = async (email: string, password: string) => {
     try {
       const data = await axios
-        .post("http://localhost:8080/auth/signin", {
+        .post("https://foodserver-lake.vercel.app/auth/signin", {
           email: email,
           upassword: password,
         })
@@ -89,13 +89,15 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   };
   const createUserBasket = async (id: string) => {
     try {
-      await axios.post("http://localhost:8080/basket", { userId: id });
+      await axios.post("https://foodserver-lake.vercel.app/basket", {
+        userId: id,
+      });
     } catch (error) {}
   };
   const signup = async (name: string, email: string, password: string) => {
     try {
       const data = await axios
-        .post("http://localhost:8080/auth/signup", {
+        .post("https://foodserver-lake.vercel.app/auth/signup", {
           name: name,
           email: email,
           password: password,
@@ -139,12 +141,13 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const updateUser = async (obj: IUpdateInfo) => {
     console.log("UPDATING USER", obj);
     try {
-      await axios.put("http://localhost:8080/users", {
+      await axios.put("https://foodserver-lake.vercel.app/users", {
         userId: user?._id,
         updateInfo: obj,
       });
     } catch (error) {}
   };
+
   return (
     <authContext.Provider
       value={{

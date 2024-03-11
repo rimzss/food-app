@@ -16,7 +16,6 @@ interface ICreateSearchContext {
   searching: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 export const searchContext = createContext({} as ICreateSearchContext);
-
 const SearchProvider = ({ children }: PropsWithChildren) => {
   const { foods } = useContext(foodContext);
   const [openSeachModal, setOpenSeachModal] = useState(false);

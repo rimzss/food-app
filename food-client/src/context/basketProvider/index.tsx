@@ -13,6 +13,7 @@ interface ICreateBasketContext {
   getUserBasketFoods: () => void;
   clearBasket: () => void;
   addBasketItem: (foodId: string, count: number) => void;
+  updateFoodCount: (count: number, foodId: string) => void;
   deleteBasketItem: (foodId: string) => void;
   totalPrice: number;
   basketFoods: any;
@@ -43,7 +44,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     if (user) {
       try {
         const data = await axios
-          .get(`http://localhost:8080/basket/${user._id}`)
+          .get(`https://foodserver-lake.vercel.app/basket/${user._id}`)
           .then((res) => res.data);
         setBasketFoods(data.basket.foods);
         console.log(data.basket.foods);
@@ -56,7 +57,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   const addBasketItem = async (foodId: string, count: number) => {
     try {
       const data = await axios
-        .put("http://localhost:8080/basket", {
+        .put("https://foodserver-lake.vercel.app/basket", {
           userId: user._id,
           foodId: foodId,
           count: count,
@@ -72,17 +73,33 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   };
   const deleteBasketItem = async (foodId: string) => {
     try {
-      const data = await axios.delete("http://localhost:8080/basket", {
-        data: {
-          userId: user._id,
-          foodId: foodId,
-        },
-      });
+      const data = await axios.delete(
+        "https://foodserver-lake.vercel.app/basket",
+        {
+          data: {
+            userId: user._id,
+            foodId: foodId,
+          },
+        }
+      );
       deleteFoodFromArray(foodId);
     } catch (error) {}
   };
   const clearBasket = () => {
     setBasketFoods([]);
+  };
+
+  const updateFoodCount = async (count: number, foodId: string) => {
+    try {
+      const data = await axios.put(
+        `https://foodserver-lake.vercel.app/basket/${user._id}`,
+        {
+          count: count,
+          foodId: foodId,
+        }
+      );
+      getUserBasketFoods();
+    } catch (error) {}
   };
   return (
     <basketContext.Provider
@@ -93,6 +110,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
         deleteBasketItem,
         clearBasket,
         totalPrice,
+        updateFoodCount,
       }}
     >
       {children}

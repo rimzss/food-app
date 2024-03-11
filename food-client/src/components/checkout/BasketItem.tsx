@@ -26,7 +26,7 @@ type Props = {
 };
 
 const BasketItem = ({ food, count, isOrder = true }: any) => {
-  const { deleteBasketItem } = useContext(basketContext);
+  const { deleteBasketItem, updateFoodCount } = useContext(basketContext);
   const { alert } = useContext(alertContext);
   const deleteFunction = () => {
     deleteBasketItem(food._id);
@@ -70,20 +70,38 @@ const BasketItem = ({ food, count, isOrder = true }: any) => {
               />
             )}
           </Box>
+          {isOrder ? (
+            <Stack spacing={4} direction="row">
+              <Button
+                onClick={() => {
+                  if (count > 1) {
+                    updateFoodCount(-1, food._id);
+                  }
+                }}
+                sx={{ borderRadius: "10px" }}
+                variant="contained"
+              >
+                <RemoveIcon className="text-white" />
+              </Button>
 
-          <Stack spacing={4} direction="row">
-            <Button sx={{ borderRadius: "10px" }} variant="contained">
-              <RemoveIcon className="text-white" />
-            </Button>
-
-            <Typography marginX="20px" variant="h6">
-              {count}
-            </Typography>
-            <Button sx={{ borderRadius: "10px" }} variant="contained">
-              <AddIcon className="text-white" />
-            </Button>
-          </Stack>
-          <Box display="flex"></Box>
+              <Typography marginX="20px" variant="h6">
+                {count}
+              </Typography>
+              <Button
+                onClick={() => {
+                  if (count < 10) {
+                    updateFoodCount(1, food._id);
+                  }
+                }}
+                sx={{ borderRadius: "10px" }}
+                variant="contained"
+              >
+                <AddIcon className="text-white" />
+              </Button>
+            </Stack>
+          ) : (
+            <Box>{count}</Box>
+          )}
         </CardContent>
       </Box>
     </Card>

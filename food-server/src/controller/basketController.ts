@@ -80,3 +80,24 @@ export const getBasketFoods = async (
     next(error);
   }
 };
+
+export const updateCounter = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+    const { count, foodId } = req.body;
+    const userBasket = await Basket.findOne({ user: userId });
+    const findIndex: number = userBasket!.foods.findIndex(
+      (food) => food.food == foodId
+    );
+    userBasket!.foods[findIndex].count =
+      userBasket?.foods[findIndex].count + count;
+    await userBasket?.save();
+    res.status(200).json({ message: "successfully  updateCount" });
+  } catch (error) {
+    next(error);
+  }
+};

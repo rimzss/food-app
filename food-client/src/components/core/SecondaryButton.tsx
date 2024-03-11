@@ -9,7 +9,10 @@ type Props = {
 
 export const SecondaryButton = ({ value, icon, buttonFunction }: Props) => {
   return (
-    <div className="rounded-sm px-3 py-5 flex justify-between items-center">
+    <div
+      onClick={buttonFunction}
+      className="rounded-sm px-3 py-5 flex justify-between items-center cursor-pointer"
+    >
       <div className="flex gap-3 items-center">
         <div className="bg-white rounded-full p-3 border-[0.5px]">
           {icon === "history" && <RestoreOutlinedIcon />}

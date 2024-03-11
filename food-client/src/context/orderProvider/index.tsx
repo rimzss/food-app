@@ -10,6 +10,7 @@ import {
 import { authContext } from "../authProvider";
 import { basketContext } from "../basketProvider";
 import { alertContext } from "../alertProvider";
+import { useRouter } from "next/navigation";
 
 interface ICreateOrderContext {
   createOrder: (
@@ -24,6 +25,7 @@ interface ICreateOrderContext {
 export const orderContext = createContext({} as ICreateOrderContext);
 
 const OrderProvider = ({ children }: PropsWithChildren) => {
+  const router = useRouter();
   const { basketFoods, totalPrice } = useContext(basketContext);
   const { alert } = useContext(alertContext);
   let orderInfo = {
@@ -62,7 +64,7 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
     console.log("TOKEN", token);
     try {
       const data = await axios.post(
-        "http://localhost:8080/order/new",
+        "https://foodserver-lake.vercel.app/order/new",
         {
           userId: user._id,
           orderInfo: orderInfo,
@@ -74,6 +76,7 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
         }
       );
       alert("Таны захиалга амжилттай боллоо", "success");
+      router.push("/history");
     } catch (error) {
       alert("Таны захиалга амжилтгүй боллоо", "error");
     }
