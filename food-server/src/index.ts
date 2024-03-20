@@ -34,6 +34,9 @@ app.use("/basket", basketRoutes);
 app.use("/order", orderRoutes);
 
 app.use(errorHandler);
+app.get("/", (req: Request, res: Response) => {
+  res.send("<h1>Food Delivery Backend</h1>");
+});
 
 app.listen(PORT, () => {
   console.log(color.rainbow(`Server is Running on ${PORT}`));
